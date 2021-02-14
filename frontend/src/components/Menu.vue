@@ -53,7 +53,7 @@ export default {
     .nav {
         display: flex;
         flex-direction: row;
-        align-content: center;
+        align-items: center;
         justify-content: space-between;
         list-style: none;
         margin: 0; 

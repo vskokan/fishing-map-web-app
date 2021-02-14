@@ -31,11 +31,10 @@
                     <tr v-for="user in allUsers" :key="user.login" class="row">
                         <td class="loginCell">{{user.login}}</td>
                         <td class="emailCell">{{user.email}}</td>
-                        <!-- <td class="descriptionCell">{{user.password}}</td> -->
                         <td class="adminCell">{{user.admin}}</td>
                         <td class="nameCell">{{user.name}}</td>
                         <td class="placeCell">{{user.location}}</td>
-                        <td class="avatarCell">{{user.avatar}}</td>
+                        <td class="avatarCell"><img class="avatar" :src="'http://localhost:3000/' + user.avatar"></td>
                         <td class="raitingCell">{{user.raiting}}</td>
                     <td class="actionCell">
                         <button class="view" @click="chooseUser(user)"><i class="fas fa-info"></i></button>
@@ -124,161 +123,11 @@ export default {
 </script>
 
 <style scoped>
-    .tableContainer {
-        /* height: 720px; */
-        font-family: 'Inter', sans-serif;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        z-index: 0;
-        
-    }
-    .tableArea {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        /* width: 80%; */
-        height: 70vh;
-        background-color: #fff;
-        box-shadow: 0 0 60px rgba(14,42,71,.25);
-        z-index: 0;
-        
-    }
-    table {
-        border-collapse: collapse;
-        background-color: #fff;
-        z-index: 0;
-        
-    }
-    .tableHeader {
-        background-color: rgb(101, 15, 172);
-        color: #fff;
-        height: 80px;
-        font-size: 24px;
-        font-weight: 700;
-        z-index: 0;
-    }
 
-    td {
-        padding: 5px;
-        border-bottom: 1px solid rgb(236, 236, 236);
-        height: 50px;
-    }
+@import './../../styles/adminpanel.css';
 
-    .navigationButtons {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        padding-bottom: 15px;
-        background: transparent;
-        border: transparent
-        
-    }
-
-    .navigationButtons button {
-        background: transparent;
-        border: transparent;
-        font-size: 20px
-    }
-
-    .navigationButtons button:hover {
-        cursor: pointer;
-    }
-
-    .edit, .view, .delete {
-        width: 30px;
-        height: 30px;
-        background: transparent;
-        border: transparent
-    }
-
-    .edit:hover, .view:hover, .delete:hover {
-        cursor: pointer;
-    }
-
-    .idCell {
-        width: 50px;
-    }
-    .descriptionCell {
-        width: 500px;
-    }
-
-    .nameCell {
-        width: 300px;
-    }
-
-    .imageCell {
-        width: 300px;
-    }
-
-    .actionCell {
-        width: 150px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    .row:nth-child(even) {background: #fff}
-    .row:nth-child(odd) {background: rgb(248, 248, 248)}
-
-
-   .tableHeader {
-        background-color: rgb(101, 15, 172);
-        color: #fff;
-        height: 80px;
-        font-size: 24px;
-        font-weight: 700;
-        z-index: 0;
-    }
-
-   .addForm, .cardForm, .editForm {
-       position: absolute;
-       margin: auto;
-       margin-top: 50px;
-       z-index: 5;
-   }
-
-   .fade-enter-active, .fade-leave-active {
-        transition: all 0.3s;
-      }
-      .fade-enter, .fade-leave-to  {
-        opacity: 0;
-      }
-
-    .tableImage {
-        width: 40px;
-        margin-right: 10px;
-        color: #fff;
-    }
-
-    .header {
-        display: flex;
-        padding-top: 5px;
-        padding-right: 10px;
-        padding-left: 10px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        background-color: rgb(101, 15, 172);
-        color: #fff;
-    }
-
-    .header h2  {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        font-size: 48px;
-    }
-
-    .fadee-enter-active, .fadee-leave-active {
-    transition: opacity .5s;
-    }
-    .fadee-enter, .fadee-leave-to {
-    opacity: 0;
-    }
+.avatar {
+    width: 50px;
+}
 
 </style>

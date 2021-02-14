@@ -1,0 +1,160 @@
+/* Таблички */
+
+.tableContainer {
+    font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 0;
+  }
+  
+  .tableArea {
+    padding: 10px;
+    border-radius: 15px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    background-color: #fff;
+    z-index: 0;
+  }
+  table {
+    border-collapse: collapse;
+    background-color: #fff;
+    z-index: 0;
+  }
+  
+  
+  td {
+    padding: 5px;
+    border-bottom: 1px solid rgb(236, 236, 236);
+    height: 50px;
+  }
+  
+  .navigationButtons {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 15px;
+    background: transparent;
+    border: transparent;
+  }
+  
+  .navigationButtons button {
+    background: transparent;
+    border: transparent;
+    font-size: 20px;
+  }
+  
+  .navigationButtons button:hover {
+    cursor: pointer;
+  }
+  
+  .edit,
+  .view,
+  .delete {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: transparent;
+    color: #000;
+  }
+  
+  .edit:hover,
+  .view:hover,
+  .delete:hover {
+    cursor: pointer;
+  }
+  
+  .idCell {
+    width: 50px;
+  }
+  .descriptionCell {
+    width: 500px;
+  }
+  
+  .nameCell {
+    width: 300px;
+  }
+  
+  .imageCell {
+    width: 60px;
+  }
+  
+  .actionCell {
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .row:nth-child(odd) {
+    background: #fff;
+  }
+  .row:nth-child(even) {
+    background: rgb(248, 248, 248);
+  }
+  
+  
+  .addForm,
+  .cardForm,
+  .editForm {
+    position: absolute;
+    margin: auto;
+    margin-top: 50px;
+    z-index: 5;
+  }
+  
+  .editForm {
+    margin-top: 20px;
+  }
+  
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 0.3s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  
+  
+  
+  .header {
+    display: flex;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: 'IBM PLex Sans', sans-serif;
+    align-items: center;
+    margin-bottom: 20px;
+    color: rgb(15, 13, 13);
+  }
+  
+  .header h2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 48px;
+  }
+  
+  .fadee-enter-active,
+  .fadee-leave-active {
+    transition: opacity 0.5s;
+  }
+  .fadee-enter, .fadee-leave-to {
+    opacity: 0;
+  }
+
+/* Карточка */
+
+
+/* Добавление */
+
+
+/* Редактирование */

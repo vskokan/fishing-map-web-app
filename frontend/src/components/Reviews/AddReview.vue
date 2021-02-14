@@ -16,7 +16,7 @@
             :close-on-select="true"
             :clear-on-select="false"
             :preserve-search="true"
-            placeholder="Укажите как клевало..."
+            placeholder="Укажите качество клёва"
             :preselect-first="false"
           />
       </div>
@@ -41,7 +41,7 @@
             <div>
               <img
                 class="icon methods"
-                src="../../assets/icons/review/rod.svg"
+                src="../../assets/icons/review/rod2.svg"
               />
             </div>
             <div>
@@ -53,10 +53,13 @@
             <div>
               <img
                 class="icon fishes"
-                src="../../assets/icons/review/bucket.svg"
+                src="../../assets/icons/review/bucket2.svg"
               />
             </div>
           </div>
+          <div class="factsContainer">
+
+          
           <div class="factRow" v-for="(fact, index) in facts" :key="index">
             <div>
               <Multiselect
@@ -116,6 +119,7 @@
               </button>
             </div>
           </div>
+          </div>
         </div>
 
         <button class="iconButton add" @click="addFact">
@@ -126,7 +130,7 @@
     <div class="stepPart step2" v-if="step == 2">
       <div class="formPart">
         <div class="partHeader">
-          <i class="fas fa-feather-alt"></i>
+          <!-- <i class="fas fa-feather-alt"></i> -->
           <div>Добавьте описание</div>
         </div>
         <textarea
@@ -443,14 +447,14 @@ export default {
 
 <style scoped>
 .reviewCard {
-  min-width: 1100px;
-  min-height: 500px;
+  width: 1100px;
+  /* min-height: 600px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: #fff;
   border-radius: 15px;
-        box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px;
+  box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px;
   /* border-radius: 5px; */
   padding: 10px;
   /* box-shadow: 0 0 60px rgba(14, 42, 71, 0.25); */
@@ -471,7 +475,7 @@ export default {
 .reviewHeader {
   color: #000;
   font-size: 36px;
-  font-family: "Rubik", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 700;
 }
 
@@ -494,7 +498,7 @@ export default {
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  font-family: "Rubik", sans-serif;
+  font-family: "IBM PLex Sans", sans-serif;
 }
 
 .radiobuttons {
@@ -562,9 +566,9 @@ export default {
 }
 
 .icon {
-  height: 40px;
-  width: 40px;
-  margin-right: 10px;
+  height: 30px;
+  width: 30px;
+  /* margin-right: 10px; */
 }
 
 .fa-question-circle {
@@ -612,10 +616,17 @@ export default {
   padding: 10px;
   resize: none;
   font-size: 20px;
+  border: none;
   border-radius: 3px;
-  border: 2px solid var(--color-violet);
+  /* border: 2px solid var(--color-violet); */
   outline: none;
   font-family: "Inter", sans-serif;
+  background-color: #ebe7ee23;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Rubik", sans-serif;
+  box-shadow: rgba(200, 200, 204, 0.15) 0px 30px 60px -10px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -30px inset;
   /* background-color: rgb(245, 244, 244); */
 }
 
@@ -695,11 +706,14 @@ input[type="file"] {
 .uploadButton {
   /* background-color: var(--color-violet); */
   padding: 10px;
-  border-radius: 3px;
+  border-radius: 10px;
   border: 3px solid var(--color-violet);
   color: #000;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
+  font-family: "Rubik", sans-serif;
+  /* font-weight: 700; */
+  border: none;
+  background-color: var(--color-violet);
+  color: rgb(255, 255, 255);
 }
 
 .uploadButton:hover {
@@ -722,6 +736,13 @@ input[type="file"] {
   font-family: "Inter", sans-serif;
   color: #000;
 }
+
+.cancel {
+  margin: 10px 0px;
+}
+
+
+
 </style>
 
 <style>

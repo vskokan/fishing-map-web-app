@@ -40,10 +40,17 @@ export default {
 
 .name {
   margin-top: 20px;
+  font-size: 34px;
+  color: rgb(0, 0, 0);
+  font-weight: 700;
+  font-family: 'IPM Plex Sans', sans-serif;
 }
 
 .description {
   margin: 20px 10px;
+  font-size: 24px;
+  color: rgb(0, 0, 0);
+  font-family: 'IPM Plex Sans', sans-serif;
 }
 
 .image {

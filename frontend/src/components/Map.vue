@@ -123,7 +123,8 @@ export default {
 <style scoped>
 
     .ymap-container {
-      height: 830px;
+      /* height: 830px; */
+      height: 89vh;
       width:  100%;
     }
 
@@ -144,7 +145,7 @@ export default {
        position: relative;
        margin: auto;
        margin-top: -650px;
-       margin-left: 500px;
+       margin-left: 420px;
        z-index: 1;
    }
 

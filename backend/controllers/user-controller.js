@@ -13,7 +13,7 @@ exports.create = (req, res) => {
         admin: 0,
         name: 'Не указано',
         location: req.body.place,
-        avatar: 'uploads/users/default.png',
+        avatar: 'uploads/users/default.jpeg',
         ban: 0,
         raiting: 0
     }
@@ -124,7 +124,7 @@ exports.update = (req, res) => {
             }
             console.log(result)
             const oldLink = result.rows[0].avatar
-            if (oldLink !== 'uploads/users/default.png') {
+            if (oldLink !== 'uploads/users/default.jpeg') {
                 fs.unlinkSync(oldLink)
             }
             
