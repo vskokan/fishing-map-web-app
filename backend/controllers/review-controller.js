@@ -261,3 +261,13 @@ exports.getOptions = (req, res) => {
         console.log(err)
     })
 }
+
+exports.delete = (req, res) => {
+    client.query('DELETE FROM reviews WHERE id = $1', [req.params.id])
+    .then((result) => {
+        res.status(200).json({message: 'Deleted'})
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}

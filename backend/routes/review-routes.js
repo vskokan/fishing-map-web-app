@@ -12,6 +12,6 @@ module.exports = app => {
     router.get("/options", review.getOptions)
     //router.get("/:id", fishes.findOne);
     router.put("/:id", multer.upload.none(), review.update);
-    //router.delete("/:id", fishes.delete);
+    router.delete("/:id", review.delete);
     //router.delete("/", fishes.deleteAll);
 }
