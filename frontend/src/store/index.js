@@ -8,7 +8,7 @@ import fish from './modules/fish'
 import user from './modules/user'
 import review from './modules/review'
 import fact from './modules/fact'
-import fullReview from './modules/fullReview'
+//import fullReview from './modules/fullReview'
 import auth from './modules/auth'
 
 import common from './modules/common'
@@ -26,7 +26,7 @@ export default new Vuex.Store({
         user,
         review,
         fact,
-        fullReview,
+        //fullReview,
         auth
     },
 })

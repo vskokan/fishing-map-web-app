@@ -1,4 +1,6 @@
 import ReviewData from '../../services/ReviewData';
+import FullReviewData from '../../services/FullReviewData';
+
 
 export default {
     actions: {
@@ -30,6 +32,14 @@ export default {
             ReviewData.create(newReview)
             .then(() => {
                 dispatch('fetchReviews')
+                .then(() => {commit('updateReviews', reviews)})
+                
+            })
+        },
+        createFullReview({ commit, dispatch }, newReview, reviews, ) {
+            FullReviewData.create(newReview)
+            .then(() => {
+                dispatch('fetchReviewsNoPagination')
                 .then(() => {commit('updateReviews', reviews)})
                 
             })

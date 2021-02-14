@@ -68,4 +68,8 @@ export default {
   object-fit: cover;
 }
 
+.photo:hover {
+    cursor: pointer;
+}
+
 </style>

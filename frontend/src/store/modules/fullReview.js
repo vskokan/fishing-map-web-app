@@ -10,14 +10,14 @@ export default {
         //         commit('updateReviews', reviews)
         //     })
         // },
-        createFullReview({ commit, dispatch }, newReview, reviews, ) {
-            FullReviewData.create(newReview)
-            .then(() => {
-                dispatch('fetchReviews')
-                .then(() => {commit('updateReviews', reviews)})
+        // createFullReview({ commit, dispatch }, newReview, reviews, ) {
+        //     FullReviewData.create(newReview)
+        //     .then(() => {
+        //         dispatch('fetchReviews')
+        //         .then(() => {commit('updateReviews', reviews)})
                 
-            })
-        },
+        //     })
+        // },
         getFullReviewById() {
 
         }

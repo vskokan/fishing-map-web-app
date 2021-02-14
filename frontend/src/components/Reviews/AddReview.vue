@@ -412,7 +412,7 @@ export default {
         }
         
         this.createFullReview(formData)
-        .then(this.fetchReviewsNoPagination())
+        //.then(this.fetchReviewsNoPagination())
         this.closeForm()
     }
   },
