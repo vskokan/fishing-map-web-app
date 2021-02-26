@@ -6,7 +6,7 @@
             <div class="userPanelArrow"><i class="fas fa-chevron-down" :class="{'opened': isMenuOpened}" @click="toggleUserMenu"></i></div>
         </div>
         <ul class="dropdown"  v-if="isMenuOpened">
-            <li @click="isMenuOpened = false"><router-link to="/404"><i class="fas fa-id-badge"></i>Мой профиль</router-link></li>
+            <li @click="isMenuOpened = false"><router-link :to="'/user/' + currentUser.login" ><i class="fas fa-id-badge"></i>Мой профиль</router-link></li>
             <li><router-link to="/404"><i class="fas fa-users-cog"></i>Настройки</router-link></li>
             <li v-if="currentUser.admin == true"><router-link to="/database"><i class="fas fa-tools"></i>Админка</router-link></li>
             <li @click="exit"><i class="fas fa-sign-out-alt"></i>Выход</li>

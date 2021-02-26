@@ -68,7 +68,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchReviewsNoPagination"]),
+    ...mapActions(["fetchReviews"]),
     ...mapMutations(['changeFormView', 'changeCardView', 'changeEditFormView']),
     onClick(e) {
       this.coords = e.get('coords');
@@ -108,7 +108,7 @@ export default {
     }     
   },
   mounted() {
-    this.fetchReviewsNoPagination()
+    this.fetchReviews()
 
   },
   // directives: {

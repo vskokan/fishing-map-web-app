@@ -174,46 +174,6 @@ exports.update = (req, res) => {
     console.log(review)
 }
 
-// exports.update = (err, res) => {
-//     client
-//     .query('begin')
-//     .then((res) => {
-//         const review = {
-//                     id: req.params.id,
-//                     description: req.body.description,
-//                     isBaiting: req.body.isBaiting,
-//                     roadQuality: req.body.isBaiting,
-//                     fishingTime: req.body.fishingTime,
-//                     raiting: req.body.raiting,
-//                     latitude: req.body.latitude,
-//                     longitude: req.body.longitude
-//         }
-
-//         return client.query(
-//             "UPDATE reviews SET desription = $1, isbaiting = $2, roadquality = $3, fishingtime = $4, raiting = $5, latitude = $6, longitude = $7 WHERE id = $8",
-//             [review.description, review.isBaiting, review.roadQuality, review.fishingTime, review.raiting, review.latitude, review.longitude]
-//         )
-//     })
-//     .then((res) => {
-//         return client.query(
-//             "UPDATE users SET raiting = raiting + 10 WHERE login in (SELECT login FROM reviews WHERE id = $1)",
-//             ["Dog Biscuit", 3, "Cat Food", 5]
-//         )
-//     })
-//     .then((res) => {
-//         return client.query("commit")
-//     })
-//     .then((res) => {
-//         console.log("transaction completed")
-//     })
-//     .catch((err) => {
-//         console.error("error while querying:", err)
-//         return client.query("rollback")
-//     })
-//     .catch((err) => {
-//         console.error("error while rolling back transaction:", err)
-//     })
-// }
 
 exports.getPhotos = (req, res) => {
     const id = req.params.id
@@ -272,4 +232,176 @@ exports.delete = (req, res) => {
     })
 
     // ДОПИСАТЬ УДАЛЕНИЕ ФОТОК ОТЗЫВОВ ИЗ ПАПКИ !!!!!!ВАЖНО!!!!!!
+}
+
+exports.getFull= (req, res) => {
+    const review = {
+        baseInfo: {
+        },
+        facts: [],
+        photos: [],
+        rating: '',
+        reports: ''
+    }
+
+    client.query('BEGIN')
+    .then(() => {
+        return client.query("SELECT login, to_char(date, 'DD.MM.YYYY') AS date, " + 
+            'reviews.description, baiting.id AS "baitingId", baiting.description AS "baitingDescription", ' + 
+            'road.id AS "roadId", road.description AS "roadDescription", ' +
+            'time.id AS "timeId", time.description AS "timeDescription", latitude, longitude FROM reviews ' +
+            'INNER JOIN baiting ON baiting.id = reviews.baiting INNER JOIN road ON road.id = reviews.road ' +
+            'INNER JOIN time ON time.id = reviews.time WHERE reviews.id = $1', 
+            [req.params.id])
+    })
+    .then((result) => {
+        review.baseInfo = result.rows[0]
+        return client.query('SELECT facts.id AS fact, ' + 
+            'fishes.id AS "fishId", fishes.name AS "fishName", ' + 
+            'baits.id AS "baitId", baits.name AS "baitName", baits.description AS "baitDescription", ' + 
+            'methods.id AS "methodId", methods.name AS "methodName", methods.description AS "methodDescription" ' + 
+            'FROM facts INNER JOIN reviews ON reviews.id = facts.review INNER JOIN fishes ON fishes.id = facts.fish ' + 
+            'INNER JOIN baits ON baits.id = facts.bait INNER JOIN methods ON methods.id = facts.method WHERE review = $1;',
+            [req.params.id])
+    })
+    .then((result) => {
+        review.facts = formatFacts(result.rows)
+        return client.query('SELECT id, src FROM review_photos WHERE review = $1', [req.params.id])
+    })
+    .then((result) => {
+        review.photos = result.rows
+        return client.query('SELECT SUM(vote) AS rating FROM review_stats WHERE review = $1 GROUP BY review', [req.params.id])
+    })
+    .then((result) => {
+        review.rating = (result.rows.length ==0) ? 0 : result.rows[0].rating
+        return client.query('SELECT COUNT(*) AS reports FROM review_stats WHERE review = $1 AND report = true', [req.params.id])
+    })
+    .then((result) => {
+        review.reports = (result.rows.length ==0) ? 0 : result.rows[0].reports
+        return client.query('COMMIT')
+    })
+    .then((result) => {
+        res.status(200).json({review: review})
+    })
+    .catch((err) => {
+        console.log(err)
+        return client.query('ROLLBACK')
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+    
+}
+
+exports.getAll = (req, res) => {
+    let reviews = []
+    client.query('BEGIN')
+    .then(() => {
+        return client.query("SELECT reviews.id, reviews.login, to_char(date, 'DD.MM.YYYY') AS date, SUM(review_stats.vote), " + 
+            'reviews.description, baiting.id AS "baitingId", baiting.description AS "baitingDescription", ' + 
+            'road.id AS "roadId", road.description AS "roadDescription", ' +
+            'time.id AS "timeId", time.description AS "timeDescription", latitude, longitude FROM reviews ' +
+            'INNER JOIN baiting ON baiting.id = reviews.baiting INNER JOIN road ON road.id = reviews.road ' +
+            'INNER JOIN time ON time.id = reviews.time LEFT OUTER JOIN review_stats ON review_stats.review = reviews.id '
+            +
+            'GROUP BY reviews.id, baiting.id, road.id, time.id'
+            )
+    })
+    .then((result) => {
+        reviews = result.rows
+        return client.query('COMMIT')
+    })
+    .then((result) => {
+        res.status(200).json({reviews: reviews})
+    })
+    .catch((err) => {
+        console.log(err)
+        return client.query('ROLLBACK')
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+} 
+
+
+
+
+function formatFacts(facts) {
+    const formatedFacts = []
+    let fishes = []
+    const combinations = formCombinations(facts)
+
+    combinations.forEach(combination => {
+        facts.forEach(fact => {
+            if (fact.baitId == combination.bait.id && fact.methodId == combination.method.id) {
+                fishes.push(
+                    {
+                        id: fact.fishId,
+                        name: fact.fishName
+                    }
+                )
+            }
+        })
+        console.log(combination)
+        console.log(fishes)
+        formatedFacts.push(
+            {
+                combination: combination,
+                fishes: fishes
+            }
+        )
+
+        fishes = []
+    })
+
+    return formatedFacts
+}
+
+function formCombinations(facts) {
+    const combinations = []
+
+    facts.forEach(fact => {
+        combinations.push(
+            { 
+                bait: { 
+                    id: fact.baitId, 
+                    name: fact.baitName, 
+                    description: fact.baitDescription 
+                }, 
+                method: { 
+                    id:  fact.methodId,
+                    name: fact.methodName, 
+                    description: fact.methodDescription 
+                }
+            }
+        )
+    })
+
+    // let reducedCombinations = 
+    // console.log('skhfkjfk')
+    // console.log(reduceArrayOfObjects(reducedCombinations))
+    return reduceArrayOfObjects(combinations)
+}
+
+function reduceArrayOfObjects(array) {
+    let reducedArray = []
+
+    if (array.length == 1) {
+        reducedArray = array
+    } else {
+        for (let i = 0; i < array.length; i++) {
+            let isExist = false
+
+            for (let j = 0; j < reducedArray.length; j++) {
+                if (array[i].bait.id == reducedArray[j].bait.id && array[i].method.id == reducedArray[j].method.id) isExist = true
+            }
+
+            if (!isExist) {
+                reducedArray.push(array[i])
+            }
+        }
+    }
+
+    return reducedArray
+    //console.log('REDUCED', reducedArray)
 }

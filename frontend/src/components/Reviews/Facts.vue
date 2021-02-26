@@ -21,7 +21,7 @@
               />
             </div>
           </div>
-        <div class="row" v-for="fact in allFacts" :key="fact.index">
+        <div class="row" v-for="fact in review.facts" :key="fact.index">
             <div class="fishes">
                 <div class="fish" v-for="fish in fact.fishes" :key="fish.id">{{fish.name}}</div>
                 
@@ -46,26 +46,26 @@
 
 <script>
 
-import { mapGetters, mapActions } from 'vuex'
+// import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: ['review'],
-    watch: {
-        review: function (newVal) {
-            this.findFactsByReview(newVal)
-        }
-    },
-    computed: mapGetters(['allFacts']),
+    // watch: {
+    //     review: function (newVal) {
+    //         this.findFactsByReview(newVal)
+    //     }
+    // },
+    // computed: mapGetters(['allFacts']),
     methods: {
-        ...mapActions(['findFactsByReview']),
+        // ...mapActions(['findFactsByReview']),
         // updateFacts() {
         //     this.findFactsByReview(newVal)
         // }
         
     },
-    created() {
-        this.findFactsByReview(this.review)
-    },
+    // created() {
+    //     this.findFactsByReview(this.review)
+    // },
     
 }
 </script>

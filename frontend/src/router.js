@@ -35,6 +35,10 @@ export default new Router({
             component: () => import('./views/Reviews.vue')
         },
         {
+            path: '/user/:login',
+            component: () => import('./views/User.vue')
+        },
+        {
             path: '/database',
             component: () => import('./views/Database.vue'),
             children: [

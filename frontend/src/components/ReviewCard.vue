@@ -7,7 +7,7 @@
                     </div>
                     <div class="data">
                         <div class="login">
-                            {{review.login}}
+                            <router-link :to="'/user/' + review.login" >{{review.login}}</router-link>
                         </div>
                         <div class="location">
                             <img class="pin" src="../assets/icons/review/placeholder.svg">

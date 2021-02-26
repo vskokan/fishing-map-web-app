@@ -1,35 +1,39 @@
 <template>
     <div class="card">
         <!-- <h2 class="name">{{review.id}}</h2> -->
-        <div class="reviewHeader">
+         <!-- <MyLoader class="load" v-if="isReviewLoading" />
+        <div v-if="isReviewLoading">
+            Ждем ответ с сервера
+        </div> -->
+        <div v-if="!isReviewLoading">
+            <div class="reviewHeader">
             <div class="userInfo">
-                <img class="avatar" :src="'http://localhost:3000/' + review.avatar">
-                <div class="login">{{review.login}} <div class="userRating"> <i class="fas fa-trophy"></i>{{review.userrating}}</div></div>
+                 <!-- <router-link :to="'/user/' + review.login" >{{review.login}}</router-link> -->
+                <!-- <img class="avatar" :src="'http://localhost:3000/' + review.avatar"> -->
+                <div class="login"><router-link :to="'/user/' + currentReview.baseInfo.login" >{{currentReview.baseInfo.login}}</router-link> <div class="userRating"> <i class="fas fa-trophy"></i>{{review.userrating}}</div></div>
                 
             </div>
             <div class="reviewInfo">
-                <p class="date"><i class="fas fa-calendar-alt"></i>{{review.date}}</p>
-                <p class="reviewRating"><i class="fas fa-minus"></i>{{review.raiting}}<i class="fas fa-plus"></i></p>
+                <p class="date"><i class="fas fa-calendar-alt"></i>{{currentReview.baseInfo.date}}</p>
+                <p class="reviewRating"><i class="fas fa-minus"></i>{{currentReview.rating}}<i class="fas fa-plus"></i></p>
             </div>
         </div>
         
         
         
-       
         
-        <p class="description">{{review.description}}</p>
+        <p class="description">{{currentReview.baseInfo.description}}</p>
 
         <div class="info">
-            <div class="road"><i class="fas fa-car"></i>{{review.road}}</div>
-            <div class="baiting"><i :class="{ 'fas fa-fish': review.baiting, 'fas fa-thumbs-down': !review.baiting}" ></i>{{review.baiting}}</div>
-            <div class="time"><i class="fas fa-clock"></i>{{review.time}}</div>
+            <div class="road"><i class="fas fa-car"></i>{{currentReview.baseInfo.roadDescription}}</div>
+            <div class="baiting"><i :class="{ 'fas fa-fish': currentReview.baseInfo.baitingDescription, 'fas fa-thumbs-down': !currentReview.baseInfo.baitingDescription}" ></i>{{currentReview.baseInfo.baitingDescription}}</div>
+            <div class="time"><i class="fas fa-clock"></i>{{currentReview.baseInfo.timeDescription}}</div>
         </div>
    
-        <!-- <p class="description">{{review.latitude}}</p>
-        <p class="description">{{review.longitude}}</p> -->
-        <!-- <p v-for="fact in allFacts" :key="fact.id">{{fact.fish + ' ' + fact.bait + ' ' + fact.method}}</p> -->
-        <Facts v-bind:review="review.id" />
-        <ReviewPhotos v-bind:review="review.id" />
+        <Facts v-bind:review="currentReview" />
+        <ReviewPhotos v-bind:review="currentReview" />
+        </div>
+        
        
         <div class="formButtons">
             <button class="button-simple close" v-on:click="closeForm">Закрыть</button>
@@ -40,35 +44,53 @@
 <script>
 
 import { mapActions} from 'vuex'
-// import { mapGetters} from 'vuex'
+import { mapGetters} from 'vuex'
 import { mapMutations } from "vuex";
 
 import Facts from '@/components/Reviews/Facts.vue'
 import ReviewPhotos from '@/components/Reviews/ReviewPhotos.vue'
-
+//import MyLoader from '@/components/MyLoader.vue'
 
 export default {
     props: ['review'],
     components: {
         Facts,
         ReviewPhotos,
+        //MyLoader,
     },
-
+    computed: mapGetters(['currentReview', 'isReviewLoading']),
+    // data() {
+    //     return {
+    //         currentReview: review
+    //     }
+    // },
+        watch: {
+        review: function (newVal) {
+            // alert(newVal.id)
+            this.getOne(newVal.id)
+        }
+    },
     // computed: mapGetters(['allFacts']),
     methods: {
         ...mapMutations(['changeCardView']),
-        ...mapActions(['findFactsByReview']),
+        ...mapActions(['findFactsByReview', 'getOne']),
         closeForm() {
             this.changeCardView()
         }
     },
     created() {
-        
+        this.getOne(this.review.id)
     }
 }
 </script>
 
 <style scoped>
+    load {
+        height: 350px;
+        width: 700px;
+        position: relative;
+        top: 10px;
+    }
     .card {
         display: flex;
         flex-direction: column;

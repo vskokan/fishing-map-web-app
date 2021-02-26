@@ -1,16 +1,16 @@
 <template>
-    <div class="container" v-if="allPhotos.length !== 0" >
+    <div class="container" v-if="review.photos.length !== 0" >
         <div class="list">
-            <img class="photo" v-for="photo in allPhotos" :key="photo.id" :src="'http://localhost:3000/' + photo.src" @click="choosePhoto(photo)">
+            <img class="photo" v-for="photo in review.photos" :key="photo.id" :src="'http://localhost:3000/' + photo.src" @click="choosePhoto(photo)">
         </div>
-        <Slider v-bind:photos="allPhotos" :active="currentPhoto" v-if="showSlider"/>
+        <Slider v-bind:photos="review.photos" :active="currentPhoto" v-if="showSlider"/>
         
     </div>
 </template>
 
 <script>
 
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters,  mapMutations } from 'vuex'
 import Slider from '@/components/Reviews/Slider.vue'
 
 export default {
@@ -22,13 +22,13 @@ export default {
         }
     },
     computed: mapGetters(['allPhotos', "showSlider"]),
-    watch: {
-        review: function (newVal) {
-            this.getReviewPhotos(newVal)
-        }
-    },
+    // watch: {
+    //     review: function (newVal) {
+    //         this.getReviewPhotos(newVal)
+    //     }
+    // },
     methods: {
-        ...mapActions(['getReviewPhotos']),
+        // ...mapActions(['getReviewPhotos']),
         ...mapMutations(['changeSliderView']),
         choosePhoto(photo) {
             this.currentPhoto = photo
@@ -37,11 +37,8 @@ export default {
         
     },
     created() {
-        this.getReviewPhotos(this.review)
+        // this.getReviewPhotos(this.review)
     },
-    // updated() {
-    //     this.findFactsByReview(this.review)
-    // }
 }
 </script>
 
