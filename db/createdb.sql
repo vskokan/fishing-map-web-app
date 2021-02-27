@@ -23,7 +23,6 @@ CREATE TABLE users (
         name VARCHAR(255),
         location INTEGER REFERENCES locations (id),
         admin BOOLEAN,
-	raiting INTEGER,
         ban BOOLEAN
 );
 
@@ -59,8 +58,7 @@ CREATE TABLE reviews (
         time INTEGER REFERENCES time (id),
         road INTEGER REFERENCES road (id),
         latitude VARCHAR(255),
-        longitude VARCHAR(255),
-	rating INTEGER
+        longitude VARCHAR(255)
 );
 
 CREATE TABLE fishes (
@@ -98,8 +96,9 @@ CREATE TABLE review_photos (
 
 CREATE TABLE review_stats (
         id SERIAL PRIMARY KEY,
+	review INTEGER REFERENCES reviews (id) ON DELETE CASCADE,
         login VARCHAR(255) REFERENCES users (login) ON DELETE CASCADE,
-        vote INTEGER,
+        rating INTEGER,
         report BOOLEAN
 );
 
@@ -110,7 +109,7 @@ CREATE TABLE companies (
         email VARCHAR(255),
         website VARCHAR(255),
         logo VARCHAR(255),
-        gives_discounts BOOLEAN
+        provides_discounts BOOLEAN
 );
 
 CREATE TABLE departments (

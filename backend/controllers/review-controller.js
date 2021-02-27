@@ -1,4 +1,5 @@
 const { json } = require('body-parser')
+const { query } = require('../db')
 const client = require('../db')
 
 // exports.findAll = (req, res) => {
@@ -295,6 +296,34 @@ exports.getFull= (req, res) => {
 
 exports.getAll = (req, res) => {
     let reviews = []
+    const params = req.query
+
+    //console.log(params)
+    let queryString = ''
+    if (Object.keys(params).length !== 0) {
+        queryString = 'WHERE '
+        for (let prop in params) {
+            let param = ''
+            switch (prop) {
+                case 'user': {
+                    param = 'reviews.login'
+                    break
+                }
+                case 'road': {
+                    param = 'road.id'
+                    break
+                }
+                case 'baiting': {
+                    param = 'baiting.id'
+                    break
+                }
+            }
+            queryString+= `${param} = '${params[prop]}' AND `
+        }
+
+        queryString = queryString.substring(0, queryString.length - 4)
+        console.log(queryString)
+    }
     client.query('BEGIN')
     .then(() => {
         return client.query("SELECT reviews.id, reviews.login, to_char(date, 'DD.MM.YYYY') AS date, SUM(review_stats.vote), " + 
@@ -303,6 +332,8 @@ exports.getAll = (req, res) => {
             'time.id AS "timeId", time.description AS "timeDescription", latitude, longitude FROM reviews ' +
             'INNER JOIN baiting ON baiting.id = reviews.baiting INNER JOIN road ON road.id = reviews.road ' +
             'INNER JOIN time ON time.id = reviews.time LEFT OUTER JOIN review_stats ON review_stats.review = reviews.id '
+            +
+            queryString
             +
             'GROUP BY reviews.id, baiting.id, road.id, time.id'
             )

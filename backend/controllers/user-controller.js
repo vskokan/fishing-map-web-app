@@ -84,13 +84,58 @@ exports.readAll = (req, res) => {
 }
 
 exports.readOne = (req, res) => {
-    let id = String(req.params.id)
-    client.query('SELECT * FROM users WHERE login = $1;', [id], function (err, result) {
-        if (err) {
-           return next(err)
-       }
-       res.json(result.rows)
-   })
+//     let id = String(req.params.id)
+//     client.query('SELECT * FROM users WHERE login = $1;', [id], function (err, result) {
+//         if (err) {
+//            return next(err)
+//        }
+//        res.json(result.rows)
+//    })
+    let user = {
+        login:  req.params.login,
+        name: '',
+        avatar: '',
+        location: '',
+        email: '',
+        admin: '',
+        ban: '',
+        rating: '',
+        reviewsAmount: '',
+        frqMethod: '',
+        frqFish: ''
+    }
+
+    client.query('BEGIN')
+    .then(() => { // сначала заносим базовую инфу
+        return client.query('SELECT login, users.name, avatar, locations.name AS location, email, admin, ban ' + 
+        'FROM users INNER JOIN locations ON locations.id = users.location WHERE login = $1', 
+        [user.login])
+    })
+    .then((result) => {
+        user.name = result.rows[0].name
+        user.avatar = result.rows[0].avatar
+        user.location = result.rows[0].location
+        user.email = result.rows[0].email
+        user.admin = result.rows[0].admin
+        user.ban = result.rows[0].ban
+
+        return client.query('SELECT COUNT(reviews.id) AS amount FROM reviews WHERE reviews.login = $1',
+        [user.login])
+    })
+    .then((result) => {
+        user.reviewsAmount = result.rows[0].amount
+        return client.query('SELECT SUM(review_stats.vote) AS sum FROM review_stats INNER JOIN ' +
+        'reviews ON reviews.id = review_stats.review WHERE reviews.login = $1',
+        [user.login])
+    })
+    .then((result) => {
+        user.rating = user.reviewsAmount * 100 + +result.rows[0].sum
+        console.log(user)
+        return client.query('COMMIT')
+    })
+    .then((result) => {
+        res.status(200).json(user)
+    })
 }
 
 exports.update = (req, res) => {

@@ -42,9 +42,9 @@ class UserData {
     return http.get(`/users?p=amount`)
   }
 
-//   findByTitle(title) {
-//     return http.get(`/fish?title=${title}`);
-//   }
+  getOne(login) {
+    return http.get(`/users/${login}`);
+  }
 
   signIn(data) {
     return http.post(`au/login`, data)

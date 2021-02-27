@@ -58,6 +58,15 @@ export default {
                     })
                 })
         },
+
+        getUser({commit}, login) {
+            UserData.getOne(login)
+            .then((json) => {
+                const user = json.data
+                console.log(user)
+                commit('updateUser', user)
+            })
+        }
         // signIn({commit,}, user) {
         //     alert('fkekfghlfklf')
         //     UserData.signIn(user)
@@ -83,6 +92,9 @@ export default {
         updateUsers(state, users) {
             state.users = users
         },
+        updateUser(state, user) {
+            state.user = user
+        }
         // updateCurrentUser(state, currentUser) {
         //     state.currentUser.login = currentUser.login
         //     state.currentUser.admin = currentUser.admin
@@ -93,6 +105,7 @@ export default {
     },
     state: {
         users: [],
+        user: {}
         // currentUser: {
         //     login: '',
         //     admin: false
@@ -103,6 +116,9 @@ export default {
         allUsers(state) {
             return state.users
         },
+        oneUser(state) {
+            return state.user
+        }
         // currentUser(state) {
         //     return state.currentUser
         // },
