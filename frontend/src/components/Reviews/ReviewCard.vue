@@ -1,16 +1,16 @@
 <template>
-    <div class="card">
+    <div class="card" v-if="!isReviewLoading">
         <!-- <h2 class="name">{{review.id}}</h2> -->
          <!-- <MyLoader class="load" v-if="isReviewLoading" />
         <div v-if="isReviewLoading">
             Ждем ответ с сервера
         </div> -->
-        <div v-if="!isReviewLoading">
+        <div >
             <div class="reviewHeader">
             <div class="userInfo">
                  <!-- <router-link :to="'/user/' + review.login" >{{review.login}}</router-link> -->
-                <!-- <img class="avatar" :src="'http://localhost:3000/' + review.avatar"> -->
-                <div class="login"><router-link :to="'/user/' + currentReview.baseInfo.login" >{{currentReview.baseInfo.login}}</router-link> <div class="userRating"> <i class="fas fa-trophy"></i>{{review.userrating}}</div></div>
+                <img class="avatar" :src="'http://localhost:3000/' + currentReview.baseInfo.avatar">
+                <div class="login"><div class="link"><router-link  :to="'/user/' + currentReview.baseInfo.login" >{{currentReview.baseInfo.login}}</router-link> </div><div class="userRating"> <i class="fas fa-trophy"></i>{{currentReview.baseInfo.userRating}}</div></div>
                 
             </div>
             <div class="reviewInfo">
@@ -25,9 +25,9 @@
         <p class="description">{{currentReview.baseInfo.description}}</p>
 
         <div class="info">
-            <div class="road"><i class="fas fa-car"></i>{{currentReview.baseInfo.roadDescription}}</div>
+            <div class="road"><i class="fas fa-car"></i>{{currentReview.baseInfo.roadDescription !== null ? currentReview.baseInfo.roadDescription : 'Не указано' }}</div>
             <div class="baiting"><i :class="{ 'fas fa-fish': currentReview.baseInfo.baitingDescription, 'fas fa-thumbs-down': !currentReview.baseInfo.baitingDescription}" ></i>{{currentReview.baseInfo.baitingDescription}}</div>
-            <div class="time"><i class="fas fa-clock"></i>{{currentReview.baseInfo.timeDescription}}</div>
+            <div class="time"><i class="fas fa-clock"></i>{{currentReview.baseInfo.timeDescription !== null ? currentReview.baseInfo.timeDescription : 'Не указано'}}</div>
         </div>
    
         <Facts v-bind:review="currentReview" />
@@ -155,12 +155,12 @@ export default {
         justify-content: flex-start;
         align-items: center;
         margin-top: 20px;
-        margin-left: 20px;
+        margin-left: 10px;
     }
 
     .reviewInfo {
         margin-top: 20px;
-        margin-right: 20px;
+        margin-right: 10px;
     }
 
     .reviewHeader {
@@ -178,7 +178,7 @@ export default {
     }
 
     .userRating {
-        font-size: 16px;
+        font-size: 18px;
         display: flex;
         justify-content: flex-start;
         margin-left: 5px;
@@ -197,6 +197,25 @@ export default {
         font-size: 18px;
         margin-top: 5px;
     }
+
+     a {
+            text-decoration: none;
+            color: #000;
+            /* font-weight: bold; */
+            height: 100%;
+        }
+
+        a:active {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
 
 
 </style>

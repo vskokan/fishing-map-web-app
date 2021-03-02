@@ -13,12 +13,18 @@ export default {
         //         dispatch('getReviewMaxPageFromServer')
         //     })
         // },
-        fetchReviews({ commit, }) {
-            ReviewData.getAll()
+        fetchReviews({ commit, }, filters) {
+            ReviewData.getAll(filters)
             .then(json => {
                 const reviews = json.data.reviews
                 console.log(reviews)
+               // console.log(filters.startsWith('user'))
+                if (filters !== undefined && filters.startsWith('user')) {
+                    commit('updateUserReviews', reviews)
+                    //commit('stopReviewsLoader')
+                }
                 commit('updateReviews', reviews)
+                commit('stopReviewsLoader')
             })
         },
         // getReviewMaxPageFromServer({commit}) {
@@ -110,8 +116,17 @@ export default {
         updateOptions(state, options) {
             state.options = options
         },
+        updateUserReviews(state, reviews) {
+            state.userReviews = reviews
+        },
         stopReviewLoader(state) {
             state.reviewLoader = false
+            // setTimeout(() => {
+            //     state.reviewLoader = false
+            // }, 1500)
+        },
+        stopReviewsLoader(state) {
+            state.reviewsLoader = false
             // setTimeout(() => {
             //     state.reviewLoader = false
             // }, 1500)
@@ -120,7 +135,9 @@ export default {
     state: {
         reviews: [],
         review: {},
+        userReviews: [],
         reviewLoader: true,
+        reviewsLoader: true,
         options: {
             baiting: [],
             road: [],
@@ -143,6 +160,12 @@ export default {
         },
         isReviewLoading(state) {
             return state.reviewLoader
+        },
+        areReviewsLoading(state) {
+            return state.reviewsLoader
+        },
+        userReviews(state) {
+            return state.userReviews
         }
     },
 }

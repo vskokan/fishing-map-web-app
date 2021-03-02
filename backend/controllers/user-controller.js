@@ -91,6 +91,7 @@ exports.readOne = (req, res) => {
 //        }
 //        res.json(result.rows)
 //    })
+    console.log('USER READ ONE')
     let user = {
         login:  req.params.login,
         name: '',
@@ -135,6 +136,9 @@ exports.readOne = (req, res) => {
     })
     .then((result) => {
         res.status(200).json(user)
+    })
+    .catch((err) => {
+        console.log('ошибка в рюзер')
     })
 }
 

@@ -7,6 +7,11 @@ import store from './store'
 Vue.config.productionTip = false
 Vue.use(YmapPlugin)
 
+router.beforeEach((to, from, next) => {
+  store.commit('closeAllWindows')
+  next()
+})
+
 new Vue({
   store,
   router,

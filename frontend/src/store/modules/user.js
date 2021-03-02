@@ -65,6 +65,7 @@ export default {
                 const user = json.data
                 console.log(user)
                 commit('updateUser', user)
+                commit('stopUserLoading')
             })
         }
         // signIn({commit,}, user) {
@@ -94,6 +95,9 @@ export default {
         },
         updateUser(state, user) {
             state.user = user
+        },
+        stopUserLoading(state) {
+            state.userLoader = false
         }
         // updateCurrentUser(state, currentUser) {
         //     state.currentUser.login = currentUser.login
@@ -105,7 +109,8 @@ export default {
     },
     state: {
         users: [],
-        user: {}
+        user: {},
+        userLoader: true
         // currentUser: {
         //     login: '',
         //     admin: false
@@ -118,6 +123,9 @@ export default {
         },
         oneUser(state) {
             return state.user
+        },
+        isUserLoading(state) {
+            return state.userLoader
         }
         // currentUser(state) {
         //     return state.currentUser

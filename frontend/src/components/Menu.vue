@@ -73,6 +73,11 @@ export default {
         justify-content: space-between;
     }
 
+    .nav-buttons a{
+        display: flex;
+        align-items: center;
+    }
+
     button .nav-buttons {
         margin-left: 5px;
     }

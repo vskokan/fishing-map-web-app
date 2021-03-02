@@ -25,6 +25,12 @@ export default {
         },
         changeSliderView(state) {
             state.slider = !state.slider
+        },
+        closeAllWindows(state) {
+            state.form = false
+            state.card = false
+            state.editForm = false
+            state.changePasswordForm = false
         }
     },
     state: {

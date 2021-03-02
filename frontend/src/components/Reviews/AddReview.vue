@@ -437,7 +437,7 @@ export default {
     this.review.longitude = this.longitude
   },
   mounted() {
-    alert(this.allBaits)
+   // alert(this.allBaits)
     this.getPreviews();
   },
 };

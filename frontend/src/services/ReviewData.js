@@ -3,8 +3,15 @@ import http from "../http-common";
 
 class ReviewData {
     
-  getAll() {
-    return http.get('/reviews')
+  getAll(filters) {
+    console.log(`Filters: ${filters}`)
+    if (filters == undefined) {
+      //alert(';fj')
+      return http.get('/reviews')
+    } else {
+      return http.get(`/reviews?${filters}`)
+    }
+    
   }
 
   getOne(id) {

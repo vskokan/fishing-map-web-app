@@ -7,8 +7,8 @@ exports.create = (req, res) => {
         login: req.body.login,
         description: req.body.description,
         baiting: req.body.baiting,
-        road: req.body.road,
-        time: req.body.time,
+        road: req.body.road == 'undefined' ? null : req.body.road,
+        time: req.body.time == 'undefined' ? null : req.body.time,
         //raiting: 0,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
        // facts: req.body.facts,
         photos: req.files
     }
-
+    
     console.log(review)
 
     client.query('BEGIN')

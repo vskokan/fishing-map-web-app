@@ -247,12 +247,12 @@ exports.getFull= (req, res) => {
 
     client.query('BEGIN')
     .then(() => {
-        return client.query("SELECT login, to_char(date, 'DD.MM.YYYY') AS date, " + 
+        return client.query("SELECT users.login, users.avatar, to_char(date, 'DD.MM.YYYY') AS date, " + 
             'reviews.description, baiting.id AS "baitingId", baiting.description AS "baitingDescription", ' + 
             'road.id AS "roadId", road.description AS "roadDescription", ' +
             'time.id AS "timeId", time.description AS "timeDescription", latitude, longitude FROM reviews ' +
-            'INNER JOIN baiting ON baiting.id = reviews.baiting INNER JOIN road ON road.id = reviews.road ' +
-            'INNER JOIN time ON time.id = reviews.time WHERE reviews.id = $1', 
+            'INNER JOIN baiting ON baiting.id = reviews.baiting LEFT OUTER JOIN road ON road.id = reviews.road ' +
+            'LEFT OUTER JOIN time ON time.id = reviews.time INNER JOIN users ON users.login = reviews.login WHERE reviews.id = $1', 
             [req.params.id])
     })
     .then((result) => {
@@ -279,6 +279,18 @@ exports.getFull= (req, res) => {
     })
     .then((result) => {
         review.reports = (result.rows.length ==0) ? 0 : result.rows[0].reports
+        return client.query('SELECT COUNT(reviews.id) AS amount FROM reviews WHERE reviews.login = $1',
+        [review.baseInfo.login])
+    })
+    .then((result) => {
+        review.baseInfo.userRating = result.rows[0].amount * 100
+        console.log(review.baseInfo.userRating)
+        return client.query('SELECT SUM(review_stats.vote) AS sum FROM review_stats INNER JOIN ' +
+        'reviews ON reviews.id = review_stats.review WHERE reviews.login = $1', [review.baseInfo.login])
+    })
+    .then((result) => {
+        review.baseInfo.userRating += +result.rows[0].sum
+        console.log(review.baseInfo.userRating)
         return client.query('COMMIT')
     })
     .then((result) => {
@@ -289,18 +301,22 @@ exports.getFull= (req, res) => {
         return client.query('ROLLBACK')
     })
     .catch((err) => {
+        console.log('AAAAAAAAAAAAAAAA')
         console.log(err)
     })
     
 }
 
 exports.getAll = (req, res) => {
+    console.log('REVIEWS READ ALL')
     let reviews = []
     const params = req.query
 
-    //console.log(params)
+    console.log(params)
+
     let queryString = ''
     if (Object.keys(params).length !== 0) {
+        console.log(Object.keys(params).length)
         queryString = 'WHERE '
         for (let prop in params) {
             let param = ''
@@ -322,21 +338,27 @@ exports.getAll = (req, res) => {
         }
 
         queryString = queryString.substring(0, queryString.length - 4)
-        console.log(queryString)
+        console.log('QS: ' + queryString)
     }
+
+    console.log('GS OUT: ' + queryString)
     client.query('BEGIN')
     .then(() => {
         return client.query("SELECT reviews.id, reviews.login, to_char(date, 'DD.MM.YYYY') AS date, SUM(review_stats.vote), " + 
             'reviews.description, baiting.id AS "baitingId", baiting.description AS "baitingDescription", ' + 
             'road.id AS "roadId", road.description AS "roadDescription", ' +
             'time.id AS "timeId", time.description AS "timeDescription", latitude, longitude FROM reviews ' +
-            'INNER JOIN baiting ON baiting.id = reviews.baiting INNER JOIN road ON road.id = reviews.road ' +
-            'INNER JOIN time ON time.id = reviews.time LEFT OUTER JOIN review_stats ON review_stats.review = reviews.id '
+            'INNER JOIN baiting ON baiting.id = reviews.baiting LEFT OUTER JOIN road ON road.id = reviews.road ' +
+            'LEFT OUTER JOIN time ON time.id = reviews.time LEFT OUTER JOIN review_stats ON review_stats.review = reviews.id '
             +
             queryString
             +
-            'GROUP BY reviews.id, baiting.id, road.id, time.id'
+            ' GROUP BY reviews.id, baiting.id, road.id, time.id'
             )
+    })
+    .catch((err) => {
+        console.log('aaaa')
+        console.log(err)
     })
     .then((result) => {
         reviews = result.rows
@@ -346,10 +368,12 @@ exports.getAll = (req, res) => {
         res.status(200).json({reviews: reviews})
     })
     .catch((err) => {
+        console.log('ошибка в ревью контроллер 1')
         console.log(err)
         return client.query('ROLLBACK')
     })
     .catch((err) => {
+        console.log('ошибка в ревью контроллер 2')
         console.log(err)
     })
 } 

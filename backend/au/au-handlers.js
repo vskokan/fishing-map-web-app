@@ -303,7 +303,7 @@ exports.register = (req, res) => {
     user.hashedPassword = bcrypt.hashSync(req.body.password, salt)
 
     client.query('INSERT INTO users (login, email, password, avatar, name, location, admin, ban, raiting) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-                [user.login, user.email, user.hashedPassword, 'uploads/users/default.png', 'Не указано', 1, 0, 0, 0])
+                [user.login, user.email, user.hashedPassword, 'uploads/users/default.jpeg', 'Не указано', 1, 0, 0, 0])
     .then((result) => {
         res.status(200).json({message: 'Successful insert'})
     })
