@@ -12,7 +12,7 @@ exports.create = (req, res) => {
         password: req.body.password,
         admin: 0,
         name: 'Не указано',
-        location: req.body.place,
+        location: null,
         avatar: 'uploads/users/default.jpeg',
         ban: 0,
         raiting: 0

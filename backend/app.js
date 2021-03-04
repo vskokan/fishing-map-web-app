@@ -29,6 +29,7 @@ require("./routes/review-routes")(app);
 require("./routes/fact-routes")(app);
 require("./routes/fullReview-routes")(app);
 require("./routes/fullReview2-routes")(app);
+require("./routes/geo-routes")(app);
 // require("./au/au-routes")(app);
 
 app.listen(3000) //, '192.168.0.102');
