@@ -1,17 +1,17 @@
 <template>
     <div class="mainpage">
        <!-- <SignUp></SignUp> -->
-    <AddReview />
+    <MapFilters />
     </div>
 </template>
 
 <script>
 // import SignUp from '@/components/SignUp'
-import AddReview from '@/components/Reviews/AddReview'
+import MapFilters from '@/components/Reviews/MapFilters'
 export default {
     components: {
         //SignUp
-         AddReview
+         MapFilters
     }    
 }
 </script>

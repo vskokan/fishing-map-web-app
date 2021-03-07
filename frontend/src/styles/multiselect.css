@@ -1,0 +1,147 @@
+
+
+.multiselect__tag {
+    position: relative;
+    display: inline-block;
+    padding: 5px 26px 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    color: #fff;
+    line-height: 1;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    background: var(--color-violet);
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    font-size: 16px;
+  }
+  
+  .multiselect__tag-icon:after {
+    content: "\D7";
+    color: var(--color-yellow);
+    font-size: 16px;
+  }
+  
+  .multiselect__tag-icon:focus,
+  .multiselect__tag-icon:hover {
+    background: var(--color-violet);
+  }
+  
+  .multiselect__tag-icon:focus:after,
+  .multiselect__tag-icon:hover:after {
+    color: var(--color-violet);
+  }
+  
+  .multiselect__option--highlight:after {
+    content: attr(data-select);
+    background: var(--color-violet);
+    color: rgb(150, 0, 0);
+    display: none;
+  }
+  
+  .multiselect__option--selected:after {
+    content: attr(data-selected);
+    color: var(--color-yellow);
+    display: none;
+  }
+  
+  .delete {
+    font-size: 16px;
+    color: var(--color-violet);
+    margin-left: 5px;
+    border: none;
+    background-color: transparent;
+  }
+  
+  .add {
+    color: var(--color-violet);
+    font-size: 16px;
+    margin-top: 15px;
+    border: none;
+    background-color: transparent;
+  }
+  
+  .delete:hover,
+  .add:hover {
+    cursor: pointer;
+  }
+  
+  .stepOne {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  
+  .stepTwo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  button {
+    border: none;
+    background-color: transparent;
+  
+    font-size: 20px;
+  }
+  
+  button:hover {
+    cursor: pointer;
+  }
+  
+  .navButton {
+    color: var(--color-violet);
+    margin: 10px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+  }
+  
+  .multiselect__placeholder {
+    color: var(--color-darkgray);
+    font-family: "Inter", sans-serif;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding-top: 2px;
+  }
+  
+  .multiselect--active .multiselect__placeholder {
+    display: none;
+  }
+  
+  .multiselect__option {
+    display: block;
+    padding: 12px;
+    color: var(--color-darkgray);
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    min-height: 40px;
+    line-height: 16px;
+    text-decoration: none;
+    text-transform: none;
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .multiselect__option--selected {
+    background: var(--color-violet);
+    color: var(--color-yellow);
+    font-weight: 700;
+  }
+  
+  .multiselect__single {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    color: var(--color-darkgray);
+  }
+  
+  .multiselect__option--highlight {
+    background: var(--color-violet);
+    outline: none;
+    color: #fff;
+  }
