@@ -56,6 +56,7 @@
         width: 450px;
         /* font-family: 'Arkhip'; */
         font-family: 'Fishhook';
+        letter-spacing: 1.5px;
         font-weight: bold;
     }
 

@@ -116,6 +116,7 @@ button:hover {
   margin-right: 5px;
   text-transform: uppercase;
   font-family: "Rubik", sans-serif;
+  letter-spacing: 1.5px;
   transition: 0.5s;
 }
 

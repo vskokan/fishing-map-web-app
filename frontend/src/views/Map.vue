@@ -1,5 +1,6 @@
 <template>
     <div class="mapContainer">
+        <MapFilters />
        <Map></Map>
     </div>
 </template>
@@ -7,11 +8,13 @@
 <script>
 
 import Map from '@/components/Map'
+import MapFilters from '@/components/Reviews/MapFilters'
 
 export default {
 
     components: {
-        Map
+        Map,
+        MapFilters
     },
 }
 
@@ -30,6 +33,10 @@ export default {
         margin-top: 5px;
         margin-bottom: 5px;
         /* width: 80%; */
+    }
+
+    MapFilters {
+        width: 100%;
     }
 
     .heading {

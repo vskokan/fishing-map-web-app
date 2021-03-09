@@ -6,11 +6,13 @@
           <i class="fas fa-times"></i>
         </div>
         <Multiselect
-          class="multiselect optional"
+          class="multiselect baiting"
           v-model="filters.baiting"
           :options="options.baiting"
           label="description"
           track-by="id"
+          :limit="1"
+          :limitText="count => `и еще ${count}`"
           :multiple="true"
           :close-on-select="true"
           :clear-on-select="false"
@@ -25,11 +27,13 @@
           <i class="fas fa-times"></i>
         </div>
         <Multiselect
-          class="multiselect optional"
+          class="multiselect road"
           v-model="filters.road"
           :options="options.road"
           label="description"
           track-by="id"
+          :limit="1"
+          :limitText="count => `и еще ${count}`"
           :multiple="true"
           :close-on-select="true"
           :clear-on-select="false"
@@ -43,12 +47,14 @@
           <i class="fas fa-times"></i>
         </div>
         <Multiselect
-          class="multiselect optional"
+          class="multiselect fishes"
           v-model="filters.fishes"
           :options="allFishes"
           label="name"
           track-by="id"
           :multiple="true"
+          :limit="2"
+          :limitText="count => `и еще ${count}`"
           :close-on-select="false"
           :clear-on-select="false"
           :preserve-search="true"
@@ -76,7 +82,10 @@
       </div>
       <div class="filter">
           <label for="photo">Только с фото</label>
-          <input type="checkbox" id="photo" v-model="filters.photos">
+          <div class="switchBody" :class="{'switchBody switch_turned': filters.photos == true }"  @click="filters.photos = !filters.photos">
+            <div class="switch"></div>
+          </div>
+          <input type="checkbox" id="photo" v-model="filters.photos" v-show="false">
       </div>
       <div class="filter" v-if="filtersOptions.reports">
           <label for="reports">С жалобами</label>
@@ -88,8 +97,8 @@
       </div>
     </div>
     <div class="buttons">
-      <button class="clear">Очистить</button>
-      <button class="apply">Обновить</button>
+      <button class="clear button-simple" >Очистить</button>
+      <button class="apply button-simple"><i class="fas fa-sync-alt"></i></button>
     </div>
   </div>
 </template>
@@ -118,7 +127,7 @@ export default {
     return {
       filters: {
         users: [],
-        photos: "",
+        photos: false,
         baiting: [],
         road: [],
         fishes: [],
@@ -159,6 +168,9 @@ export default {
         justify-content: space-around;
         background-color: #fff;
         padding: 20px;
+        font-family: 'Inter', sans-serif;
+        color: #000;
+        height: 60px;
     }
 
     .filters {
@@ -174,5 +186,87 @@ export default {
         margin: 0px 10px;
         align-items: center;
     }
+
+    .baiting, .road {
+      width: 350px;
+    }
+
+    .fishes {
+      width: 400px;
+    }
+
+    .clear {
+      margin-right: 7px;
+    }
+
+    #rating, #rating:focus {
+      width: 60px;
+      border: none;
+      border-bottom: 1px solid #000;
+      outline: none;
+      margin-left: 5px;
+      color: var(--color-violet);
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .switchBody {
+      
+      width: 40px;
+      height: 25px;
+      padding: 0px 5px;
+      border-radius: 25px;
+      display: flex;
+      /* justify-content: flex-end; */
+      justify-content: center;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: var(--color-lightgray);
+      transition: all 0.3s;
+      margin-left: 10px;
+    }
+
+    .switchBody:hover {
+      cursor: pointer;
+    }
+
+    .switch_unturned {
+        justify-content: flex-start;
+        background-color: var(--color-lightgray);
+    }
+
+    .switch_turned {
+      justify-content: flex-end;
+      background-color: var(--color-violet);
+    }
+
+    .switch {
+      background-color: rgb(255, 255, 255);
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+      /* margin-left: 5px; */
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .clear {
+      font-size: 16px;
+    }
+
+    .apply {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* .clear, .apply {
+      font-size: 14px;
+      padding: 10px;
+    } */
 
 </style>

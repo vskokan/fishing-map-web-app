@@ -61,6 +61,7 @@ export default {
         height: 100%;
         font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 500;
+        letter-spacing: 1.5px;
         background-color:  #fff;
     }
 
