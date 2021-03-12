@@ -2,8 +2,8 @@ module.exports = app => {
     const fish = require("../controllers/fish-controller.js");
     let router = require("express").Router();
    
-    const multer = require("../configs/index.js")
-    const au = require('../au/au-handlers')
+    const multer = require("../configs/multer.js")
+    const au = require('../controllers/au-controller')
     //app.use(multer({storage:storageConfig}).single("image", "avatar"));
     // app.use(multer({storage:storageConfig}).array("image"));
     

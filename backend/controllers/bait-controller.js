@@ -1,4 +1,4 @@
-const client = require('../db')
+const client = require('../configs/db.js')
 
 exports.create = (req, res) => {
     const bait = {

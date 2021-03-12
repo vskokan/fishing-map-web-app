@@ -1,6 +1,6 @@
 const { json } = require('body-parser')
-const { query } = require('../db')
-const client = require('../db')
+const { query } = require('../configs/db.js')
+const client = require('../configs/db.js')
 
 // exports.findAll = (req, res) => {
 //     client.query('SELECT id, login, to_char(reviews.reviewDate, $2) AS date, description, isbaiting, roadquality, fishingtime, raiting, latitude, longitude FROM reviews;', [], function (err, result) {

@@ -1,5 +1,5 @@
 const e = require('express')
-const client = require('../db')
+const client = require('../configs/db.js')
 
 exports.findAll = (req, res) => {
     client.query('SELECT * FROM facts;', [], function (err, result) {

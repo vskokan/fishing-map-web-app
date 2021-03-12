@@ -2,8 +2,8 @@ module.exports = app => {
     const user = require("../controllers/user-controller.js");
     const router = require("express").Router();
 
-    const multer = require("../configs/index.js")
-    const au = require('../au/au-handlers')
+    const multer = require("../configs/multer.js")
+    const au = require('../controllers/au-controller')
     // var multer  = require('multer')
     
     // const storageConfig = multer.diskStorage({

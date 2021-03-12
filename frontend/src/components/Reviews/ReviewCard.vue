@@ -102,7 +102,8 @@ export default {
         background-color: #fff;
         padding-bottom: 20px;
         border-radius: 15px;
-        box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px;
+        /* box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px; */
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.26);
         font-style: normal;
         /* box-shadow: 0 0 60px rgba(14,42,71,.25); */
     }

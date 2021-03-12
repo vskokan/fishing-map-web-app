@@ -2,7 +2,7 @@ module.exports = app => {
     const review = require("../controllers/fullReview2-controller.js");
     const router = require("express").Router();
 
-    const multer = require("../configs/index.js")
+    const multer = require("../configs/multer.js")
 
 
     app.use('/api/test/reviews', router);

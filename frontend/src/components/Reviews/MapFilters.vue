@@ -167,7 +167,10 @@ export default {
         flex-direction: row;
         justify-content: space-around;
         background-color: #fff;
-        padding: 20px;
+        position: relative;
+        /* top: 2px; */
+        z-index: 2;
+        /* padding: 20px; */
         font-family: 'Inter', sans-serif;
         color: #000;
         height: 60px;

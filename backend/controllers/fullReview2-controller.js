@@ -1,4 +1,4 @@
-const client = require('../db')
+const client = require('../configs/db.js')
 const fs = require('fs')
 const format = require('pg-format');
 

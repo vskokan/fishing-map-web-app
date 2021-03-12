@@ -1,5 +1,5 @@
 //const ExpressFormidable = require('express-formidable') Надо бы удалить это вообще
-const client = require('../db')
+const client = require('../configs/db.js')
 const bcrypt = require('bcrypt')
 const fs = require('fs')
 const salt = bcrypt.genSaltSync(10)

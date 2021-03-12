@@ -3,8 +3,8 @@ module.exports = app => {
     let router = require("express").Router();
     app.use('/api/baits', router);
 
-    const multer = require("../configs/index.js")
-    const au = require('../au/au-handlers')
+    const multer = require("../configs/multer.js")
+    const au = require('../controllers/au-controller')
 
     router.post("/", multer.upload.none(), au.verify, bait.create);
     router.get("/", bait.readAll);

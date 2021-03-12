@@ -37,6 +37,9 @@ export default {
 
     MapFilters {
         width: 100%;
+        position: relative;
+        /* top: 1px; */
+        z-index: 2;
     }
 
     .heading {
@@ -52,7 +55,7 @@ export default {
         margin-right: 30px;
     }
 
-    .mapContainer {
+    /* .mapContainer {
         height: 600px
-    }
+    } */
 </style>

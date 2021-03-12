@@ -3,7 +3,7 @@
     
 //     let router = require("express").Router();
 
-//     const multer = require("../configs/index.js")
+//     const multer = require("../configs/multer.js")
 
 //     app.use('/api/au', router);
 
@@ -17,10 +17,10 @@
 //     //router.delete("/", fishes.deleteAll);
 // }
 
-const au = require("./au-handlers.js")
+const au = require("../controllers/au-controller.js")
 var express = require('express')
 var router = express.Router()
-const multer = require("../configs/index.js")
+const multer = require("../configs/multer.js")
 
 router.post('/login', multer.upload.none(), au.login)
 router.post('/verify', multer.upload.none(), au.verify)

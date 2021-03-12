@@ -3,11 +3,11 @@ var events = require('events').EventEmitter.defaultMaxListeners = 0;
 const express = require("express");
 const cors = require('cors')
 const app = express();
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser')
-var routes = require('./au/au-routes.js');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
+const authenticationRoutes = require('./routes/au-routes.js');
 
-var corsOptions = {
+const corsOptions = {
   origin: "http://localhost:8080",
   credentials: true
 };
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(cors(corsOptions));
 app.use(express.static(__dirname))
-app.use('/api/au/', routes)
+app.use('/api/au/', authenticationRoutes)
 
 require("./routes/fish-routes")(app);
 require("./routes/user-routes")(app);

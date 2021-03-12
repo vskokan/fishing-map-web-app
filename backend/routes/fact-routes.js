@@ -2,7 +2,7 @@ module.exports = app => {
     const fact = require("../controllers/fact-controller.js");
     let router = require("express").Router();
 
-    const multer = require("../configs/index.js")
+    const multer = require("../configs/multer.js")
 
     app.use('/api/facts', router);
 

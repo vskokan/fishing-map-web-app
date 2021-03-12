@@ -1,5 +1,5 @@
 //import { fish } from '../models/fish-model.js'
-const client = require('../db')
+const client = require('../configs/db.js')
 const fs = require('fs')
 
 exports.readAll = (req, res) => {

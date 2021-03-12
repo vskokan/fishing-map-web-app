@@ -134,7 +134,7 @@ export default {
 <style scoped>
 .ymap-container {
   /* height: 830px; */
-  height: 89vh;
+  height: 82vh;
   width: 100%;
 }
 
@@ -143,11 +143,11 @@ export default {
   top: 1px;
   width: 100%;
   z-index: 0;
-  min-height: calc(100vh - 320px);
+  min-height: calc(100vh - 350px);
 }
 
 yandex-map {
-  height: 820px;
+  height: 800px;
   width: 100%;
 }
 

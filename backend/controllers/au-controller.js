@@ -1,4 +1,4 @@
-const client = require('../db')
+const client = require('../configs/db.js')
 const bcrypt = require('bcrypt')
 const cookieParser = require('cookie-parser')
 // const salt = bcrypt.genSaltSync(10)
