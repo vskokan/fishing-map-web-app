@@ -8,6 +8,7 @@
                 :balloon-template="balloonTemplate"
             ></ymap-marker>
         </yandex-map> -->
+    <MapFilters />
     <yandex-map :coords="coords" :zoom="10" @click="onClick">
       <!-- <ymap-marker v-click-outside="hide" @click="toggle(review)" v-for="review of reviews" :key="review" :icon="markerIcon"
                 marker-id="review.id" 
@@ -46,6 +47,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import MapFilters from '@/components/Reviews/MapFilters';
 // import ReviewCard from '@/components/Reviews/AdminPanel/ReviewCard'
 import AddReview from "@/components/Reviews/AddReview";
 import ReviewCard from "@/components/Reviews/ReviewCard";
@@ -68,11 +70,15 @@ export default {
         preset: "islands#violetIcon",
       },
       currentReview: {},
+      filters: {}
     };
   },
-  components: { ReviewCard, AddReview },
+  components: { ReviewCard, AddReview, MapFilters },
   computed: {
-    ...mapGetters(["allReviews", "showCard", "showForm", "isAuth"]),
+    ...mapGetters(["allReviews", "showCard", "showForm", "isAuth", "getFilters"]),
+    // reviews: function() {
+    //   return this.allReviews
+    // },
     balloonTemplate() {
       return `
         <h1 class="red">Hi, everyone!</h1>
@@ -121,6 +127,7 @@ export default {
   },
   mounted() {
     this.fetchReviews();
+    //this.filters = this.getFilters
   },
   // directives: {
   //   ClickOutside

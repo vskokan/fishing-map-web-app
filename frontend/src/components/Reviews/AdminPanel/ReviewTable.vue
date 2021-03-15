@@ -1,6 +1,7 @@
 <template>
     <div class="tableArea">
         <transition name="fade">
+            <MapFilters />
             <AddReview class="addForm" v-if="showForm"/>
             <ReviewCard class="cardForm" v-if="showCard" v-bind:review="currentReview" />
             <EditReview class="editForm" v-if="showEditForm" v-bind:review="currentReview" />
@@ -57,9 +58,10 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 import AddReview from '@/components/Reviews/AdminPanel/AddReview'
 import ReviewCard from '@/components/Reviews/AdminPanel/ReviewCard'
 import EditReview from '@/components/Reviews/AdminPanel/EditReview'
+import MapFilters from '@/components/Reviews/MapFilters'
 
 export default {
-    components: {AddReview, ReviewCard, EditReview},
+    components: {AddReview, ReviewCard, EditReview, MapFilters},
     computed: mapGetters(["allReviews", "showForm", "showCard", "showEditForm", "getCurrentPage", "getMaxPage"]), 
     methods: { 
         ...mapActions(["fetchReviews", "deleteReview", "getReviewMaxPageFromServer"]),

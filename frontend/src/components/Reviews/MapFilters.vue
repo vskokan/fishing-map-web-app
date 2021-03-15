@@ -82,10 +82,10 @@
       </div>
       <div class="filter">
           <label for="photo">Только с фото</label>
-          <div class="switchBody" :class="{'switchBody switch_turned': filters.photos == true }"  @click="filters.photos = !filters.photos">
+          <div class="switchBody" :class="{'switchBody switch_turned': filters.onlyWithPhotos == true }"  @click="filters.onlyWithPhotos = !filters.onlyWithPhotos">
             <div class="switch"></div>
           </div>
-          <input type="checkbox" id="photo" v-model="filters.photos" v-show="false">
+          <input type="checkbox" id="photo" v-model="filters.onlyWithPhotos" v-show="false">
       </div>
       <div class="filter" v-if="filtersOptions.reports">
           <label for="reports">С жалобами</label>
@@ -98,7 +98,7 @@
     </div>
     <div class="buttons">
       <button class="clear button-simple" >Очистить</button>
-      <button class="apply button-simple"><i class="fas fa-sync-alt"></i></button>
+      <button class="apply button-simple" @click="sendFilters"><i class="fas fa-sync-alt"></i></button>
     </div>
   </div>
 </template>
@@ -114,26 +114,18 @@ export default {
   components: {
     Multiselect,
   },
-  computed: mapGetters(["allFishes", "allMethods", "options", "allUsers"]),
-  methods: {
-    ...mapActions([
-      "fetchFishesNoPagination",
-      "fetchReviewsNoPagination",
-      "getOptions",
-      "fetchUsersNoPagination"
-    ]),
-  },
-  data() {
+    data() {
     return {
       filters: {
         users: [],
-        photos: false,
+        onlyWithPhotos: false,
         baiting: [],
         road: [],
         fishes: [],
         reports: "",
         ratingMoreThan: "",
       },
+      filtersToUpdate: {},
       filtersOptions: {
           users: false,
           reports: false,
@@ -143,8 +135,76 @@ export default {
           fishes: true,
           rating: true
       }
-    };
+    }
   },
+  computed: mapGetters(["allFishes", "allMethods", "options", "allUsers", "allReviews", "reviewFilters"]),
+  methods: {
+    ...mapActions([
+      "fetchFishesNoPagination",
+      "fetchReviewsNoPagination",
+      "getOptions",
+      "fetchUsersNoPagination",
+      "getFilters"
+    ]),
+    //...mapMutations(['getFilters']),
+    sendFilters() {
+      console.log(this.filtersToUpdate)
+
+      let temp = []
+
+      if (this.filters.users.length !== 0) {
+        this.filters.users.forEach(user => {
+          temp.push(user.login)
+        })
+
+        this.filtersToUpdate.users = temp
+        temp = []
+      } else {
+        this.filtersToUpdate.users = []
+      }
+
+      if (this.filters.baiting.length !== 0) {
+        this.filters.baiting.forEach(baiting => {
+          temp.push(baiting.id)
+        })
+
+        this.filtersToUpdate.baiting = temp
+        temp = []
+      } else {
+        this.filtersToUpdate.baiting = []
+      }
+
+      if (this.filters.road.length !== 0) {
+        this.filters.road.forEach(road => {
+          temp.push(road.id)
+        })
+
+        this.filtersToUpdate.road = temp
+        temp = []
+      } else {
+        this.filtersToUpdate.road = []
+      }
+
+      if (this.filters.fishes.length !== 0) {
+        this.filters.fishes.forEach(fish => {
+          temp.push(fish.id)
+        })
+
+        this.filtersToUpdate.fishes = temp
+        temp = []
+      } else {
+        this.filtersToUpdate.fishes = []
+      }
+
+      this.filtersToUpdate.onlyWithPhotos = this.filters.onlyWithPhotos
+      this.filtersToUpdate.ratingMoreThan = this.filters.ratingMoreThan
+      this.filtersToUpdate.reports = this.filters.reports
+
+      //this.getFilters(this.filtersToUpdate)
+     this.getFilters(this.filtersToUpdate)
+    }
+  }, 
+
   created() {
     this.fetchFishesNoPagination()
     this.getOptions()

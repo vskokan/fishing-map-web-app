@@ -1,6 +1,6 @@
 <template>
     <div class="mapContainer">
-        <MapFilters />
+        <!-- <MapFilters /> -->
        <Map></Map>
     </div>
 </template>
@@ -8,13 +8,13 @@
 <script>
 
 import Map from '@/components/Map'
-import MapFilters from '@/components/Reviews/MapFilters'
+
 
 export default {
 
     components: {
         Map,
-        MapFilters
+        //MapFilters
     },
 }
 
