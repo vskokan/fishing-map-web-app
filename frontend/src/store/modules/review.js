@@ -24,9 +24,27 @@ export default {
                     //commit('stopReviewsLoader')
                 }
 
+                function compareArrays(array1, array2) {
+                    let commonElements = false
+
+                    array1.forEach(elem1 => {
+                        array2.forEach(elem2 => {
+                            if (elem1 == elem2) commonElements = true
+                        })
+                    })
+
+                    return commonElements
+                }
+
                 function reviewFilter(review) {
                     if ((state.filters.users.length == 0 || state.filters.users.includes(review.login)) 
-                    && (state.filters.baiting.length == 0 || state.filters.baiting.includes(review.baitingId))) {
+                    && (state.filters.baiting.length == 0 || state.filters.baiting.includes(review.baitingId))
+                    && (state.filters.onlyWithPhotos == false || state.filters.onlyWithPhotos == true && review.photos > 0)
+                    && (state.filters.road.length == 0 || state.filters.road.includes(review.roadId))
+                    && (state.filters.ratingMoreThan.length == 0 || state.filters.ratingMoreThan <= review.reviewRating )
+                    && (state.filters.fishes.length == 0 || compareArrays(review.fishes, state.filters.fishes))
+                   // && (state.filters.fishes.length == 0 || review.fishes.forEach(fish => {state.filters.fishes.includes(fish)}))
+                    ) {
                         return true
                     }
                     return false

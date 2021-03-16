@@ -345,15 +345,21 @@ exports.getAll = (req, res) => {
     client.query('BEGIN')
     .then(() => {
         return client.query("SELECT reviews.id, reviews.login, to_char(date, 'DD.MM.YYYY') AS date, SUM(review_stats.vote), " + 
+            'SUM(review_stats.vote) AS "reviewRating", ' +
+            'COUNT(review_photos.src) AS photos, ' +
+            "SUM(case review_stats.report when 'true' then 1 else 0 end) AS reports, " +
+            'array_agg(DISTINCT facts.fish) AS fishes, ' +
             'reviews.description, baiting.id AS "baitingId", baiting.description AS "baitingDescription", ' + 
             'road.id AS "roadId", road.description AS "roadDescription", ' +
             'time.id AS "timeId", time.description AS "timeDescription", latitude, longitude FROM reviews ' +
             'INNER JOIN baiting ON baiting.id = reviews.baiting LEFT OUTER JOIN road ON road.id = reviews.road ' +
-            'LEFT OUTER JOIN time ON time.id = reviews.time LEFT OUTER JOIN review_stats ON review_stats.review = reviews.id '
+            'LEFT OUTER JOIN time ON time.id = reviews.time LEFT OUTER JOIN review_stats ON review_stats.review = reviews.id ' +
+            'LEFT OUTER JOIN review_photos ON review_photos.review = reviews.id ' +
+            'INNER JOIN facts ON facts.review = reviews.id '
             +
             queryString
             +
-            ' GROUP BY reviews.id, baiting.id, road.id, time.id'
+            ' GROUP BY reviews.id, baiting.id, road.id, time.id, review_stats.report'
             )
     })
     .catch((err) => {
