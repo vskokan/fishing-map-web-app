@@ -209,6 +209,7 @@
         padding: 0px 20px 20px 20px;
         /* box-shadow: 0 0 60px rgba(14, 42, 71, 0.25); */
         /* box-shadow: 0 0 60px rgba(14,42,71,.25); */
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
         border-radius: 15px;
         z-index: 0;
     }
