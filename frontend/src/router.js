@@ -20,7 +20,7 @@ export default new Router({
         },
         {
             path: '/fish',
-            component: () => import('./views/Fish.vue')
+            component: () => import('./views/Fishes.vue')
         },
         {
             path: '/profile',

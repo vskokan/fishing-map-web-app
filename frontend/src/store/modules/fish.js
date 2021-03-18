@@ -48,19 +48,33 @@ export default {
                     commit('updateFishes', fishes)
                 })
             })
+        },
+        fetchFish({commit, }, fish) {
+            FishData.get(fish)
+            .then((json) => {
+                const fish = json.data
+                commit('updateFish', fish)
+            })
         }
     },
     mutations: {
         updateFishes(state, fishes) {
             state.fishes = fishes
         },
+        updateFish(state, fish) {
+            state.fish = fish
+        }
     },
     state: {
         fishes: [],
+        fish: {}
     },
     getters: {
         allFishes(state) {
             return state.fishes
         },
+        currentFish(state) {
+            return state.fish
+        }
     },
 }

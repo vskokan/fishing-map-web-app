@@ -97,7 +97,7 @@
       </div>
     </div>
     <div class="buttons">
-      <button class="clear button-simple" >Очистить</button>
+      <button class="clear button-simple" @click="reset">Очистить</button>
       <button class="apply button-simple" @click="sendFilters"><i class="fas fa-sync-alt"></i></button>
     </div>
   </div>
@@ -105,7 +105,7 @@
 
 <script>
 import { mapActions } from "vuex";
-//import { mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import { mapGetters } from "vuex";
 
 import Multiselect from "vue-multiselect";
@@ -144,9 +144,10 @@ export default {
       "fetchReviewsNoPagination",
       "getOptions",
       "fetchUsersNoPagination",
-      "getFilters"
+      "getFilters",
+      "resetFilters"
     ]),
-    //...mapMutations(['getFilters']),
+    ...mapMutations(['clearFilters']),
     sendFilters() {
       console.log(this.filtersToUpdate)
 
@@ -202,6 +203,16 @@ export default {
 
       //this.getFilters(this.filtersToUpdate)
      this.getFilters(this.filtersToUpdate)
+    },
+    reset() {
+      this.filters.baiting = []
+      this.filters.road = []
+      this.filters.fishes = []
+      this.filters.onlyWithPhotos = false
+      this.filters.ratingMoreThan = ''
+      this.filters.reports = false
+      this.filters.users = []
+      this.resetFilters()
     }
   }, 
 

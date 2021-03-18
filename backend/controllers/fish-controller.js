@@ -1,6 +1,7 @@
 //import { fish } from '../models/fish-model.js'
 const client = require('../configs/db.js')
 const fs = require('fs')
+const { response } = require('express')
 
 exports.readAll = (req, res) => {
     const page = req.query.page
@@ -210,4 +211,16 @@ exports.findAllPagination = (req, res) => {
          
     })
     
+}
+
+exports.getOne = (req, res) => {
+    const id = req.params.id
+
+    client.query('SELECT * FROM fishes WHERE id = $1', [id])
+    .then((result) => {
+        res.status(200).json(result.rows[0])
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 }

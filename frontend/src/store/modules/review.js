@@ -78,6 +78,11 @@ export default {
             dispatch('fetchReviews')
             .then(() => {commit('updateReviews', reviews)})
         },
+        resetFilters({commit, dispatch}, reviews) {
+            commit('clearFilters')
+            dispatch('fetchReviews')
+            .then(() => {commit('updateReviews', reviews)})
+        },
         // getReviewMaxPageFromServer({commit}) {
         //     ReviewData.getAmount()
         //     .then(json => {

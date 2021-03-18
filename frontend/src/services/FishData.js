@@ -18,9 +18,9 @@ class FishData {
     return http.get(`/fish?p=amount`)
   }
 
-//   get(id) {
-//     return http.get(`/fish/${id}`);
-//   }
+  get(id) {
+    return http.get(`/fish/${id}`);
+  }
 
   create(data) {
     return http.post("/fish/", data);
