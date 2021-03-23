@@ -3,6 +3,7 @@ import FishData from '../../services/FishData';
 export default {
     actions: {
         fetchFishes({ commit,  rootState, dispatch}) {
+            
             FishData.getPage(rootState.common.currentPage)
             .then(json => {
                 const fishes = json.data.rows
@@ -50,6 +51,7 @@ export default {
             })
         },
         fetchFish({commit, }, fish) {
+            commit('loadFish')
             FishData.get(fish)
             .then((json) => {
                 const fish = json.data
@@ -63,11 +65,16 @@ export default {
         },
         updateFish(state, fish) {
             state.fish = fish
+            state.isFishLoaded = true
+        },
+        loadFish(state) {
+            state.isFishLoaded = false
         }
     },
     state: {
         fishes: [],
-        fish: {}
+        fish: {},
+        isFishLoaded: false
     },
     getters: {
         allFishes(state) {
@@ -75,6 +82,9 @@ export default {
         },
         currentFish(state) {
             return state.fish
+        },
+        isFishLoaded(state) {
+            return state.isFishLoaded
         }
     },
 }

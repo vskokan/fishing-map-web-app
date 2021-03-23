@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <FishCardBig v-bind:fish="$route.params.fish"/>
+      <FishCardBig v-bind:fish="$route.params.id"/>
   </div>
 </template>
 
@@ -16,12 +16,15 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  height: 88vh;
+  padding: 40px 0px;
+  /* height: auto; */
+  /* min-height: 88vh; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  margin: auto;
+  /* margin: 40px 0px; */
+  /* margin: auto; */
 }
+
 </style>

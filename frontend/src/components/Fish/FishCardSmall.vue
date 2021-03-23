@@ -13,7 +13,7 @@ export default {
   methods: {
     openFishPage(fish) {
         console.log(fish)
-    //тут будет обработчик открытия страницы рыбы
+        this.$router.push({ path: `fish/${fish}` })
     }
   },
 };
@@ -33,6 +33,10 @@ export default {
   padding-bottom: 20px;
   border-radius: 15px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  cursor: pointer;
 }
 
 .image {

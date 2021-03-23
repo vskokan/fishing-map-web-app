@@ -2,6 +2,7 @@
 const client = require('../configs/db.js')
 const fs = require('fs')
 const { response } = require('express')
+const { getCiphers } = require('crypto')
 
 exports.readAll = (req, res) => {
     const page = req.query.page
@@ -216,11 +217,53 @@ exports.findAllPagination = (req, res) => {
 exports.getOne = (req, res) => {
     const id = req.params.id
 
-    client.query('SELECT * FROM fishes WHERE id = $1', [id])
+    const fish = {
+        baseInfo: {},
+        stats: {}
+    }
+
+    client.query('BEGIN')
+    .then(() => {
+        return client.query('SELECT * FROM fishes WHERE id = $1', [id])
+    })
     .then((result) => {
-        res.status(200).json(result.rows[0])
+        fish.baseInfo = result.rows[0]
+        return client.query('SELECT array_agg(name) AS labels, ' +
+        'array_agg(round((cast(baitcount as numeric) / fishcount) * 100, 0)) as "percents" FROM ' +
+        '((SELECT DISTINCT facts.bait, baits.name, COUNT(facts.bait) as "baitcount" ' + 
+        'FROM facts INNER JOIN  baits ON baits.id = facts.bait WHERE facts.fish = $1 '+ 
+        'GROUP BY facts.bait, facts.fish, baits.name) as q1 NATURAL JOIN ' +
+        '(SELECT COUNT (fish) as "fishcount" FROM facts WHERE fish = $1) as q2)', [id])
+    })
+    .then((result) => {
+        fish.stats.baits = result.rows[0]
+        return client.query('SELECT array_agg(name) AS labels, ' +
+        'array_agg(round((cast(methodcount as numeric) / fishcount) * 100, 0)) as "percents" FROM ' +
+        '((SELECT DISTINCT facts.method, methods.name, COUNT(facts.method) as "methodcount" ' + 
+        'FROM facts INNER JOIN methods ON methods.id = facts.method WHERE facts.fish = $1 '+ 
+        'GROUP BY facts.method, facts.fish, methods.name) as q1 NATURAL JOIN ' +
+        '(SELECT COUNT (fish) as "fishcount" FROM facts WHERE fish = $1) as q2)', [id])
+    })
+    .then((result) => {
+        fish.stats.methods = result.rows[0]
+        return client.query('COMMIT')
+    })
+    .then((result) => {
+        res.status(200).json(fish)
     })
     .catch((err) => {
         console.log(err)
+        return client.query('ROLLBACK')
     })
+    .catch((err) => {
+        console.log('Error in transaction rollback')
+    })
+
+    // client.query('SELECT * FROM fishes WHERE id = $1', [id])
+    // .then((result) => {
+    //     res.status(200).json(result.rows[0])
+    // })
+    // .catch((err) => {
+    //     console.log(err)
+    // })
 }

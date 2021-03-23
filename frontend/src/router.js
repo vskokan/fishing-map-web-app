@@ -23,6 +23,10 @@ export default new Router({
             component: () => import('./views/Fishes.vue')
         },
         {
+            path: '/fish/:id',
+            component: () => import('./views/Fish.vue')
+        },
+        {
             path: '/profile',
             component: () => import('./views/Profile.vue')
         },
