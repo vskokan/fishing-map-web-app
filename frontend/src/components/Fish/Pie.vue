@@ -24,6 +24,7 @@ export default {
             //backgroundColor: "#f87979",
             data: [],
             backgroundColor: ["#9b53ed", "#f0f078", "#6eb6e6", "#e366ab", "#66e37b", "#5f6363"], 
+            borderWidth: 0
           },
         ],
         
