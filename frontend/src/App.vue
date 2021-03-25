@@ -5,11 +5,13 @@
     <transition name="slide-fade" mode="out-in">
       <router-view v-if="!isAuthLoading"> </router-view>
     </transition>
+    <Footer v-if="!isAuthLoading"/>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
+import Footer from '@/components/Footer'
 import MyLoader from "@/components/MyLoader";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
@@ -19,6 +21,7 @@ export default {
   components: {
     Header,
     MyLoader,
+    Footer
   },
   methods: {
     ...mapActions(["checkSession"]),

@@ -3,7 +3,7 @@
             <ul class="nav">
                 <li class="menuitem"><router-link to="/map"><i class="fas fa-map-marker-alt"></i>Карта</router-link></li>
                 <li class="menuitem"><router-link to="/fish"><i class="fas fa-fish"></i>Рыба</router-link></li>
-                <li class="menuitem"><router-link to="/test"><i class="fas fa-handshake"></i>Партнеры</router-link></li>
+                <li class="menuitem"><router-link to="/partners"><i class="fas fa-handshake"></i>Партнеры</router-link></li>
                 <li class="menuitem"><router-link to="/test"><i class="fas fa-info-circle"></i>О нас</router-link></li>
             </ul>
             <div class="nav-buttons">

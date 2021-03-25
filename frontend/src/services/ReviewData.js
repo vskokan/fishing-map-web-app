@@ -51,7 +51,9 @@ class ReviewData {
     return http.get('/reviews/options')
   }
 
-
+  updateStats(id, data) {
+    return http.post(`/reviews/${id}/stats`, data)
+  }
 
 
 }

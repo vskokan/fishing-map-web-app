@@ -1,14 +1,14 @@
 <template>
     <div class="footer">
-        <h2>Footer</h2>
+        <h2>Футер в разработке</h2>
     </div>
 </template>
 
 <style scoped>
     .footer {
-        height: 70px;
+        height: 10vh;
         font-size: 22px;
-        background: linear-gradient(to right, #7c8e51, #69afce);
+        background-color: var(--color-violet);
         color: rgb(255, 255, 255);
         display: flex;
         align-items: center;
