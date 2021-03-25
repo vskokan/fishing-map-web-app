@@ -118,7 +118,9 @@ button:hover {
   margin-left: 5px;
   margin-right: 5px;
   text-transform: uppercase;
-  font-family: "Rubik", sans-serif;
+  /* font-family: "Rubik", sans-serif; */
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
   letter-spacing: 1.5px;
   transition: 0.5s;
 }

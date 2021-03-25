@@ -44,6 +44,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin: 20px 0px;
     }
     .cards {
         width: 100%;
@@ -54,7 +55,7 @@ export default {
     }
 
     .fishCard{
-        margin: 5px;
+        margin: 10px;
     }
 
 </style>

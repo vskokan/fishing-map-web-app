@@ -141,7 +141,7 @@ export default {
 <style scoped>
 .ymap-container {
   /* height: 830px; */
-  height: 82vh;
+  height: 73.3vh;
   width: 100%;
 }
 
