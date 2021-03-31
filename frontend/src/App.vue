@@ -70,7 +70,7 @@ export default {
   /* --color-darkgray: rgb(56, 56, 56); */
   --color-darkgray: rgb(0, 0, 0);
   --color-lightgray: rgb(194, 194, 194);
-  --color-darkviolet: rgb(87, 31, 133);
+  --color-darkviolet: #571f85;
 }
 
 .red {

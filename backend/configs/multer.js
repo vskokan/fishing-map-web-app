@@ -7,6 +7,8 @@ const fs = require('fs')
                 cb(null, "uploads/fishes/")
             if (file.fieldname == "avatar")
                 cb(null, "uploads/users/")
+            if (file.fieldname == "logo")
+                cb(null, "uploads/companies/")
             if (file.fieldname == "images") {
                 const user = req.body.login
 

@@ -4,13 +4,13 @@
     <div class="partners">
       <i class="fas fa-briefcase"></i>
       <div class="header">Наши партнеры</div>
-      <!-- <div class="priceCards">
-        <Price
-          v-for="price in this.prices"
-          :key="price.index"
-          v-bind:data="price"
+      <div class="companyCards" v-if="companiesAreLoaded">
+        <CompanyCard
+          v-for="company in allCompanies"
+          :key="company.id"
+          v-bind:company="company"
         />
-      </div> -->
+      </div>
     </div>
         <div class="intro">
       <div class="text">
@@ -24,7 +24,7 @@
     <div class="prices">
       <i class="fas fa-ruble-sign"></i>
       <div class="header">Тарифы на размещение</div>
-      <div class="priceCards">
+      <div class="priceCards" >
         <Price
           v-for="price in this.prices"
           :key="price.index"
@@ -63,10 +63,22 @@
 </template>
 
 <script>
-import Price from "../components/Partners/Price.vue";
+import Price from "../components/Partners/Price.vue"
+import CompanyCard from "../components/Partners/CompanyCard.vue"
+import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+
 export default {
   components: {
     Price,
+    CompanyCard
+  },
+  computed: mapGetters(['allCompanies', 'companiesAreLoaded']),
+  methods: {
+    ...mapActions(['fetchCompanies'])
+  },
+  created() {
+    this.fetchCompanies()
   },
   data() {
     return {
@@ -142,6 +154,8 @@ export default {
 
 .partners {
   background-color: var(--color-violet);
+/* background: rgb(198,187,209); */
+background: linear-gradient(0deg, rgba(198,187,209,0.16288522244835435) 0%, var(--color-violet) 100%, rgba(255,255,248,0.5270308807116597) 100%);
   /* height: 500px; */
   padding: 30px;
 }
@@ -167,6 +181,20 @@ export default {
   flex-direction: row;
   justify-content: space-evenly;
   margin: 0px 0px 20px 0px;
+}
+
+.companyCards {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin: 0px 0px 20px 0px;
+  gap: 60px;
+}
+
+CompanyCard {
+  margin-bottom: 20px;
 }
 
 .cooperation {

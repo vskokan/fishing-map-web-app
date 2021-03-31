@@ -3,13 +3,28 @@ const client = require('../configs/db.js')
 /* CТРАНЫ */ 
 
 exports.createCountry = (req, res) => {
-    client.query('INSERT INTO TABLE countries (name) VALUES ($1)',
-        [req.body.name])
+    client.query('BEGIN')
     .then((result) => {
-        res.status(200).json({ message: 'Успех'})
+        return client.query('INSERT INTO TABLE countries (name) VALUES ($1) returning id', req.body.name)
+    })
+    .then((result) => {
+        const country = result.rows[0].id
+        return client.query('INSERT INTO TABLE regions (name, country) VALUES ("Все регионы", $1) returning id', country)
+    })
+    .then((result) => {
+        const region = result.rows[0].id
+        return client.query('INSERT INTO TABLE locations (name, region) VALUES ("Все города", $1)', region)
+    })
+    .then((result) => {
+        res.status(200).json({status: 'success'})
+        return client.query('COMMIT')
     })
     .catch((err) => {
-        console.log('Ошибка вставки в countries' + err)
+        console.log(err)
+        return client.query('ROLLBACK')
+    })
+    .catch((err) => {
+        console.log(err)
     })
 }
 

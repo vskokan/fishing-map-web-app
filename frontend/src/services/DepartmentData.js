@@ -2,8 +2,8 @@ import http from "../http-common";
 
 class DepartmentData {
     
-  getAll() {
-    return http.get("/partners");
+  readAll() {
+    return http.get("/department");
   }
 
 //   get(id) {
@@ -11,7 +11,7 @@ class DepartmentData {
 //   }
 
   create(data) {
-    return http.post("/partners", data);
+    return http.post("/department", data);
   }
 
 //   update(id, data) {

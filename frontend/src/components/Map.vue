@@ -9,7 +9,7 @@
             ></ymap-marker>
         </yandex-map> -->
     <MapFilters />
-    <yandex-map :coords="coords" :zoom="10" @click="onClick">
+    <yandex-map :coords="coords" :zoom="10" @click="onClick" :cluster-options="clusterOptions">
       <!-- <ymap-marker v-click-outside="hide" @click="toggle(review)" v-for="review of reviews" :key="review" :icon="markerIcon"
                 marker-id="review.id" 
                 :coords= "[`${review.latitude}`, `${review.longitude}`]"
@@ -27,6 +27,16 @@
           move(review.latitude, review.longitude);
         "
         :options="markerIcon"
+        cluster-name="1"
+        :icon="markerIcon"
+      />
+            <ymap-marker
+        v-for="department in allDepartments"
+        :key="department.id"
+        marker-id="departmen.id"
+        :coords="[`${department.latitude}`, `${department.longitude}`]"
+        cluster-name="1"
+        :icon="markerIconPartner"
       />
       <ReviewCard
         class="cardForm"
@@ -62,12 +72,49 @@ export default {
       zoom: 12,
       //opened: false,
       markerIcon: {
-        // layout: 'default#image',
+        layout: 'default#image',
         // imageHref: 'http://localhost:3000/assets/map-marker.svg',
-        // imageSize: [35, 50],
-        // imageOffset: [-15, -45],
-        // // imageOffset: [0, 0],
-        preset: "islands#violetIcon",
+        imageHref: 'http://localhost:3000/uploads/map-marker.svg',
+        imageSize: [35, 50],
+        //imageOffset: [-15, -45],
+        imageOffset: [-15, -45],
+        // preset: "islands#violetIcon",
+      },
+            markerIconPartner: {
+        layout: 'default#image',
+        // imageHref: 'http://localhost:3000/assets/map-marker.svg',
+        imageHref: 'http://localhost:3000/uploads/map-marker-dollar.svg',
+        imageSize: [25, 40],
+        //imageOffset: [-15, -45],
+        imageOffset: [-15, -45],
+        // preset: "islands#violetIcon",
+      },
+      clusterOptions: {
+      '1': {
+        clusterDisableClickZoom: false,
+        clusterOpenBalloonOnClick: false,
+         preset: 'islands#invertedVioletClusterIcons',
+         gridSize: 128,
+        // clusterBalloonLayout: [
+        //   '<ul class=list>',
+        //   '{% for geoObject in properties.geoObjects %}',
+        //   '<li><a href=# class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
+        //   '{% endfor %}',
+        //   '</ul>'
+        // ].join('')
+      },
+        '2': {
+        clusterDisableClickZoom: false,
+        clusterOpenBalloonOnClick: false,
+         preset: 'islands#invertedGreenClusterIcons',
+        // clusterBalloonLayout: [
+        //   '<ul class=list>',
+        //   '{% for geoObject in properties.geoObjects %}',
+        //   '<li><a href=# class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
+        //   '{% endfor %}',
+        //   '</ul>'
+        // ].join('')
+      },
       },
       currentReview: {},
       filters: {}
@@ -75,7 +122,7 @@ export default {
   },
   components: { ReviewCard, AddReview, MapFilters },
   computed: {
-    ...mapGetters(["allReviews", "showCard", "showForm", "isAuth", "getFilters"]),
+    ...mapGetters(["allReviews", "showCard", "showForm", "isAuth", "getFilters", "allDepartments"]),
     // reviews: function() {
     //   return this.allReviews
     // },
@@ -87,7 +134,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["fetchReviews"]),
+    ...mapActions(["fetchReviews", "fetchDepartments"]),
     ...mapMutations(["changeFormView", "changeCardView", "changeEditFormView"]),
     onClick(e) {
       this.coords = e.get("coords");
@@ -127,6 +174,7 @@ export default {
   },
   mounted() {
     this.fetchReviews();
+    this.fetchDepartments()
     //this.filters = this.getFilters
   },
   // directives: {

@@ -30,6 +30,8 @@ require("./routes/fact-routes")(app);
 require("./routes/fullReview-routes")(app);
 require("./routes/fullReview2-routes")(app);
 require("./routes/geo-routes")(app);
+require("./routes/company-routes")(app);
+require("./routes/department-routes")(app);
 // require("./au/au-routes")(app);
 
 
