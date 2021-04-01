@@ -1,6 +1,8 @@
 <template>
     <div class="footer">
-        <h2>Футер в разработке</h2>
+        <div>
+            2020-2021
+        </div>
     </div>
 </template>
 

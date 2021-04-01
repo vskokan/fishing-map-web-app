@@ -31,6 +31,10 @@ export default new Router({
             component: () => import('./views/Profile.vue')
         },
         {
+            path: '/settings',
+            component: () => import('./views/Settings.vue'),
+        },
+        {
             path: '/partners',
             component: () => import('./views/Partners.vue')
         },
