@@ -1,7 +1,9 @@
 const client = require('../configs/db.js')
 
 exports.readAll = (req, res) => {
-    client.query('SELECT departments.id, departments.adress, companies.name, latitude, longitude FROM departments INNER JOIN companies ON companies.id = departments.company')
+    client.query('SELECT departments.id AS "departmentId", departments.adress, departments.latitude, departments.longitude, ' + 
+    'departments.location, companies.id AS "companyId", companies.name AS "companyName", companies.website, companies.logo, companies.description, locations.name ' +
+    'FROM departments INNER JOIN companies ON companies.id = departments.company INNER JOIN locations ON locations.id = departments.location')
     .then((result) => {
         res.status(200).json(result.rows)
     })

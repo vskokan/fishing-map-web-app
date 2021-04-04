@@ -1,15 +1,15 @@
 <template>
     <div class="area">
-        <PlaceTable/>
+        <List />
     </div>
 </template>
 
 <script>
 
-import PlaceTable from '@/components/Places/PlaceTable'
+import List from '@/components/Geo/List'
 
 export default {
-    components: { PlaceTable },
+    components: { List },
 }
 
 </script>

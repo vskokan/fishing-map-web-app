@@ -1,37 +1,30 @@
 <template>
-    <div class="companyCard">
-        <div class="imageContainer">
-            <img :src="'http://localhost:3000/' + company.logo"  class="logo" />
-        </div>
-        
-        <div class="name">{{ company.name }}</div>
+    <div class="companyLogo">
         <div class="website">
-            <i class="fas fa-globe"></i>
-            <a :href="'//'+ company.website">{{ company.website }}</a>
+            <a :href="'//'+ company.website"><div class="imageContainer">
+            <img :src="'http://localhost:3000/' + company.logo"  class="logo" />
+        </div></a>
         </div>
-        <div class="locations">
-            <i class="fas fa-map-marker-alt"></i>
-           <div>Тест, Тест, Тест</div> 
-        </div>
-        <div class="description">{{ company.description }}</div>
-        <div class="discounts" v-if="company.gives_discounts"><i class="fas fa-percent"></i>Участвует в бонусной программе</div>
     </div>
 </template>
 
 <script>
 
+//import { mapGetters } from "vuex";
+
 export default {
-    props: ['company']
+    props: ['company'],
+   
 }
 </script>
 
 <style scoped>
-        .companyCard {
+        .companyLogo {
         background-color: rgb(255, 255, 255);
         width: 25%;
         padding: 20px;
-        border-radius: 15px;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
+        /* border-radius: 15px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16); */
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -8,6 +8,9 @@ export default {
         changeCardView(state) {
             state.card = !state.card
         },
+        changeDepartmentCardView(state) {
+            state.departmentCard= !state.departmentCard
+        },
         changeEditFormView(state) {
             state.editForm = !state.editForm
         },
@@ -31,6 +34,7 @@ export default {
             state.card = false
             state.editForm = false
             state.changePasswordForm = false
+            state.departmentCard = false
         }
     },
     state: {
@@ -40,7 +44,8 @@ export default {
         changePasswordForm: false,
         currentPage: 1,
         maxPage: 1,
-        slider: false
+        slider: false,
+        departmentCard: false
     },
     getters: {
         showForm(state) {
@@ -48,6 +53,9 @@ export default {
         },
         showCard(state) {
             return state.card
+        },
+        showDepartmentCard(state) {
+            return state.departmentCard
         },
         showEditForm(state) {
             return state.editForm

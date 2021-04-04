@@ -19,7 +19,7 @@ export default {
 <style scoped>
 
     .main {
-        height: 80vh;
+        /* height: 80vh; */
         display: flex;
         flex-direction: row;
     }

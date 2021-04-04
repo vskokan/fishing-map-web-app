@@ -153,16 +153,17 @@ export default {
 }
 
 .partners {
-  background-color: var(--color-violet);
+  background-color: #fff;
+  /* background-color: var(--color-violet); */
 /* background: rgb(198,187,209); */
-background: linear-gradient(0deg, rgba(198,187,209,0.16288522244835435) 0%, var(--color-violet) 100%, rgba(255,255,248,0.5270308807116597) 100%);
+/* background: linear-gradient(0deg, rgba(198,187,209,0.16288522244835435) 0%, var(--color-violet) 100%, rgba(255,255,248,0.5270308807116597) 100%); */
   /* height: 500px; */
   padding: 30px;
 }
 
 .partners .header,
 .partners .fas {
-  color: #fff;
+  color: rgb(0, 0, 0);
 }
 
 .prices {
@@ -187,10 +188,10 @@ background: linear-gradient(0deg, rgba(198,187,209,0.16288522244835435) 0%, var(
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
   margin: 0px 0px 20px 0px;
-  gap: 60px;
+  gap: 10px;
 }
 
 CompanyCard {

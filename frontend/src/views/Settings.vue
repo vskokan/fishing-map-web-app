@@ -33,10 +33,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Main from "@/components/Settings/Main";
-import Password from "@/components/Settings/Password";
-import Sessions from "@/components/Settings/Sessions";
+import { mapGetters } from "vuex"
+
+import Main from "@/components/Settings/Main"
+import Password from "@/components/Settings/Password"
+import Sessions from "@/components/Settings/Sessions"
 
 export default {
   components: {
@@ -48,6 +49,7 @@ export default {
   data() {
     return {
       currentOption: "main",
+      user: {}
     };
   },
   methods: {

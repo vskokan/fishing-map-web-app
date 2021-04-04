@@ -17,10 +17,20 @@
 </template>
 
 <style scoped>
-
+    .tables {
+         padding: 20px;
+         background-color:  #fff;
+    /* border-radius: 15px; */
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* width: 10vw; */
+    }
     .router-link-active {
         color: rgb(255, 255, 255);
         background: rgb(101, 15, 172);
+        border-radius: 15px;
         
     }
 
@@ -36,21 +46,23 @@
     .nav {
         font-family: 'Inter', sans-serif;
         
-        border-top: 1px solid #f5f5f5;
+        /* border-top: 1px solid #f5f5f5; */
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        align-items: center;
         list-style: none;
         margin: 0; 
         padding-left: 0; 
         background-color:  #fff;
-        padding-right: 20px;
-        height: 87vh;
+        /* padding-right: 20px; */
+        /* height: 87vh; */
     }
 
     .menuitem {
         margin-top: 10px;
         width: 100%;
+        text-align: center;
     }
 
     a {
@@ -61,7 +73,7 @@
         font-weight: 700;
         font-size: 20px;
         display: block;
-        width: 100%;
+        /* width: 100%; */
         transition: .2s ease-in-out;
         
     }
