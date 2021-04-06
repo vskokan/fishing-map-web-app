@@ -244,7 +244,7 @@ export default {
         /* padding: 20px; */
         font-family: 'Inter', sans-serif;
         color: #000;
-        height: 60px;
+        height: 6vh;
     }
 
     .filters {

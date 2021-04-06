@@ -621,12 +621,14 @@ export default {
   /* border: 2px solid var(--color-violet); */
   outline: none;
   font-family: "Inter", sans-serif;
-  background-color: #ebe7ee23;
+  background-color: #ffffff;
   padding: 10px;
   font-size: 20px;
   font-weight: bold;
-  font-family: "Rubik", sans-serif;
-  box-shadow: rgba(200, 200, 204, 0.15) 0px 30px 60px -10px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -30px inset;
+  font-family: "Inter", sans-serif;
+  border-radius: 15px;
+  border: 1px solid var(--color-violet);
+  /* box-shadow: rgba(200, 200, 204, 0.15) 0px 30px 60px -10px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -30px inset; */
   /* background-color: rgb(245, 244, 244); */
 }
 

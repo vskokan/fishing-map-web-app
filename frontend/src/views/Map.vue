@@ -24,9 +24,9 @@ export default {
 
 
 
-  /* div {
-      min-height: calc(100vh - 180px)
-  } */
+  .map-container {
+      height: 84vh
+  }
 
 
      p  {

@@ -30,6 +30,10 @@ class GeoData {
     return http.post("/geo/regions", data);
   }
 
+  updateRegion(id, data) {
+    return http.put(`/geo/regions/${id}`, data)
+}
+
   createLocation(data) {
     return http.post("/geo/locations", data);
   }
@@ -38,6 +42,13 @@ class GeoData {
     return http.get(`/geo/locations?region=${regionId}`)
 }
 
+deleteLocation(id) {
+    return http.delete(`/geo/locations/${id}`)
+}
+
+updateLocation(id, data) {
+    return http.put(`/geo/locations/${id}`, data)
+}
 //   update(id, data) {
 //     return http.put(`/fish/${id}`, data);
 //   }

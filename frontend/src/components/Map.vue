@@ -239,11 +239,13 @@ export default {
 <style scoped>
 .ymap-container {
   /* height: 830px; */
-  height: 73.3vh;
+  /* height: 73.3vh; */
+  height: 78vh;
   width: 100%;
 }
 
 .map {
+  height: 84vh;
   position: relative;
   top: 1px;
   width: 100%;

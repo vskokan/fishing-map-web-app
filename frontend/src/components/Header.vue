@@ -27,11 +27,12 @@
 
     .header {
         font-family: 'Rubik Mono One', sans-serif;
-        padding-top: 20px;
+        /* padding-top: 20px; */
         margin-top: 0px;
-        padding-left: 20px;
+        /* padding-left: 20px;
         padding-right: 20px;
-        padding-bottom: 20px;
+        padding-bottom: 20px; */
+        padding: 2vh;
         background-color:  rgb(255, 255, 255);
         display: flex;
         flex-direction: row;
@@ -55,7 +56,6 @@
         font-size: 50px;
         color: #000;
         width: 450px;
-        /* font-family: 'Arkhip'; */
         font-family: 'Fishhook';
         letter-spacing: 1.5px;
         font-weight: bold;

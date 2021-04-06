@@ -16,7 +16,7 @@
                     <input class="input-field" type="text" name="login" v-model="formData.email" @input="validateEmail" required>
                     <div class="placeholder">Электронная почта</div>
                 </div>
-                <div class="description">Она типа нужна <div class="errors">{{errors.emailError}}</div></div>
+                <div class="description">example@mail.com <div class="errors">{{errors.emailError}}</div></div>
             </div>            
             <div class="container">
                 <div class="input">
