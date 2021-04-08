@@ -1,16 +1,30 @@
 <template>
   <div class="countryCard">
-    <div class="header">
+    <div class="header" v-if="!countryEditionIsActive">
       <div class="name">
         <i class="fas fa-flag"></i>
         {{ country.countryName }}
       </div>
       <div class="actions">
-        <div class="edit">
+        <div class="edit" @click="openCountryEdition">
           <i class="fas fa-pen"></i>
         </div>
-        <div class="delete">
+        <div class="delete" @click="deleteCountry">
           <i class="fas fa-trash"></i>
+        </div>
+      </div>
+    </div>
+    <div class="country-header-new" v-if="countryEditionIsActive">
+      <div class="name">
+        <i class="fas fa-flag"></i>
+        <input type="text" v-focus v-model="editedCountry" />
+      </div>
+      <div class="country-actions">
+        <div class="edit" @click="cancelCountryEdition">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="delete">
+          <i class="fas fa-plus" @click="updateCountry"></i>
         </div>
       </div>
     </div>
@@ -20,6 +34,7 @@
         :key="region.regionId"
         v-bind:region="region"
         @update="updateRegion"
+        @delete="deleteRegion"
       />
     </div>
      <transition name="slide-fade" mode="out-in">
@@ -68,7 +83,9 @@ export default {
       regions: [],
       regionsAreLoaded: false,
       regionCreationIsActive: false,
-      newRegion: ''
+      newRegion: '',
+      countryEditionIsActive: false,
+      editedCountry: this.country.countryName
     };
   },
   methods: {
@@ -107,7 +124,28 @@ export default {
         .then(() => {
             this.fetchRegions(this.country.countryId)
         })
+    },
+    deleteRegion(data) {
+      GeoData.deleteRegion(data.id)
+      .then(() => {
+        this.fetchRegions(this.country.countryId)        
+      })
+    },
+    deleteCountry() {
+      this.$emit('delete', {id: this.country.countryId})
+    },
+    openCountryEdition() {
+      if (!this.countryEditionIsActive)
+        this.countryEditionIsActive = true
+    },
+    cancelCountryEdition() {
+      this.countryEditionIsActive = false
+    },
+    updateCountry() {
+      this.cancelCountryEdition()
+      this.$emit('update', {id: this.country.countryId, name: this.editedCountry})
     }
+
   },
     directives: {
     focus: {
@@ -137,7 +175,7 @@ export default {
 <style scoped>
 .countryCard {
   background-color: #fff;
-  width: 70%;
+  width: 58vw;
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
@@ -210,17 +248,17 @@ export default {
   align-items: center;
 }
 
-.region-actions {
-  font-size: 25px;
+.country-actions {
+  font-size: 35px;
   align-self: center;
 }
 
-.region-actions .fas {
+.country-actions .fas {
   margin: 0px 10px;
   color: rgb(133, 133, 133);
 }
 
-.region-actions{
+.country-actions{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -244,10 +282,44 @@ export default {
   text-transform: uppercase;
 }
 
+.region-actions {
+  font-size: 25px;
+  align-self: center;
+}
+
+.region-actions .fas {
+  margin: 0px 10px;
+  color: rgb(133, 133, 133);
+}
+
+.region-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.country-header-new {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: start;
+}
+
+.country-header-new {
+  width: 100%;
+  color: #000;
+  font-size: 35px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-family: "IBM Plex Sans", sans-serif;
+  text-transform: uppercase;
+}
+
 input {
   color: #000;
   background-color: transparent;
-  font-size: 25px;
+  font-size: 35px;
   font-weight: 600;
   letter-spacing: 2px;
   font-family: "IBM Plex Sans", sans-serif;

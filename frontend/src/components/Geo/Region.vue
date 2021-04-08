@@ -10,7 +10,7 @@
           <i class="fas fa-pen"></i>
         </div>
         <div class="delete">
-          <i class="fas fa-trash"></i>
+          <i class="fas fa-trash" @click="deleteRegion"></i>
         </div>
       </div>
     </div>
@@ -138,6 +138,10 @@ export default {
         this.$emit('update', {id: this.region.regionId, name:this.editedRegion})
         this.regionEditionIsActive = false
         this.editedRegion = this.region.regionName
+    },
+    deleteRegion() {
+      if (this.region.locations !== 0)
+        this.$emit('delete', {id: this.region.regionId})
     }
   },
   directives: {

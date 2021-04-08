@@ -3,28 +3,9 @@ const client = require('../configs/db.js')
 /* CТРАНЫ */ 
 
 exports.createCountry = (req, res) => {
-    client.query('BEGIN')
-    .then((result) => {
-        return client.query('INSERT INTO countries (name) VALUES ($1) returning id', [req.body.name])
-    })
-    .then((result) => {
-        const country = result.rows[0].id
-        console.log(country)
-        return client.query('INSERT INTO regions (name, country) VALUES ($1, $2) returning id', ['Другое', country])
-    })
-    .then((result) => {
-        console.log(result)
-        const region = result.rows[0].id
-        
-        return client.query('INSERT INTO locations (name, region) VALUES ($1, $2)', ['Другое', region])
-    })
+   client.query('INSERT INTO countries (name) VALUES ($1)', [req.body.name])
     .then((result) => {
         res.status(200).json({status: 'success'})
-        return client.query('COMMIT')
-    })
-    .catch((err) => {
-        console.log(err)
-        return client.query('ROLLBACK')
     })
     .catch((err) => {
         console.log(err)
@@ -39,9 +20,26 @@ exports.readAllCountries = (req, res) => { // Выводим страны и к�
     //'regions.id AS "regionId", regions.name AS "regionName", ' +
    // 'locations.id AS "locationId", locations.name AS "locationName" ' +
     'FROM countries LEFT OUTER JOIN regions ON regions.country = countries.id ' + 
-    'LEFT OUTER JOIN locations ON locations.region = regions.id GROUP BY (countries.id)')
+    'LEFT OUTER JOIN locations ON locations.region = regions.id GROUP BY (countries.id) ORDER BY countries.name')
     .then((result) => {
         res.status(200).json(result.rows)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
+exports.updateCountry = (req, res) => {
+    client.query('UPDATE countries SET name = $1 WHERE id = $2', [req.body.name, req.params.id])
+    .then((result) => {
+        res.status(200).json({message: 'updated'})
+    })
+}
+
+exports.deleteCountry = (req, res) => {
+    client.query('DELETE FROM countries WHERE id = $1', [req.params.id])
+    .then((result) => {
+        res.status(200).json({message: 'deleted'})
     })
     .catch((err) => {
         console.log(err)
@@ -79,6 +77,16 @@ exports.updateRegions = (req, res) => {
     client.query('UPDATE regions SET name = $1 WHERE id = $2', [req.body.name, req.params.id])
     .then((result) => {
         res.status(200).json({message: 'updated'})
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
+exports.deleteRegion = (req, res) => {
+    client.query('DELETE FROM regions WHERE id = $1',[req.params.id])
+    .then((result) => {
+        res.status(200).json({message: 'deleted'})
     })
     .catch((err) => {
         console.log(err)
