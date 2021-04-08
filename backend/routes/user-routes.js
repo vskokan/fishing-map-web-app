@@ -1,5 +1,6 @@
 module.exports = app => {
     const user = require("../controllers/user-controller.js");
+    const sessions = require("../controllers/user-session-controller")
     const router = require("express").Router();
 
     const multer = require("../configs/multer.js")
@@ -31,4 +32,7 @@ module.exports = app => {
     router.get("/:login", multer.upload.none(), user.readOne);
     router.put("/:login", au.verify, multer.upload.single("avatar"), user.update);
     router.delete("/:login", au.verify, multer.upload.none(), user.deleteByLogin);
+
+    router.get("/:login/sessions", sessions.readUserSessions)
+    router.delete("/:login/sessions/:sessionId", sessions.deleteUserSession)
 }

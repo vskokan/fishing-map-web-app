@@ -197,6 +197,17 @@ exports.verify = (req, res, next) => {
         res.status(404).json({message: 'No cookies'})
     }
 
+    client.query('SELECT COUNT(*) AS count FROM sessions WHERE refresh_token = $1', [req.cookies.refreshToken]) 
+    .then((result) => {
+        console.log('kngrkrjgkrgkjrgkghkrn')
+        console.log(result.rows)
+        if (result.rows[0] == 0) {
+            console.log('kngrkrjgkrgkjrgkghkrn')
+            res.clearCookie('accessToken').clearCookie('refreshToken')
+            res.status(200).json({message: 'logout'})
+        }
+    })
+
     const auth = {
         accessToken: req.cookies.accessToken,
         refreshToken: req.cookies.refreshToken,
