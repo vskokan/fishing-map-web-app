@@ -39,9 +39,10 @@ export default {
                 }
                 commit('updateServerResponse', serverResponse)
                 commit('cleanUserData')
+                router.push('map')
             })
         },
-        checkSession({commit,}) {
+        checkSession({commit, dispatch}) {
             // const data = {
             //     message: 'check session',
             //     //refreshToken: localStorage.getItem('refreshToken')
@@ -50,13 +51,19 @@ export default {
             formdata.append('message', 'check session')
             AuthData.checkSession(formdata)
             .then((response) => {
-                if (response.status === 200) {
-                    console.log(response.data)
+                console.log(response.data)
+                if (response.data.message !== 'logout') {
                     //localStorage.setItem('refreshToken', response.data.refreshToken)
                     commit('updateCurrentUser', response.data.user)
+                    commit('stopAuthLoader')
+                } else {
+                    dispatch('logout')
+                    .then(() => {
+                        commit('stopAuthLoader')
+                    })
                 }
 
-                commit('stopAuthLoader')
+                
             })
             .catch(() => {
                 commit('stopAuthLoader')

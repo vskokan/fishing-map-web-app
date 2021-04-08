@@ -30,6 +30,7 @@
           :key="price.index"
           v-bind:data="price"
         />
+        <PlanList />
       </div>
     </div>
     <div class="cooperation">
@@ -64,6 +65,7 @@
 
 <script>
 import Price from "../components/Partners/Price.vue"
+import PlanList from '../components/Partners/PlanList'
 import CompanyCard from "../components/Partners/CompanyCard.vue"
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
@@ -71,7 +73,8 @@ import { mapGetters } from 'vuex'
 export default {
   components: {
     Price,
-    CompanyCard
+    CompanyCard,
+    PlanList
   },
   computed: mapGetters(['allCompanies', 'companiesAreLoaded']),
   methods: {

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    
     <div class="card">
       <ul class="options">
         <li
@@ -25,10 +26,13 @@
         </li>
       </ul>
       <div class="divider" />
+      <transition name="slide-fade" mode="out-in">
       <Main v-if="currentOption == 'main'" v-bind:user="currentUser" />
       <Password v-if="currentOption == 'password'" v-bind:user="currentUser" />
       <Sessions v-if="currentOption == 'sessions'" v-bind:user="currentUser" />
+      </transition>
     </div>
+    
   </div>
 </template>
 
@@ -63,7 +67,7 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  height: 79.4vh;
+  height: 84vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -74,7 +78,7 @@ export default {
 .card {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 80vw;
   height: 60vh;
   background-color: #fff;
@@ -84,21 +88,26 @@ export default {
 }
 
 .options {
+  width: 15vw;
   list-style: none;
   padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+   background-color: rgb(243, 243, 243);
+   padding: 20px;
+   border-radius: 15px;
 }
 
 .option {
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 15px;
   margin: 10px 0px;
   font-size: 20px;
   color: #000;
   font-family: 'Inter', sans-serif;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
 
 .option:hover {
@@ -112,7 +121,17 @@ export default {
 
 .divider {
   width: 1px;
-  margin: 0px 40px;
-  background-color: rgb(219, 217, 217);
+  margin: 0px 10px;
+  background-color: rgb(255, 255, 255);
 }
+
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to {
+        opacity: 0;
+    }
 </style>

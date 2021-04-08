@@ -36,7 +36,7 @@ export default {
 
 <style scoped>
     .router-link-active {
-        color: rgb(0, 0, 0);
+        color: var(--color-violet);
     }
 
     .menu {
@@ -104,7 +104,7 @@ export default {
         position: absolute;
         content: '';
         height: 5px;
-        background: rgb(101, 15, 172);
+        background: var(--color-violet);
         -webkit-transition: width .3s ease-in-out;
         -moz--transition: width .3s ease-in-out;
         transition: width .3s ease-in-out;
@@ -135,7 +135,7 @@ export default {
 
         a:hover {
             text-decoration: none;
-            color: rgb(101, 15, 172);
+            color: var(--color-violet);
         }
     
 </style>

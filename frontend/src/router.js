@@ -79,8 +79,8 @@ export default new Router({
                     component: () => import('./views/Tables/Places.vue')
                 },
                 {
-                    path: 'districts',
-                    component: () => import('./views/Tables/Districts.vue')
+                    path: 'plans',
+                    component: () => import('./views/Tables/Plans.vue')
                 },
                 {
                     path: 'partners',

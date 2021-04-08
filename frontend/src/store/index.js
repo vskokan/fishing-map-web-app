@@ -11,6 +11,7 @@ import fact from './modules/fact'
 import companies from './modules/companies'
 import department from './modules/department'
 import geo from './modules/geo'
+import plan from './modules/plan'
 //import fullReview from './modules/fullReview'
 import auth from './modules/auth'
 
@@ -32,6 +33,7 @@ export default new Vuex.Store({
         companies,
         department,
         geo,
+        plan,
         //fullReview,
         auth
     },

@@ -7,8 +7,8 @@
                 <li class="menuitem"><router-link to="/database/users">Пользователи</router-link></li>
                 <li class="menuitem"><router-link to="/database/reviews">Отзывы</router-link></li>
                 <li class="menuitem"><router-link to="/database/facts">Факты</router-link></li>
-                <li class="menuitem"><router-link to="/database/cities">Города</router-link></li>
-                <li class="menuitem"><router-link to="/database/districts">Районы</router-link></li>
+                <li class="menuitem"><router-link to="/database/cities">Нас.пункты</router-link></li>
+                <li class="menuitem"><router-link to="/database/plans">Тарифы</router-link></li>
                 <li class="menuitem"><router-link to="/database/partners">Партнеры</router-link></li>
                 <li class="menuitem"><router-link to="/database/departments">Филиалы</router-link></li>
                 <li class="menuitem"><router-link to="/database/discounts">Скидки</router-link></li>
@@ -29,7 +29,7 @@
     }
     .router-link-active {
         color: rgb(255, 255, 255);
-        background: rgb(101, 15, 172);
+        background: var(--color-violet);
         border-radius: 15px;
         
     }

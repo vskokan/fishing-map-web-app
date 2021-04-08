@@ -193,18 +193,20 @@ exports.verify = (req, res, next) => {
 
     console.log(req.headers)
 
+    let tokensAreExistButNotInDatabase = false
+
     if (req.cookies.accessToken === undefined || req.cookies.refreshToken === undefined) {
         res.status(404).json({message: 'No cookies'})
     }
 
     client.query('SELECT COUNT(*) AS count FROM sessions WHERE refresh_token = $1', [req.cookies.refreshToken]) 
     .then((result) => {
-        console.log('kngrkrjgkrgkjrgkghkrn')
         console.log(result.rows)
-        if (result.rows[0] == 0) {
-            console.log('kngrkrjgkrgkjrgkghkrn')
-            res.clearCookie('accessToken').clearCookie('refreshToken')
-            res.status(200).json({message: 'logout'})
+        if (result.rows[0].count == 0) {
+            console.log('Токены есть на устройстве, а в базе их нет ...')
+            tokensAreExistButNotInDatabase = true
+            res.clearCookie('accessToken').clearCookie('refreshToken').status(200).json({message: 'logout'})
+           //res.status(200).json({message: 'logout'})
         }
     })
 
@@ -222,7 +224,7 @@ exports.verify = (req, res, next) => {
     // }
 
     // В любом случае надо проверить валидность токенов
-
+    if (!tokensAreExistButNotInDatabase)
     jwt.verify(auth.accessToken, 'secret', (err, decoded) => {
         if (err) {
             if(err.message == 'jwt expired') {
