@@ -50,6 +50,7 @@ export default {
         font-family: 'Rubik', sans-serif;
         color: #000;
         font-weight: bold;
+        
     }
 
     .avatar {
@@ -91,7 +92,7 @@ export default {
         padding: 5px 10px;
         font-family: 'IBM Plex Sans', sans-serif;
         border-radius: 15px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     }
 
     li {

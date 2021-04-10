@@ -67,7 +67,8 @@ export default {
                 commit('updateUser', user)
                 commit('stopUserLoading')
             })
-        }
+        },
+        
         // signIn({commit,}, user) {
         //     alert('fkekfghlfklf')
         //     UserData.signIn(user)

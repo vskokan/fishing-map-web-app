@@ -69,7 +69,8 @@ export default {
   --color-yellow: rgb(255, 230, 0);
   /* --color-darkgray: rgb(56, 56, 56); */
   --color-darkgray: rgb(0, 0, 0);
-  --color-lightgray: rgb(194, 194, 194);
+  /* --color-lightgray: rgb(194, 194, 194); */
+  --color-lightgray: rgb(232, 232, 232);
   --color-darkviolet: #571f85;
 }
 
@@ -108,7 +109,10 @@ button:hover {
   height: 40px;
   font-size: 24px;
   border: none;
-  padding: 0px 20px;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   /* background-color: transparent; */
   background-color: var(--color-violet);
   color: rgb(255, 255, 255);
@@ -120,8 +124,8 @@ button:hover {
   text-transform: uppercase;
   /* font-family: "Rubik", sans-serif; */
   font-family: "Inter", sans-serif;
-  font-weight: 600;
-  letter-spacing: 1.5px;
+  /* font-weight: 600; */
+  letter-spacing: 1.1px;
   transition: 0.5s;
 }
 

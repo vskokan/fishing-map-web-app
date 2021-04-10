@@ -72,5 +72,11 @@ export default {
     allLocations(state) {
       return state.locations;
     },
+    filteredLocation(state, id) {
+      state.locations.forEach(location => {
+        if (location.locationId == id)
+            return location
+    })
+    }
   },
 };

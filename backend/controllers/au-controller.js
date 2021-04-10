@@ -285,7 +285,8 @@ exports.verify = (req, res, next) => {
             if (auth.message === undefined) {
                 next()
             } else if (auth.message === 'check session') {
-                client.query('SELECT * FROM users WHERE login = $1', [decoded.data.login])
+                client.query('SELECT * from users WHERE login = $1',
+                 [decoded.data.login])
                 .then((result) => {
                     res.status(200).json({user: result.rows[0]})
                 })

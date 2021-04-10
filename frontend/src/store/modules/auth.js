@@ -1,4 +1,5 @@
 import AuthData from '../../services/AuthData'
+import UserData from '../../services/UserData';
 import router from '../../router'
 
 export default {
@@ -81,6 +82,12 @@ export default {
                 } else {
                     commit('updateServerResponse', 'Что-то пошло не так...')
                 }
+            })
+        },
+        updateCurrentUserSettings({dispatch}, user) {
+            UserData.update(user.login, user.formData)
+            .then(() => {
+                dispatch('checkSession')
             })
         }
     },

@@ -145,14 +145,14 @@ exports.readOne = (req, res) => {
 exports.update = (req, res) => {
 
     const user = {
-        login: req.body.login,
-        oldLogin: req.params.login,
+        // login: req.body.login,
+        login: req.params.login,
         email: req.body.email,
         //password: req.body.password,
         admin: req.body.admin,
         name: req.body.name,
-        place: req.body.place,
-        raiting: req.body.raiting
+        location: req.body.location,
+        // raiting: req.body.raiting
     }
     
     console.log(user)
@@ -177,7 +177,7 @@ exports.update = (req, res) => {
                 fs.unlinkSync(oldLink)
             }
             
-            client.query('UPDATE users SET login = $1, email = $2, admin = $3, name = $4, location = $5, avatar = $6, raiting = $7 WHERE login = $8', [user.login, user.email, user.admin, user.name, user.place, user.avatar, user.raiting, user.oldLogin], function (err, res) {
+            client.query('UPDATE users SET email = $1, admin = $2, name = $3, location = $4, avatar = $5 WHERE login = $6', [user.email, user.admin, user.name, user.location, user.avatar, user.login], function (err, res) {
                 if (err) {
                     console.log('Ошибка во время обновления данных')
                     return
@@ -190,7 +190,7 @@ exports.update = (req, res) => {
             })
         })
     } else {
-        client.query('UPDATE users SET login = $1, email = $2, admin = $3, name = $4, location = $5, raiting = $6 WHERE login = $7', [user.login, user.email, user.admin, user.name, user.place, user.raiting, user.oldLogin], function (err, res) {
+        client.query('UPDATE users SET email = $1, admin = $2, name = $3, location = $4 WHERE login = $5', [user.email, user.admin, user.name, user.location, user.login], function (err, res) {
             if (err) {
                 console.log('Ошибка во время обновления данных')
                 return
@@ -216,7 +216,7 @@ exports.update = (req, res) => {
 }) 
 }
 
-exports.updatePassword = (req, res) => {
+exports.updatePasswordOld = (req, res) => {
     const login = req.query.login
     //const oldPassword = req.oldPassword
     //console.log(req.oldPassword)
@@ -260,6 +260,49 @@ exports.updatePassword = (req, res) => {
             }
             // result == true
         });
+    })
+}
+
+exports.updatePassword = (req, res) => {
+    const user = {
+        login: req.query.login,
+        oldPassword: req.body.oldPassword,
+        newPassword: req.body.newPassword
+    }
+
+    console.log(user)
+    
+    client.query('SELECT password AS password FROM users WHERE login = $1', [user.login])
+    .then((result) => {
+        if (result.rows[0].password.length == 0) {
+            res.status(200).json({message: 'No password'})
+    
+        } else {
+            const passwordFromDB = result.rows[0].password
+            bcrypt.compare(user.oldPassword, passwordFromDB)
+            .then((result) => {
+                if(result === true) {
+                    bcrypt.hash(user.newPassword, salt)
+                    .then((hash) => {
+                        client.query('UPDATE users SET password = $1 WHERE login = $2', [hash, user.login])
+                        .then((result) => {
+                            res.status(200).json({message: 'password updated'})
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                    }) 
+                } else {
+                    res.status(200).json({message: 'wrong password'})
+                }    
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+    })
+    .catch((err) => {
+        console.log(err)
     })
 }
 

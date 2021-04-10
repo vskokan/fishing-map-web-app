@@ -2,7 +2,11 @@
     <div class="container">
         <div class="data">
             <div class="user-agent">
-                <i class="fas fa-desktop"></i>
+                <i :class="{
+                    'fab fa-windows' : session.userAgent.includes('Windows'),
+                    'fab fa-linux' : session.userAgent.includes('Linux'),
+                    'fab fa-android' : session.userAgent.includes('Android'),
+                }"></i>
                 {{session.userAgent}}
             </div>
             <div class="ip">
@@ -62,6 +66,10 @@ export default {
         text-align: start;
         align-items: center;
         width: 35vw;
+    }
+
+    .user-agent i {
+         margin: 0px 10px;
     }
 
     .fas {
