@@ -16,7 +16,7 @@
     </div>
     <div class="buttons">
       <i class="fas fa-times" @click="endPlanCreation"></i>
-      <i class="fas fa-plus" @click="endPlanCreation"></i>
+      <i class="fas fa-plus" @click="createPlan"></i>
     </div>
   </div>
 </template>
@@ -39,6 +39,10 @@ export default {
     endCreation() {
       this.endPlanCreation();
     },
+    createPlan() {
+        this.$emit('created', this.plan)
+        this.endPlanCreation()
+    }
   },
 };
 </script>

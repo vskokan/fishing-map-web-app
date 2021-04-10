@@ -68,7 +68,7 @@ export default {
   --color-violet: #7d24d6;
   --color-yellow: rgb(255, 230, 0);
   /* --color-darkgray: rgb(56, 56, 56); */
-  --color-darkgray: rgb(0, 0, 0);
+  --color-darkgray: rgb(133, 133, 133);
   /* --color-lightgray: rgb(194, 194, 194); */
   --color-lightgray: rgb(232, 232, 232);
   --color-darkviolet: #571f85;
