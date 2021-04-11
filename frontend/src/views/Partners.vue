@@ -43,21 +43,22 @@
         </div>
         <div class="inputContainer">
           <label for="mail">Адрес электронной почты</label>
-          <input placeholder="Адрес электронной почты" type="mail" id="mail" />
+          <input placeholder="Адрес электронной почты" type="mail" id="mail" v-model="message.email" />
         </div>
         <div class="inputContainer">
           <label for="name">ФИО</label>
-          <input placeholder="ФИО" type="text" id="name" />
+          <input placeholder="ФИО" type="text" id="name" v-model="message.name" />
         </div>
         <div class="inputContainer">
           <label for="description">Сопроводительный текст</label>
           <textarea
             placeholder="Расскажите кратко о деятельности вашей компании"
             id="description"
+            v-model="message.description"
           >
           </textarea>
         </div>
-        <button class="button-simple">Отправить</button>
+        <button class="button-simple" @click="sendPartnershipRequest">Отправить</button>
       </div>
     </div>
   </div>
@@ -69,6 +70,7 @@ import PlanList from '../components/Partners/PlanList'
 import CompanyCard from "../components/Partners/CompanyCard.vue"
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
+import CompanyData from './../services/CompanyData'
 
 export default {
   components: {
@@ -78,7 +80,28 @@ export default {
   },
   computed: mapGetters(['allCompanies', 'companiesAreLoaded']),
   methods: {
-    ...mapActions(['fetchCompanies'])
+    ...mapActions(['fetchCompanies']),
+    sendPartnershipRequest() {
+      const message = new FormData()
+      message.append('email', this.message.email)
+      message.append('name', this.message.name)
+      message.append('description', this.message.description)
+
+      CompanyData.sendMail(message)
+      .then((json) => {
+        if (json.data.message == 'sent') {
+          this.mailStatus = 'Ваше сообщение успешно отправлено'
+        } else {
+          this.mailStatus = 'Какая-то ошибка'
+        }
+
+        this.message.name = ''
+        this.message.email = ''
+        this.message.description = ''
+      })
+
+
+    }
   },
   created() {
     this.fetchCompanies()
@@ -107,6 +130,12 @@ export default {
           priceWithDiscount: 2500,
         },
       ],
+      message: {
+        email: '',
+        name: '',
+        description: ''
+      },
+      mailStatus: ''
     };
   },
 };

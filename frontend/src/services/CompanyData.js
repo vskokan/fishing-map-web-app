@@ -29,6 +29,10 @@ class CompanyData {
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);
 //   }
+
+    sendMail(data) {
+      return http.post("/company/partnership", data)
+    }
   
 }
 

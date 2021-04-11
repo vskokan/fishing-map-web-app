@@ -1,5 +1,7 @@
 const client = require('../configs/db.js')
 const fs = require('fs')
+const nodemailer = require('nodemailer')
+
 
 exports.create = (req, res) => {
     client.query('INSERT INTO companies (name, description, email, website, logo, gives_discounts) ' +
@@ -28,4 +30,62 @@ exports.readAll = (req, res) => {
     .catch((err) => {
         console.log(err)
     })
+}
+
+
+exports.sendPartnershipRequest = (req, res) => {
+
+    const message = {
+        name: req.body.name,
+        email: req.body.email,
+        description: req.body.description
+    }
+
+    console.log(message)
+
+    
+    nodemailer.createTestAccount()
+    .then((result) => {
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'vsgofishing@gmail.com',
+              pass: 'Aaa111!!!',
+            },
+        })
+
+        transporter.sendMail({
+            from: '"GoFishing!🐟" <nodejs@example.com>',
+            to: 'victoriaskokan@gmail.com',
+            subject: 'Message from Node js',
+            text: 'This message was sent from Node js server.',
+            html:
+              'This <i>message</i> was sent from <strong>Node js</strong> server. <br/>' +
+              `<div>ФИО: ${message.name}</div><div>Email: ${message.email}</div><div>Сопроводительный текст: ${message.description}</div>`,
+          })
+          .then((result) => {
+              console.log(result)
+              return transporter.sendMail({
+                from: '"GoFishing!🐟" <nodejs@example.com>',
+                to: `victoriaskokan@gmail.com`, //${message.email}
+                subject: 'Message from Node js',
+                text: 'This message was sent from Node js server.',
+                html:
+                  'This <i>message</i> was sent from <strong>Node js</strong> server. <br/>' +
+                  `<div>Ваша заявка по поводу <div>${message.description}</div> подана на рассмотрение!</div>`,
+              })
+          })
+          .then((result) => {
+            res.status(200).json({message: 'sent'})
+          })
+          .catch((err) => {
+              console.log(err)
+          })
+    })
+
+    
+
+      
+
+    
 }

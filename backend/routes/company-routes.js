@@ -16,7 +16,7 @@ module.exports = app => {
     //router.get("/pag/", fish.findAllPagination);
     // router.post("/test/", fish.parse);
     //router.post("/test/", upload.single('image'), fish.parse);
-
+    router.post('/partnership', multer.upload.none(), company.sendPartnershipRequest)
     //router.get("/:id", fish.getOne);
     //router.put("/:id", au.verify, multer.upload.single("logo"), fish.update);
     //router.delete("/:id", au.verify, fish.deleteById);
