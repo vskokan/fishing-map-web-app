@@ -1,8 +1,8 @@
 const client = require('../configs/db.js')
 
 exports.create = (req, res) => {
-    client.query('INSERT INTO tariff_plans (name, description, price) VALUES ($1, $2, $3)',
-    [req.body.name, req.body.description, req.body.price])
+    client.query('INSERT INTO tariff_plans (name, description, price, discount_support) VALUES ($1, $2, $3, $4)',
+    [req.body.name, req.body.description, req.body.price, req.body.discountSupport])
     .then((result) => {
         res.status(200).json({message: 'inserted'})
     })
@@ -12,7 +12,7 @@ exports.create = (req, res) => {
 }
 
 exports.read = (req, res) => {
-    client.query('SELECT * FROM tariff_plans')
+    client.query('SELECT id, name, description, price, discount_support AS "discountSupport" FROM tariff_plans ORDER BY price')
     .then((result) => {
         res.status(200).json(result.rows)
     })

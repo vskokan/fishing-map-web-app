@@ -1,9 +1,9 @@
 <template>
     <div class="container" v-if="plansAreLoaded">
         <div class="addPlan" @click="startPlanCreation">Добавить тарифный план</div>
-        <NewPlan class="newPlan" v-if="planCreation" @created="create" />
+        <NewPlan class="newPlan" v-if="planCreation" @created="create"  />
         <div class="plans">
-            <Plan v-for="plan in allPlans" :key="plan.id" :plan="plan"  />
+            <Plan v-for="plan in allPlans" :key="plan.id" :plan="plan" @delete="removePlan" @update="editPlan" />
         </div>
         
     </div>
@@ -22,7 +22,7 @@ export default {
     },
     computed: mapGetters(['allPlans', 'plansAreLoaded', 'planCreation', ]),
     methods: {
-        ...mapActions(['fetchPlans', 'createPlan']),
+        ...mapActions(['fetchPlans', 'createPlan', 'deletePlan', 'updatePlan']),
         ...mapMutations(['startPlanCreation']),
         // initPlanCreation() {
         //     this.startPlanCreation()
@@ -32,8 +32,21 @@ export default {
             data.append('name', plan.name)
             data.append('price', plan.price)
             data.append('description', plan.description)
+            data.append('discountSupport', plan.discountSupport)
 
             this.createPlan(data)
+        },
+        removePlan(plan) {
+            this.deletePlan(plan)
+        },
+        editPlan(data) {
+            const plan = new FormData()
+            plan.append('name', data.name)
+            plan.append('price', data.price)
+            plan.append('description', data.description)
+            plan.append('discountSupport', plan.discountSupport)
+
+            this.updatePlan({id: data.id, data: plan})
         }
     },
     created() {

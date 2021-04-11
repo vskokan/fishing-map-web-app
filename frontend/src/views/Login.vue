@@ -23,7 +23,7 @@ export default {
     }
 
     .mainpage {
-      min-height: calc(100vh - 180px)
+      min-height: 84vh;
     }
     
 </style>

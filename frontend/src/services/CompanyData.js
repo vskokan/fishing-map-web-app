@@ -14,6 +14,10 @@ class CompanyData {
     return http.post("/company", data);
   }
 
+  getDepartments(id) {
+    return http.get(`company/${id}/departments`)
+  }
+
 //   update(id, data) {
 //     return http.put(`/fish/${id}`, data);
 //   }

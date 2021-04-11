@@ -161,10 +161,10 @@ input:focus {
 }
 
 .fail {
-   color: rgb(192, 67, 67);
+   color: var(--color-red);
 }
 
 .success {
-    color: rgb(20, 145, 87);
+    color: var(--color-green);
 }
 </style>

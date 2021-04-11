@@ -240,7 +240,7 @@ export default {
         background-color: #fff;
         position: relative;
         /* top: 2px; */
-        z-index: 2;
+        /* z-index: 2; */
         /* padding: 20px; */
         font-family: 'Inter', sans-serif;
         color: #000;

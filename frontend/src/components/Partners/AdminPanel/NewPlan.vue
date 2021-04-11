@@ -9,6 +9,10 @@
           <input class="price" type="text" v-model="plan.price" />
           <label for="price">₽/мес</label>
         </div>
+        <div class="inputContainer">
+          <input type="checkbox" v-model="plan.discountSupport" id="discount" v-show="false" />
+          <label for="discount" class="checkbox-label"> <div class="checkbox"><i :class="{'fas fa-check':plan.discountSupport, 'fas fa-times': !plan.discountSupport }"></i></div>Поддержка скидок</label>
+        </div>
       </div>
       <div class="inputContainer">
         <textarea placeholder="Введите описание" v-model="plan.description" />
@@ -31,6 +35,7 @@ export default {
         name: "",
         description: "",
         price: 0,
+        discountSupport: true
       },
     };
   },
@@ -95,7 +100,7 @@ textarea {
 textarea {
     width: 40vw;
     resize: none;
-    height: 8vh;
+    height: 12vh;
 }
 
 .inputContainer input:focus,
@@ -125,6 +130,26 @@ textarea:focus {
     color: var(--color-lightgray);
 }
 
+.checkbox {
+    border: 1px solid var(--color-lightgray);
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.checkbox .fa-check {
+    color: var(--color-green);
+}
+
+.checkbox .fa-times {
+    color: var(--color-red);
+}
+
+.checkbox-label {
+    display: flex;
+    flex-direction: row;
+}
 
 
 </style>

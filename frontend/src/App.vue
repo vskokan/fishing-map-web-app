@@ -72,6 +72,8 @@ export default {
   /* --color-lightgray: rgb(194, 194, 194); */
   --color-lightgray: rgb(232, 232, 232);
   --color-darkviolet: #571f85;
+  --color-red: rgb(192, 67, 67);
+  --color-green: rgb(20, 145, 87);
 }
 
 .red {

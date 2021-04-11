@@ -299,7 +299,7 @@ export default {
     hasEmptyFacts(facts) {
         let hasEmpty = false
         facts.forEach(fact => {
-            if (fact.method == '' || fact.bait == '' || fact.fishes.length == 0 || this.review.baiting == '') {
+            if (fact.method == '' || fact.method == null  || fact.bait == '' || fact.bait == null || fact.fishes.length == 0 || this.review.baiting == '' || this.review.baiting == null ) {
                 hasEmpty = true
                 return
             }
@@ -454,7 +454,8 @@ export default {
   justify-content: space-between;
   background-color: #fff;
   border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.26);
+  /* box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px; */
   /* border-radius: 5px; */
   padding: 10px;
   /* box-shadow: 0 0 60px rgba(14, 42, 71, 0.25); */
@@ -499,6 +500,7 @@ export default {
   align-items: flex-start;
   justify-content: center;
   font-family: "IBM PLex Sans", sans-serif;
+  color: #000;
 }
 
 .radiobuttons {
@@ -519,6 +521,7 @@ export default {
   border: 3px solid var(--color-violet);
   margin-left: 10px;
   margin-right: 10px;
+  color: #000;
 }
 
 .radioBlock label {
@@ -529,6 +532,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #000;
 }
 
 .radioBlock label:hover {
@@ -581,12 +585,14 @@ export default {
 }
 .fishes {
   width: 500px;
+  color: #000;
 }
 
 .baits,
 .methods {
   width: 230px;
   margin-right: 10px;
+  color: #000;
 }
 
 .optional {
@@ -617,19 +623,20 @@ export default {
   resize: none;
   font-size: 20px;
   border: none;
-  border-radius: 3px;
   /* border: 2px solid var(--color-violet); */
   outline: none;
-  font-family: "Inter", sans-serif;
   background-color: #ffffff;
   padding: 10px;
-  font-size: 20px;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-family: "Inter", sans-serif;
-  border-radius: 15px;
-  border: 1px solid var(--color-violet);
+  border-radius: 5px;
+  border: 1px solid var(--color-lightgray);
   /* box-shadow: rgba(200, 200, 204, 0.15) 0px 30px 60px -10px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -30px inset; */
   /* background-color: rgb(245, 244, 244); */
+}
+
+.reviewDescription:focus {
+  border: 1px solid var(--color-violet);
 }
 
 .disabled {
@@ -757,7 +764,7 @@ input[type="file"] {
   color: #fff;
   line-height: 1;
   font-family: "Inter", sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   background: var(--color-violet);
   margin-bottom: 5px;
   white-space: nowrap;
@@ -850,6 +857,7 @@ button:hover {
 
 .multiselect__placeholder {
   color: var(--color-darkgray);
+  color: #000;
   font-family: "Inter", sans-serif;
   display: inline-block;
   margin-bottom: 10px;
@@ -865,7 +873,8 @@ button:hover {
   padding: 12px;
   color: var(--color-darkgray);
   font-family: "Inter", sans-serif;
-  font-weight: 700;
+  font-weight: 500;
+  color: #000;
   min-height: 40px;
   line-height: 16px;
   text-decoration: none;
@@ -879,13 +888,14 @@ button:hover {
 .multiselect__option--selected {
   background: var(--color-violet);
   color: var(--color-yellow);
-  font-weight: 700;
+  /* font-weight: 700; */
 }
 
 .multiselect__single {
   font-family: "Inter", sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--color-darkgray);
+  color: #000;
 }
 
 .multiselect__option--highlight {

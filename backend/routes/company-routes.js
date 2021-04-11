@@ -13,6 +13,7 @@ module.exports = app => {
     router.post("/",  multer.upload.single("logo"), company.create);
     // router.get("/", fish.findAll);
     router.get("/", company.readAll);
+    router.get("/:id/departments", company.readDepartments);
     //router.get("/pag/", fish.findAllPagination);
     // router.post("/test/", fish.parse);
     //router.post("/test/", upload.single('image'), fish.parse);

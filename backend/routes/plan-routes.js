@@ -8,6 +8,6 @@ module.exports = app => {
 
     router.post("/", multer.upload.none(), au.verify, plan.create);
     router.get("/", plan.read);
-    router.post("/update", au.verify, multer.upload.none(), plan.update);
+    router.put("/:id", au.verify, multer.upload.none(), plan.update);
     router.delete("/:id", au.verify, plan.delete);
 }

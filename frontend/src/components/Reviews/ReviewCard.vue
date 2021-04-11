@@ -164,12 +164,18 @@ load {
 .info {
   display: flex;
   flex-direction: row;
-  width: 550px;
+  /* width: 550px; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;
   font-family: "Inter", sans-serif;
+}
+
+.road, .baiting, .time {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
 }
 
 .fas {

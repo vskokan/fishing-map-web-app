@@ -25,11 +25,6 @@
       <i class="fas fa-ruble-sign"></i>
       <div class="header">Тарифы на размещение</div>
       <div class="priceCards" >
-        <Price
-          v-for="price in this.prices"
-          :key="price.index"
-          v-bind:data="price"
-        />
         <PlanList />
       </div>
     </div>
@@ -65,7 +60,6 @@
 </template>
 
 <script>
-import Price from "../components/Partners/Price.vue"
 import PlanList from '../components/Partners/PlanList'
 import CompanyCard from "../components/Partners/CompanyCard.vue"
 import { mapActions } from 'vuex'
@@ -74,13 +68,12 @@ import CompanyData from './../services/CompanyData'
 
 export default {
   components: {
-    Price,
     CompanyCard,
     PlanList
   },
-  computed: mapGetters(['allCompanies', 'companiesAreLoaded']),
+  computed: mapGetters(['allCompanies', 'companiesAreLoaded', 'allPlans']),
   methods: {
-    ...mapActions(['fetchCompanies']),
+    ...mapActions(['fetchCompanies', 'fetchPlans']),
     sendPartnershipRequest() {
       const message = new FormData()
       message.append('email', this.message.email)
@@ -105,31 +98,10 @@ export default {
   },
   created() {
     this.fetchCompanies()
+    this.fetchPlans()
   },
   data() {
     return {
-      prices: [
-        {
-          name: "Для интернет-магазинов",
-          description: "Без размещения точек на карте, но с рекламой на сайте",
-          priceWithoutDiscount: 500,
-          priceWithDiscount: 1000,
-        },
-        {
-          name: "Для организаций сопуствующих товаров и услуг",
-          description:
-            "С указанием отделений на карте. Тариф доступен для следующих направлений: продажа товаров для рыбалки и туризма, рыболовные базы, места платной рыбалки, автосервисы, заправки",
-          priceWithoutDiscount: 1000,
-          priceWithDiscount: 1500,
-        },
-        {
-          name: "Для организаций, не связанных с рыбалкой",
-          description:
-            "С указанием отделений на карте. Для направлений, не удовлетворяющих условию предыдущего тарифа",
-          priceWithoutDiscount: 2000,
-          priceWithDiscount: 2500,
-        },
-      ],
       message: {
         email: '',
         name: '',

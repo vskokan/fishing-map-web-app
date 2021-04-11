@@ -30,7 +30,7 @@
     .router-link-active {
         color: rgb(255, 255, 255);
         background: var(--color-violet);
-        border-radius: 15px;
+        
         
     }
 
@@ -63,6 +63,7 @@
         margin-top: 10px;
         width: 100%;
         text-align: center;
+        
     }
 
     a {
@@ -75,6 +76,7 @@
         display: block;
         /* width: 100%; */
         transition: .2s ease-in-out;
+        border-radius: 15px;
         
     }
 

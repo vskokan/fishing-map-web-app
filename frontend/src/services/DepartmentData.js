@@ -14,6 +14,8 @@ class DepartmentData {
     return http.post("/department", data);
   }
 
+  
+
 //   update(id, data) {
 //     return http.put(`/fish/${id}`, data);
 //   }

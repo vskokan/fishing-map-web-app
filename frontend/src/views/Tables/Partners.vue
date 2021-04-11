@@ -1,14 +1,21 @@
 <template>
-    <div class="area">
-        <AddPartner></AddPartner>
-    </div>
+  <div class="area">
+    <CompanyList></CompanyList>
+  </div>
 </template>
 
 <script>
-
-import AddPartner from '@/components/Shops/AddPartner'
+import CompanyList from "@/components/Partners/AdminPanel/CompanyList";
 
 export default {
-    components: { AddPartner }
-}
+  components: { CompanyList },
+
+};
 </script>
+
+<style scoped>
+  .area {
+    width: 100%;
+    padding: 40px;
+  }
+</style>

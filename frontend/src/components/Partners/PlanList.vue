@@ -23,3 +23,12 @@ export default {
     
 }
 </script>
+
+<style scoped>
+    .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+</style>

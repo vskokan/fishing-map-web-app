@@ -1,6 +1,9 @@
 <template>
   <div class="card" @click="openFishPage(fish.id)">
-    <img class="image" :src="'http://localhost:3000/' + fish.img_src" />
+    <div class="imgcontainer">
+      <img class="image" :src="'http://localhost:3000/' + fish.img_src" />
+    </div>
+    
     <div class="name">
       {{ fish.name }}
     </div>
@@ -24,9 +27,9 @@ export default {
   font-family: "Inter", sans-serif;
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 23vw;
   color: #000;
-  height: 300px;
+  height: 35vh;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
@@ -40,13 +43,21 @@ export default {
 }
 
 .image {
-  max-width: 70%;
-  height: 200px;
+  height: 250px;
+  width: 20vw;
+  max-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   margin-top: 20px;
+  object-fit: fill;
+  border-radius: 5px;
+
+}
+
+.imgcontainer {
+  
 }
 
 .name {

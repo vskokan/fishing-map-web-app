@@ -15,9 +15,9 @@
     <!-- {{currentFish.stats.baits.labels}} -->
     <div class="stats">
       <PieChart v-if="isFishLoaded" :fish="currentFish.stats.baits" />
-    <PieChart v-if="isFishLoaded" :fish="currentFish.stats.methods" />
+      <PieChart v-if="isFishLoaded" :fish="currentFish.stats.methods" />
     </div>
-    
+
     <!-- <PieChart :data="chartdata" :options="options"/> -->
   </div>
 </template>
@@ -53,59 +53,61 @@ export default {
     ...mapActions(["fetchFish"]),
   },
   created() {
-   // alert(this.fish);
+    // alert(this.fish);
     this.fetchFish(this.fish);
     //this.chartdata.labels = this.currentFish.stats.baits.labels
-     //this.chartdata.datasets.data = this.currentFish.stats.baits.percents
+    //this.chartdata.datasets.data = this.currentFish.stats.baits.percents
     // alert('ekfjkf')
     // alert(this.chartdata.labels)
   },
   // mounted() {
-    
-    
+
   // }
 };
 </script>
 
-
 <style scoped>
-  .header {
-    font-size: 45px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    text-transform: uppercase;
-    color: #000;
-  }
-  .fishCard {
-    background-color: #fff;
-    width: 70%;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.header {
+  font-size: 45px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  font-family: "IBM Plex Sans", sans-serif;
+  text-transform: uppercase;
+  color: #000;
+}
+.fishCard {
+  background-color: #fff;
+  width: 70vw;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-  }
+.image {
+  margin: 10px 0px;
+}
 
-  .image {
-    margin: 10px 0px;
-  }
+img {
+  object-fit: fill;
+  width: 40vw
+}
 
-  .stats {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0px;
-    color: #000;
-  }
+.stats {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+  color: #000;
+}
 
-  .description {
-    text-align: left;
-    font-size: 24px;
-    margin: 20px 0px;
-    font-family: 'Rubik', sans-serif;
-     color: #000;
-  }
+.description {
+  text-align: left;
+  font-size: 24px;
+  margin: 20px 0px;
+  font-family: "Rubik", sans-serif;
+  color: #000;
+}
 </style>

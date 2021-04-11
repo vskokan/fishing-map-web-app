@@ -23,7 +23,7 @@ export default {
       });
     },
     updatePlan({ commit, dispatch }, planToUpdate, plans) {
-      PlanData.update(planToUpdate).then(() => {
+      PlanData.update(planToUpdate.id, planToUpdate.data).then(() => {
         dispatch("fetchPlans").then(() => {
           commit("updatePlans", plans);
         });

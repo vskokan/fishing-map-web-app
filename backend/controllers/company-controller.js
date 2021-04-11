@@ -67,7 +67,7 @@ exports.sendPartnershipRequest = (req, res) => {
               console.log(result)
               return transporter.sendMail({
                 from: '"GoFishing!🐟" <nodejs@example.com>',
-                to: `victoriaskokan@gmail.com`, //${message.email}
+                to: `${message.email}`, // `victoriaskokan@gmail.com`, //${message.email}
                 subject: 'Message from Node js',
                 text: 'This message was sent from Node js server.',
                 html:
@@ -83,9 +83,16 @@ exports.sendPartnershipRequest = (req, res) => {
           })
     })
 
-    
+}
 
-      
-
-    
+exports.readDepartments = (req, res) => {
+    client.query('SELECT departments.id, departments.adress, departments.latitude, ' + 
+    'departments.longitude, locations.name AS "location" FROM departments INNER JOIN locations ' +
+    'ON locations.id = departments.location WHERE company = $1 GROUP BY departments.id, locations.name', [req.params.id])
+    .then((result) => {
+        res.status(200).json(result.rows)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 }

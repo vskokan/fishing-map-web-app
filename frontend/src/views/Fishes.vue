@@ -47,16 +47,16 @@ export default {
         margin: 20px 0px;
     }
     .cards {
-        width: 100%;
+        width: 99vw;
         display: flex;
         flex-direction: row;
-        margin: 0px 0px 0px 12px;
-        /* justify-content: center; */
+        /* margin: 0px 0px 0px 5px; */
+        justify-content: flex-start;
         flex-wrap: wrap;
     }
 
     .fishCard{
-        margin: 10px;
+        margin: 16px;
     }
 
 </style>
