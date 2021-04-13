@@ -96,3 +96,4 @@ exports.readDepartments = (req, res) => {
         console.log(err)
     })
 }
+

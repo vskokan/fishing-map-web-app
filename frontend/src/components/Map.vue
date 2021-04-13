@@ -109,25 +109,11 @@ export default {
           clusterOpenBalloonOnClick: false,
           preset: "islands#invertedVioletClusterIcons",
           gridSize: 128,
-          // clusterBalloonLayout: [
-          //   '<ul class=list>',
-          //   '{% for geoObject in properties.geoObjects %}',
-          //   '<li><a href=# class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
-          //   '{% endfor %}',
-          //   '</ul>'
-          // ].join('')
         },
         "2": {
           clusterDisableClickZoom: false,
           clusterOpenBalloonOnClick: false,
           preset: "islands#invertedGreenClusterIcons",
-          // clusterBalloonLayout: [
-          //   '<ul class=list>',
-          //   '{% for geoObject in properties.geoObjects %}',
-          //   '<li><a href=# class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
-          //   '{% endfor %}',
-          //   '</ul>'
-          // ].join('')
         },
       },
 

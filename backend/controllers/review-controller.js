@@ -124,9 +124,10 @@ exports.createWithPromises = (req, res) => {
         return client.query('commit')
     })
     .then((result) => {
-        console.log('Транзакция вроде сработала')
+        console.log('Транзакция вроде сработалаааааа')
         result = { status: 'ok' }
-        res.send(result)
+        // res.send(result)
+        
     })
     .catch((err) => {
         console.log('Ошибка в транзакции, откат: ', err)

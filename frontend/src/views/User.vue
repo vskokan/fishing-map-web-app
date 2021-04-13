@@ -49,7 +49,7 @@ export default {
 <style scoped>
     .container {
         width: 100%;
-        height: 88vh;
+        height: 84vh;
         display: flex;
         flex-direction: row;
         justify-content: center;

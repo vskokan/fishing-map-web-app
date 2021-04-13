@@ -1,8 +1,9 @@
 const client = require('../configs/db.js')
 const fs = require('fs')
 const format = require('pg-format');
+const { nextTick } = require('process');
 
-exports.create = (req, res) => {
+exports.create = (req, res, next) => {
     const review = {
         login: req.body.login,
         description: req.body.description,
@@ -51,7 +52,8 @@ exports.create = (req, res) => {
     .then((result) => {
         console.log('Транзакция вроде сработала')
         result = { status: 'ok' }
-        res.send(result)
+        next()
+        // res.send(result)
     })
     .catch((err) => {
         console.log('Ошибка в транзакции, откат: ', err)

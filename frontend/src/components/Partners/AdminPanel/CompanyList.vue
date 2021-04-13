@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+            <div class="addCompany">
+      <i class="fas fa-plus" ></i>
+      Добавить компанию
+    </div>
         <div class="companies" v-if="companiesAreLoaded">
             <Company v-for="company in allCompanies" :key="company.id" v-bind:company="company"  />
         </div>
@@ -41,4 +45,13 @@ export default {
      
 
  }
+
+ .addCompany{
+    width: 100%;
+  color: rgb(133, 133, 133);
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
 </style>
