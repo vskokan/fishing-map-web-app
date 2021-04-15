@@ -4,8 +4,10 @@
             <div class="user-agent">
                 <i :class="{
                     'fab fa-windows' : session.userAgent.includes('Windows'),
-                    'fab fa-linux' : session.userAgent.includes('Linux'),
+                    'fab fa-linux' : session.userAgent.includes('Linux') && !session.userAgent.includes('Android'),
                     'fab fa-android' : session.userAgent.includes('Android'),
+                    
+                    
                 }"></i>
                 {{session.userAgent}}
             </div>
@@ -79,6 +81,10 @@ export default {
     .ip {
         margin-left: 10px;
         width: 10vw;
+    }
+
+    .fab {
+        font-size: 32px;
     }
 
     /* .signOut {

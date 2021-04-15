@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const authenticationRoutes = require('./routes/au-routes.js');
 
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin:"http://localhost:8080",// "http://192.168.0.101:8080", // http://192.168.0.101:8080
   credentials: true
 };
 
@@ -36,4 +36,4 @@ require("./routes/plan-routes")(app);
 // require("./au/au-routes")(app);
 
 
-app.listen(3000) //, '192.168.0.102'); //3000
+app.listen(3000)//, '192.168.0.101'); //3000 // 192.168.0.101

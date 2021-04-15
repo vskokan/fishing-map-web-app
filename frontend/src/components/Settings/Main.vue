@@ -313,7 +313,7 @@ input {
 .multiselect__single {
   font-family: "Inter", sans-serif;
   /* font-weight: 700; */
-  color: var(--color-darkgray);
+  color: #000;
 }
 
 .multiselect__option--highlight {
