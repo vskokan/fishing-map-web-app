@@ -138,6 +138,7 @@ export default {
   width: 65vw;
    padding: 20px;
   height: 100%;
+  color: #000;
 }
 
 .area {
@@ -153,6 +154,7 @@ input {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid var(--color-lightgray);
+  color: #000;
   font-family: "Inter", sans-serif;
   font-size: 16px;
 }
@@ -164,6 +166,7 @@ input:focus {
 
 .location {
     width: 15vw;
+    color: #000;
 }
 
 input {
@@ -282,6 +285,7 @@ input {
   display: inline-block;
   margin-bottom: 10px;
   padding-top: 2px;
+  color: #000;
 }
 
 .multiselect--active .multiselect__placeholder {
@@ -291,8 +295,9 @@ input {
 .multiselect__option {
   display: block;
   padding: 12px;
-  color: var(--color-darkgray);
+  /* color: var(--color-darkgray); */
   font-family: "Inter", sans-serif;
+  color: #000;
   /* font-weight: 700; */
   min-height: 40px;
   line-height: 16px;
@@ -313,7 +318,7 @@ input {
 .multiselect__single {
   font-family: "Inter", sans-serif;
   /* font-weight: 700; */
-  color: var(--color-darkgray);
+  color: #000;
 }
 
 .multiselect__option--highlight {
@@ -321,6 +326,9 @@ input {
   outline: none;
   color: #fff;
 }
+
+
+
 
 
 </style>

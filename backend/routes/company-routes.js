@@ -1,5 +1,7 @@
 module.exports = app => {
     const company = require("../controllers/company-controller.js");
+    const department = require("../controllers/department-controller.js");
+
     let router = require("express").Router();
    
     const multer = require("../configs/multer.js")
@@ -13,7 +15,9 @@ module.exports = app => {
     router.post("/",  multer.upload.single("logo"), company.create);
     // router.get("/", fish.findAll);
     router.get("/", company.readAll);
+    router.delete("/:id", company.delete)
     router.get("/:id/departments", company.readDepartments);
+    router.post("/:id/departments", department.create)
     //router.get("/pag/", fish.findAllPagination);
     // router.post("/test/", fish.parse);
     //router.post("/test/", upload.single('image'), fish.parse);

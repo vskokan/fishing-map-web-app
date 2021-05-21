@@ -1,6 +1,6 @@
 <template>
   <div class="company-container">
-    <div class="company">
+    <div class="company" v-if="!isEditing">
       <main>
         <div class="info">
           <div class="left">
@@ -9,43 +9,50 @@
               {{ company.name }}
             </div>
             <div class="email">
-                <i class="fas fa-envelope"></i>
+              <i class="fas fa-envelope"></i>
               {{ company.email }}
             </div>
             <div class="website">
-                <i class="fas fa-globe"></i>
+              <i class="fas fa-globe"></i>
               {{ company.website }}
             </div>
             <div class="departmentsAmount">
-                <i class="fas fa-store-alt"></i>
-              Тут будет количество филиалов
+              <i class="fas fa-store-alt"></i>
+              {{ "Филиалов: " + company.departmentsAmount }}
             </div>
           </div>
           <div class="description">
             {{ company.description }}
           </div>
           <div class="actions">
-            <i class="fas fa-pen"></i>
-            <i class="fas fa-trash"></i>
+            <i class="fas fa-pen" @click="startEdition()"></i>
+            <i class="fas fa-trash" @click="deleteCompanyById(company.id)"></i>
           </div>
         </div>
       </main>
       <footer>
         <div class="contract-info">
           <div class="plan">
-            {{ company.contract_plan || "Тут будет тариф" }}
+            {{ company.contractPlanName || "Тут будет тариф" }}
           </div>
           <div class="term">
-            {{ company.contract_term || "Тут будет срок контракта" }}
+            {{
+              "На " + company.contractTerm + " мес." ||
+                "Тут будет срок контракта"
+            }}
           </div>
           <div class="date">
             {{
-              company.contract_creation_date ||
+              "Действует с " + company.contractCreationDate ||
                 "Тут будет дата заключения контракта"
             }}
           </div>
           <div class="status">
-            {{ company.contract_status || "Тут будет статус контракта" }}
+            {{
+              "Статус: " +
+                (company.isContractActive ? "Активен" : "Просрочен") ||
+                "Тут будет статус контракта"
+            }}
           </div>
         </div>
       </footer>
@@ -62,39 +69,206 @@
         />
       </div>
       <div class="addDepartment">
-        <i class="fas fa-plus"></i><div>Добавить филиал</div>
+        <i class="fas fa-plus"></i>
+        <div>Добавить филиал</div>
       </div>
     </div>
-    <div class="company-edit"></div>
+    <div class="company-edit" v-if="isEditing">
+      <main>
+        <div class="info">
+          <div class="left">
+            <div class="name">
+              <i class="fas fa-briefcase"></i>
+              <input type="text" id="name" v-model="newCompany.name" />
+            </div>
+            <div class="email">
+              <i class="fas fa-envelope"></i>
+              <input type="text" v-model="newCompany.email" />
+            </div>
+            <div class="website">
+              <i class="fas fa-globe"></i>
+              <input type="text" v-model="newCompany.website" />
+            </div>
+          </div>
+          <div class="description">
+            <textarea type="text" v-model="newCompany.description" />
+          </div>
+
+        </div>
+      </main>
+      <div class="logo">
+        <div class="upload">
+          <label for="logo" class="custom-file-upload"
+            >Выбрать логотип <i class="fas fa-file-upload"></i
+          ></label>
+          <input
+            type="file"
+            name="logo"
+            id="logo"
+            accept=".jpg, .jpeg, .png"
+            ref="file"
+            v-on:change="uploadImage()"
+            required
+          />
+          <!-- <p>
+            {{ isFileChosen ? this.newCompany.logo.name : "Файл не выбран" }}
+          </p> -->
+        </div>
+        <div class="emptyPreview" v-if="!isFileChosen">
+          <img
+            :src="'http://localhost:3000/' + company.logo"
+            height="200"
+            alt="Превью"
+          />
+          
+        </div>
+        <div class="newPreview" v-else>
+          <img :src="fileSrc" height="200" alt="Превью" />
+          <button class="button-simple" @click="clearPreview()">Отмена</button>
+        </div>
+        
+        
+      </div>
+      <footer>
+        <div class="contract-info">
+          <div class="plan">
+            <Multiselect
+              v-if="plansAreLoaded"
+              class="multiselect location"
+              v-model="newCompany.contractPlan"
+              :hide-selected="true"
+              :options="allPlans"
+              label="name"
+              track-by="id"
+              placeholder="Выберите тариф"
+              :multiple="false"
+              :close-on-select="true"
+              :clear-on-select="false"
+              :preserve-search="true"
+              :preselect-first="false"
+            />
+          </div>
+          <div class="term">
+            <div class="termInput">
+              <i class="fas fa-minus" @click="decrement()"></i>
+              {{ newCompany.contractTerm }}
+              <i class="fas fa-plus" @click="increment()"></i> месяцев
+            </div>
+          </div>
+          <div class="date">
+            Дата заключения контракта
+            <input type="date" v-model="newCompany.contractCreationDate" />
+          </div>
+        </div>
+      </footer>
+                <div class="actions">
+            <i class="fas fa-plus"></i>
+            <i class="fas fa-times" @click="isEditing = false"></i>
+          </div>
+    </div>
   </div>
 </template>
 
 <script>
 import CompanyData from "../../../services/CompanyData";
 import Department from "./Department";
+import Multiselect from "vue-multiselect";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   props: ["company"],
   components: {
     Department,
+    Multiselect,
   },
   data() {
     return {
+      isEditing: false,
       departments: [],
       departmentsAreLoaded: false,
+      newCompany: {
+        name: this.company.name,
+        email: this.company.email,
+        website: this.company.website,
+        description: this.company.description,
+        contractPlan: {},
+        contractTerm: this.company.contractTerm,
+        contractCreationDate: this.company.rawContractCreationDate.substr(
+          0,
+          10
+        ),
+        logo: '',
+      },
+      
+      isFileChosen: false,
+       fileSrc: "",
     };
+  },
+  computed: mapGetters(["plansAreLoaded", "allPlans"]),
+  methods: {
+    ...mapActions(["deleteCompany", "fetchPlans"]),
+    deleteCompanyById(id) {
+      this.deleteCompany(id);
+    },
+    startEdition() {
+      this.findCompanyPlan();
+      this.isEditing = true;
+    },
+        increment() {
+      this.newCompany.contractTerm++;
+    },
+    decrement() {
+      if (this.newCompany.contractTerm > 1) {
+        this.newCompany.contractTerm--;
+      }
+    },
+    findCompanyPlan() {
+      this.allPlans.forEach((plan) => {
+        // console.log(location)
+        console.log(plan);
+        if (plan.id == this.company.contractPlanId) {
+          // alert(location.locationId)
+
+          this.newCompany.contractPlan = plan;
+        }
+      });
+    },
+    uploadImage() {
+      this.isFileChosen = true;
+      this.newCompany.logo = this.$refs.file.files[0];
+      this.getPreviews();
+    },
+        getPreviews() {
+      let fileReader = new FileReader();
+
+      fileReader.addEventListener(
+        "load",
+        () => {
+          this.fileSrc = fileReader.result;
+        }
+      );
+
+      fileReader.readAsDataURL(this.$refs.file.files[0]);
+    },
+    clearPreview() {
+      this.fileSrc = ''
+      this.newCompany.logo = this.company.logo
+      this.isFileChosen = false
+    }
   },
   created() {
     CompanyData.getDepartments(this.company.id).then((json) => {
       this.departments = json.data;
       this.departmentsAreLoaded = true;
+      this.fetchPlans();
     });
   },
 };
 </script>
 
 <style scoped>
-.company {
+.company,
+.company-edit {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,7 +281,6 @@ export default {
   color: #000;
   font-size: 20px;
   font-family: "Inter", sans-serif;
-  
 }
 
 .info {
@@ -150,7 +323,7 @@ main {
 }
 
 .departments {
-    width: 60vw;
+  width: 60vw;
   background-color: rgb(248, 248, 248);
   padding: 20px;
   margin: 20px 0px;
@@ -161,8 +334,8 @@ main {
 }
 
 .name {
-    margin: 20px 0px;
-    font-size: 26px;
+  margin: 20px 0px;
+  font-size: 26px;
   font-weight: 600;
   letter-spacing: 2px;
   font-family: "IBM Plex Sans", sans-serif;
@@ -170,29 +343,131 @@ main {
 }
 
 .actions .fas {
-    margin: 0px 5px;
-    color: var(--color-darkgray)
+  margin: 0px 5px;
+  color: var(--color-darkgray);
 }
 
 .actions .fas:hover {
-    cursor: pointer;
-    color: var(--color-violet)
+  cursor: pointer;
+  color: var(--color-violet);
 }
 
 .addDepartment {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: var(--color-darkgray)
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--color-darkgray);
 }
 
 .addDepartment .fas {
-    margin: 0px 5px;
-    
+  margin: 0px 5px;
 }
 
 .addDepartment:hover {
-    cursor: pointer;
-    color: var(--color-violet)
+  cursor: pointer;
+  color: var(--color-violet);
+}
+
+.company-edit .left {
+  display: flex;
+  flex-direction: column;
+  width: 16vw;
+}
+
+.company-edit  .logo {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+}
+
+.company-edit  .left .fas {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.company-edit  .actions .fas {
+  margin: 0px 5px;
+  color: var(--color-darkgray);
+}
+
+.company-edit  .actions .fas:hover {
+  cursor: pointer;
+  color: var(--color-violet);
+}
+
+.company-edit .emptyPreview {
+  width: 300px;
+  height: 200px;
+  /* background-color: var(--color-lightgray);
+  color: var(--color-darkgray); */
+  /* border: 2px dashed var(--color-darkgray); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+}
+input,
+textarea {
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--color-lightgray);
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+}
+
+textarea {
+  width: 40vw;
+  resize: none;
+  height: 12vh;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid var(--color-violet);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  font-family: "Rubik", sans-serif;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 40px;
+  font-size: 22px;
+  border: none;
+  background-color: var(--color-violet);
+  color: rgb(255, 255, 255);
+  margin: 10px 0px 0px 10px;
+  margin: auto;
+}
+.inputContainerFile {
+  margin-bottom: 20px;
+  justify-self: center;
+}
+
+.fa-file-upload {
+  margin-left: 10px;
+}
+
+.custom-file-upload:hover {
+  cursor: pointer;
+}
+
+.term {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

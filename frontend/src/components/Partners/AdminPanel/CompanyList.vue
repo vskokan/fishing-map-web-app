@@ -1,9 +1,10 @@
 <template>
     <div class="container">
-            <div class="addCompany">
+            <div class="addCompany" @click="startCompanyCreation">
       <i class="fas fa-plus" ></i>
       Добавить компанию
     </div>
+        <NewCompany v-if="companyCreation" />
         <div class="companies" v-if="companiesAreLoaded">
             <Company v-for="company in allCompanies" :key="company.id" v-bind:company="company"  />
         </div>
@@ -12,16 +13,19 @@
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Company from './Company'
+import NewCompany from './NewCompany'
 
 export default {
     components: {
-        Company
+        Company,
+        NewCompany
     },
-    computed: mapGetters(['allCompanies', 'companiesAreLoaded']),
+    computed: mapGetters(['allCompanies', 'companiesAreLoaded', 'companyCreation']),
     methods: {
         ...mapActions(['fetchCompanies']),
+        ...mapMutations(['startCompanyCreation'])
     },
     created() {
         this.fetchCompanies()
@@ -35,6 +39,7 @@ export default {
      display: flex;
      flex-direction: column;
      gap: 20px;
+     margin-top: 20px;
  }
 
  .container {

@@ -19,10 +19,30 @@ export default {
                 .then(() => {
                     dispatch('fetchCompanies')
                         .then(() => {
-                            commit('updateCompany', companies)
+                            commit('updateCompanies', companies)
                         })
 
                 })
+        },
+        deleteCompany({ commit, dispatch}, companyToDelete, companies) {
+            CompanyData.delete(companyToDelete)
+            .then(() => {
+                dispatch('fetchCompanies')
+                .then(() => {
+                    commit('updateCompanies', companies)
+                })
+            })
+
+        },
+        updateCompany({ commit, dispatch}, companyToUpdate, companies) {
+            CompanyData.update(companyToUpdate.id, companyToUpdate.data)
+            .then(() => {
+                dispatch('fetchCompanies')
+                .then(() => {
+                    commit('updateCompanies', companies)
+                })
+            })
+
         },
     },
     mutations: {
@@ -30,10 +50,17 @@ export default {
             state.companies = companies
             state.isLoaded = true
         },
+        startCompanyCreation(state) {
+            state.creation = true
+        },
+        endCompanyCreation(state) {
+            state.creation = false
+        }
     },
     state: {
         companies: [],
-        isLoaded: false
+        isLoaded: false,
+        creation: false
     },
     getters: {
         allCompanies(state) {
@@ -41,6 +68,10 @@ export default {
         },
         companiesAreLoaded(state) {
             return state.isLoaded
+        },
+        companyCreation(state) {
+            return state.creation
         }
+
     },
 }

@@ -15,16 +15,16 @@ class CompanyData {
   }
 
   getDepartments(id) {
-    return http.get(`company/${id}/departments`)
+    return http.get(`/company/${id}/departments`)
   }
 
-//   update(id, data) {
-//     return http.put(`/fish/${id}`, data);
-//   }
+  update(id, data) {
+    return http.put(`/company/${id}`, data);
+  }
 
-//   delete(id) {
-//     return http.delete(`/fish/${id}`);
-//   }
+  delete(id) {
+    return http.delete(`/company/${id}`);
+  }
 
 //   deleteAll() {
 //     return http.delete(`/fish`);
