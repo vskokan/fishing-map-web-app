@@ -44,21 +44,16 @@ exports.readAll = (req, res) => {
                 console.log('Ошибка на этапе подсчета')
                 return
             }
-            //console.log(result.rows[0].rownumber)
             data.maxpage = Math.ceil(result.rows[0].rownumber / rowsPerPage)
-            //console.log('maxpage: ' + data.maxpage)
-           //console.log('page from url ', page)
     
             let from = rowsPerPage * (page - 1) + 1
             let to = rowsPerPage * page
-           //console.log(from, to)
     
             client.query('SELECT * FROM (SELECT id, name, description, ROW_NUMBER () OVER (ORDER BY id) FROM baits) AS numberedRows WHERE row_number BETWEEN $1 AND $2;', [from, to], function (err, result) {
                 if (err) {
                     console.log(err)
                 }
                 data.rows = result.rows
-                //console.log(data)
                 res.json(data)
             })  
         })
@@ -66,7 +61,6 @@ exports.readAll = (req, res) => {
 }
 
 exports.readOne = (req, res) => {
-    // тут будет вывод одной записи по id
     let id = String(req.params.id)
     client.query('SELECT * FROM baits WHERE id = $1;', [id], function (err, result) {
         if (err) {
@@ -77,11 +71,7 @@ exports.readOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    //сюда изменение одной записи
     let id = req.query.id
-   // console.log(id)
-    // let name = req.body.name
-    // let description = req.body.description
 
     const bait = {
         id: req.body.id,
@@ -89,8 +79,6 @@ exports.update = (req, res) => {
         description: req.body.description
     }
 
-    console.log(bait)
-    // console.log(description)
     client.query('UPDATE baits SET name = $1, description = $2 WHERE id = $3;', [bait.name, bait.description, bait.id], function (err, result) {
         if (err) {
             console.log('Ошибка во время обновления')
@@ -102,7 +90,6 @@ exports.update = (req, res) => {
 
 exports.deleteById = (req, res) => {
     let id = req.params.id
-    //console.log(id)
     client.query('DELETE FROM baits WHERE id = $1;', [id], function(err, result) {
         if(err) {
             console.log('Ошибка во время удаления')
@@ -113,7 +100,6 @@ exports.deleteById = (req, res) => {
 }
 
 exports.deleteAll = (req, res) => {
-    //сюда удаление одной записи
     client.query('DELETE * FROM baits;', [], function (err, result) {
         if (err) {
            return next(err)

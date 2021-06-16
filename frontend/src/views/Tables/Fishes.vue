@@ -1,16 +1,15 @@
 <template>
     <div class="area">
-        <!-- <AddFish></AddFish> -->
-        <FishTable2></FishTable2>
+        <FishList />
     </div>
 </template>
 
 <script>
 
-import FishTable2 from '@/components/Fish/FishTable2'
+import FishList from '@/components/Fish/FishList'
 
 export default {
-    components: { FishTable2 }
+    components: { FishList}
 }
 </script>
 
@@ -18,7 +17,8 @@ export default {
     .area {
         width: 100%;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
     }
 </style>

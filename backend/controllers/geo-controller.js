@@ -12,13 +12,9 @@ exports.createCountry = (req, res) => {
     })
 }
 
-exports.readAllCountries = (req, res) => { // Выводим страны и количество областей и регионов для каждой
+exports.readAllCountries = (req, res) => { 
     client.query('SELECT countries.id AS "countryId", countries.name AS "countryName", ' +
-    // 'COUNT(regions.id) AS "regions", ' +
-    // 'COUNT (locations.id) AS "locations" ' +
     "array_agg(json_build_object('id', regions.id,'name',regions.name )) AS regions " +
-    //'regions.id AS "regionId", regions.name AS "regionName", ' +
-   // 'locations.id AS "locationId", locations.name AS "locationName" ' +
     'FROM countries LEFT OUTER JOIN regions ON regions.country = countries.id ' + 
     'LEFT OUTER JOIN locations ON locations.region = regions.id GROUP BY (countries.id) ORDER BY countries.name')
     .then((result) => {
@@ -61,7 +57,6 @@ exports.createRegion = (req, res) => {
 
 exports.readAllRegions = (req, res) => {
     let filter = (req.query.country !== undefined) ? `WHERE country = ${req.query.country} ` : ''
-    console.log('FILTTTTTTTTTTTTTTTTTTTTTTTER: ', filter)
     client.query('SELECT regions.id AS "regionId", regions.name AS "regionName", ' +
     'countries.id AS "countryId", countries.name AS "countryName", COUNT(locations.id) AS "locations" FROM ' +
     'regions INNER JOIN countries ON countries.id = regions.country ' +

@@ -1,24 +1,26 @@
 <template>
     <div class="area">
-        <UserTable/>
+        <UserList/>
     </div>
 </template>
 
 <script>
 
-import UserTable from '@/components/Users/UserTable'
+import UserList from '@/components/Users/UserList'
 
 export default {
-    components: { UserTable },
+    components: { UserList },
 }
 
 </script>
 
 <style scoped>
     .area {
+        /* min-height: 84vh; */
         width: 100%;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
+        padding: 20px 0px;
     }
 </style>

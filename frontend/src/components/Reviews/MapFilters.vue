@@ -87,9 +87,12 @@
           </div>
           <input type="checkbox" id="photo" v-model="filters.onlyWithPhotos" v-show="false">
       </div>
-      <div class="filter" v-if="filtersOptions.reports">
-          <label for="reports">С жалобами</label>
-          <input type="checkbox" id="reports" v-model="filters.reports">
+      <div class="filter" v-if="isAdmin">
+          <label for="photo">Только с жалобами</label>
+          <div class="switchBody" :class="{'switchBody switch_turned': filters.reports == true }"  @click="filters.reports = !filters.reports">
+            <div class="switch"></div>
+          </div>
+          <input type="checkbox" id="photo" v-model="filters.reports" v-show="false">
       </div>
       <div class="filter">
           <label for="rating">Рейтинг от </label>
@@ -122,13 +125,13 @@ export default {
         baiting: [],
         road: [],
         fishes: [],
-        reports: "",
+        reports: false,
         ratingMoreThan: "",
       },
       filtersToUpdate: {},
       filtersOptions: {
           users: false,
-          reports: false,
+          reports: true,
           baiting: true,
           photos: true,
           road: true,
@@ -137,13 +140,13 @@ export default {
       }
     }
   },
-  computed: mapGetters(["allFishes", "allMethods", "options", "allUsers", "allReviews", "reviewFilters"]),
+  computed: mapGetters(["allFishes", "allMethods", "options", "allUsers", "allReviews", "reviewFilters", "isAdmin"]),
   methods: {
     ...mapActions([
-      "fetchFishesNoPagination",
+      "fetchFishes",
       "fetchReviewsNoPagination",
       "getOptions",
-      "fetchUsersNoPagination",
+      "fetchUsers",
       "getFilters",
       "resetFilters"
     ]),
@@ -217,9 +220,9 @@ export default {
   }, 
 
   created() {
-    this.fetchFishesNoPagination()
+    this.fetchFishes()
     this.getOptions()
-    this.fetchUsersNoPagination()
+    this.fetchUsers()
   },
 };
 </script>

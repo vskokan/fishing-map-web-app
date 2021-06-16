@@ -7,18 +7,18 @@
           Здесь клюёт?
         </div>
         <Multiselect
-            class="multiselect optional"
-            v-model="review.baiting"
-            :options="options.baiting"
-            label="description"
-            track-by="id"
-            :multiple="false"
-            :close-on-select="true"
-            :clear-on-select="false"
-            :preserve-search="true"
-            placeholder="Укажите качество клёва"
-            :preselect-first="false"
-          />
+          class="multiselect optional"
+          v-model="review.baiting"
+          :options="options.baiting"
+          label="description"
+          track-by="id"
+          :multiple="false"
+          :close-on-select="true"
+          :clear-on-select="false"
+          :preserve-search="true"
+          placeholder="Укажите качество клёва"
+          :preselect-first="false"
+        />
       </div>
       <div class="formPart">
         <div class="partHeader">
@@ -58,67 +58,65 @@
             </div>
           </div>
           <div class="factsContainer">
-
-          
-          <div class="factRow" v-for="(fact, index) in facts" :key="index">
-            <div>
-              <Multiselect
-                class="multiselect methods"
-                v-model="fact.method"
-                :options="allMethods"
-                :multiple="false"
-                :close-on-select="true"
-                :clear-on-select="false"
-                :preserve-search="true"
-                placeholder="Выберите способ"
-                label="name"
-                track-by="id"
-                :preselect-first="false"
-              />
+            <div class="factRow" v-for="(fact, index) in facts" :key="index">
+              <div>
+                <Multiselect
+                  class="multiselect methods"
+                  v-model="fact.method"
+                  :options="allMethods"
+                  :multiple="false"
+                  :close-on-select="true"
+                  :clear-on-select="false"
+                  :preserve-search="true"
+                  placeholder="Выберите способ"
+                  label="name"
+                  track-by="id"
+                  :preselect-first="false"
+                />
+              </div>
+              <div>
+                <Multiselect
+                  class="multiselect baits"
+                  v-model="fact.bait"
+                  :options="allBaits"
+                  :multiple="false"
+                  :close-on-select="true"
+                  :clear-on-select="false"
+                  :preserve-search="true"
+                  placeholder="Выберите приманку"
+                  label="name"
+                  track-by="id"
+                  :preselect-first="false"
+                />
+              </div>
+              <div>
+                <Multiselect
+                  class="multiselect fishes"
+                  v-model="fact.fishes"
+                  :options="allFishes"
+                  :multiple="true"
+                  :close-on-select="false"
+                  :clear-on-select="false"
+                  :preserve-search="true"
+                  placeholder="Выберите рыбу или начните вводить название"
+                  label="name"
+                  track-by="id"
+                  :preselect-first="false"
+                  :taggable="false"
+                  @tag="addTag"
+                />
+              </div>
+              <div>
+                <button
+                  class="iconButton delete"
+                  :class="{ 'iconButton delete disabled': facts.length == 1 }"
+                  :disabled="facts.length == 1"
+                  @click="deleteFact(index)"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
             </div>
-            <div>
-              <Multiselect
-                class="multiselect baits"
-                v-model="fact.bait"
-                :options="allBaits"
-                :multiple="false"
-                :close-on-select="true"
-                :clear-on-select="false"
-                :preserve-search="true"
-                placeholder="Выберите приманку"
-                label="name"
-                track-by="id"
-                :preselect-first="false"
-              />
-            </div>
-            <div>
-              <Multiselect
-                class="multiselect fishes"
-                v-model="fact.fishes"
-                :options="allFishes"
-                :multiple="true"
-                :close-on-select="false"
-                :clear-on-select="false"
-                :preserve-search="true"
-                placeholder="Выберите рыбу или начните вводить название"
-                label="name"
-                track-by="id"
-                :preselect-first="false"
-                :taggable="false"
-                @tag="addTag"
-              />
-            </div>
-            <div>
-              <button
-                class="iconButton delete"
-                :class="{ 'iconButton delete disabled': facts.length == 1 }"
-                :disabled="facts.length == 1"
-                @click="deleteFact(index)"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
           </div>
         </div>
 
@@ -130,7 +128,6 @@
     <div class="stepPart step2" v-if="step == 2">
       <div class="formPart">
         <div class="partHeader">
-          <!-- <i class="fas fa-feather-alt"></i> -->
           <div>Добавьте описание</div>
         </div>
         <textarea
@@ -200,17 +197,13 @@
             v-on:change="uploadFiles()"
           />
         </label>
-        <!-- <img v-bind:src="preview" v-show="showPreview" /> -->
       </div>
-      <div class="large-12 medium-12 small-12 cell">
+      <div>
         <div class="previewContainer" v-show="this.review.files.length > 0">
-          <!-- <div v-if="this.review.files.length == 0">Изображения не выбраны</div> -->
           <div
             v-for="(file, key) in review.files"
             v-bind:key="key"
-            class="large-4 medium-4 small-6 cell file-listing"
           >
-            <!-- {{ file.name }} -->
             <div class="previewElem">
               <img class="preview" v-bind:ref="'image' + parseInt(key)" />
               <div class="deleteOnPreview" @click="deleteImage(key)">
@@ -219,20 +212,23 @@
             </div>
           </div>
         </div>
-        <div class="large-12 medium-12 small-12 cell clear">
+        <div>
           <button class="uploadButton" v-on:click="addFiles()">
             Добавить фото<i class="fas fa-images"></i>
           </button>
         </div>
       </div>
     </div>
-    <div class="progressContainer"></div>
     <div class="reviewButtons">
       <div class="stepButtons stepOne" v-if="step == 1">
-        <button class="navButton" 
-        :disabled="hasEmptyFacts(facts) == true" 
-        :class="{ 'navButton disabled': hasEmptyFacts(facts) == true }"
-        @click="next()">Далее</button>
+        <button
+          class="navButton"
+          :disabled="hasEmptyFacts(facts) == true"
+          :class="{ 'navButton disabled': hasEmptyFacts(facts) == true }"
+          @click="next()"
+        >
+          Далее
+        </button>
       </div>
       <div class="stepButtons stepTwo" v-if="step == 2">
         <button class="navButton" @click="back()">Назад</button>
@@ -256,7 +252,7 @@ import Multiselect from "vue-multiselect";
 
 export default {
   components: { Multiselect },
-  props: ['latitude', 'longitude'],
+  props: ["latitude", "longitude"],
   data() {
     return {
       step: 1,
@@ -264,12 +260,12 @@ export default {
       //preview: "",
       //showPreview: false,
       review: {
-        login: '',
-        baiting: '',
-        description: '',
+        login: "",
+        baiting: "",
+        description: "",
         files: [],
-        road: '',
-        time: ''
+        road: "",
+        time: "",
       },
       facts: [
         {
@@ -285,35 +281,49 @@ export default {
       // },
     };
   },
-  computed: mapGetters(["allFishes", "allBaits", "allMethods", "options", "currentUser"]),
+  computed: mapGetters([
+    "allFishes",
+    "allBaits",
+    "allMethods",
+    "options",
+    "currentUser",
+  ]),
   methods: {
     ...mapActions([
-      "fetchFishesNoPagination",
+      "fetchFishes",
       "fetchBaitsNoPagination",
       "fetchMethodsNoPagination",
       "fetchReviewsNoPagination",
       "getOptions",
-      "createFullReview"
+      "createFullReview",
     ]),
-    ...mapMutations(["changeFormView", ]),
+    ...mapMutations(["changeFormView"]),
     hasEmptyFacts(facts) {
-        let hasEmpty = false
-        facts.forEach(fact => {
-            if (fact.method == '' || fact.method == null  || fact.bait == '' || fact.bait == null || fact.fishes.length == 0 || this.review.baiting == '' || this.review.baiting == null ) {
-                hasEmpty = true
-                return
-            }
-        })
-        console.log(this.facts)
-        return hasEmpty
+      let hasEmpty = false;
+      facts.forEach((fact) => {
+        if (
+          fact.method == "" ||
+          fact.method == null ||
+          fact.bait == "" ||
+          fact.bait == null ||
+          fact.fishes.length == 0 ||
+          this.review.baiting == "" ||
+          this.review.baiting == null
+        ) {
+          hasEmpty = true;
+          return;
+        }
+      });
+      console.log(this.facts);
+      return hasEmpty;
     },
     next() {
-    //   const data = {
-    //     facts: this.facts,
-    //   };
-    //   console.log(data);
-    
-      if (this.step < 3 ) this.step++;
+      //   const data = {
+      //     facts: this.facts,
+      //   };
+      //   console.log(data);
+
+      if (this.step < 3) this.step++;
       if (this.step == 3) this.getPreviews();
     },
     back() {
@@ -338,7 +348,6 @@ export default {
         fishes: [],
       };
       this.facts.push(fact);
-      //alert(JSON.stringify(this.facts));
     },
     deleteFact(index) {
       this.facts.splice(index, 1);
@@ -362,7 +371,6 @@ export default {
     getPreviews() {
       for (let i = 0; i < this.review.files.length; i++) {
         let fileReader = new FileReader();
-
         fileReader.addEventListener(
           "load",
           function() {
@@ -370,7 +378,6 @@ export default {
           }.bind(this),
           false
         );
-
         fileReader.readAsDataURL(this.review.files[i]);
       }
     },
@@ -378,47 +385,44 @@ export default {
       this.$refs.files.click();
     },
     deleteImage(key) {
-      console.log(this.review.files);
-      console.log("Должен быть удален файл с индексом ", key);
       this.review.files.splice(key, 1);
-      console.log(this.review.files);
       this.getPreviews();
     },
     closeForm() {
-            this.changeFormView()
+      this.changeFormView();
     },
     send() {
-        // const review = {
-        //     login: this.currentUser.login,
-        //     isBaiting: this.review.isBaiting,
-        //     facts:this.facts,
-        //     description: this.review.description,
-        //     roadquality: this.review.roadquality,
-        //     fishingtime: this.review.fishingtime,
-        //     files: this.review.files
-        // }
-        let formData = new FormData()
+      // const review = {
+      //     login: this.currentUser.login,
+      //     isBaiting: this.review.isBaiting,
+      //     facts:this.facts,
+      //     description: this.review.description,
+      //     roadquality: this.review.roadquality,
+      //     fishingtime: this.review.fishingtime,
+      //     files: this.review.files
+      // }
+      let formData = new FormData();
 
-        formData.append('login', this.currentUser.login)
-        formData.append('baiting', this.review.baiting.id)
-        formData.append('facts', JSON.stringify(this.facts))
-        formData.append('description',this.review.description)
-        formData.append('road',this.review.road.id)
-        formData.append('time',this.review.time.id)
-        formData.append('latitude', this.review.latitude)
-        formData.append('longitude',this.review.longitude)
-        // formData.append('images', this.review.files)
+      formData.append("login", this.currentUser.login);
+      formData.append("baiting", this.review.baiting.id);
+      formData.append("facts", JSON.stringify(this.facts));
+      formData.append("description", this.review.description);
+      formData.append("road", this.review.road.id);
+      formData.append("time", this.review.time.id);
+      formData.append("latitude", this.review.latitude);
+      formData.append("longitude", this.review.longitude);
+      // formData.append('images', this.review.files)
 
-        for( let i = 0; i < this.review.files.length; i++ ){
-          let file = this.review.files[i];
+      for (let i = 0; i < this.review.files.length; i++) {
+        let file = this.review.files[i];
         //   formData.append('files[' + i + ']', file);
-        formData.append('images', file);
-        }
-        
-        this.createFullReview(formData)
-        //.then(this.fetchReviewsNoPagination())
-        this.closeForm()
-    }
+        formData.append("images", file);
+      }
+
+      this.createFullReview(formData);
+      //.then(this.fetchReviewsNoPagination())
+      this.closeForm();
+    },
   },
   directives: {
     focus: {
@@ -429,15 +433,15 @@ export default {
     },
   },
   created() {
-    this.fetchFishesNoPagination();
+    this.fetchFishes();
     this.fetchBaitsNoPagination();
     this.fetchMethodsNoPagination();
-    this.getOptions()
-    this.review.latitude = this.latitude
-    this.review.longitude = this.longitude
+    this.getOptions();
+    this.review.latitude = this.latitude;
+    this.review.longitude = this.longitude;
   },
   mounted() {
-   // alert(this.allBaits)
+    // alert(this.allBaits)
     this.getPreviews();
   },
 };
@@ -596,21 +600,22 @@ export default {
 }
 
 .optional {
-    width: 350px;
+  width: 350px;
 }
 
 .optionalSelect {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.fa-clock, .fa-car {
-    margin-right: 10px;
-    color: #000;
-    font-size: 20px;
+.fa-clock,
+.fa-car {
+  margin-right: 10px;
+  color: #000;
+  font-size: 20px;
 }
 
 .reviewDescription,
@@ -749,9 +754,6 @@ input[type="file"] {
 .cancel {
   margin: 10px 0px;
 }
-
-
-
 </style>
 
 <style>

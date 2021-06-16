@@ -76,8 +76,6 @@ exports.readOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    // let id = req.params.id
-    // console.log(id)
 
     const district = {
         id: req.params.id,
@@ -113,13 +111,3 @@ exports.deleteAll = (req, res) => {
        res.send(result)
    })
 }
-
-// exports.findById = (req, res) => {
-//     client.query('SELECT * FROM regions WHERE id = $1', [id], function(err, result) {
-//         if (err) {
-//             console.log('Ошибка во время поиска по айди')
-//             return
-//         }
-//         res.json(result.rows)
-//     })
-// }

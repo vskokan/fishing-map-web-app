@@ -52,7 +52,6 @@ exports.readAll = (req, res) => {
             console.log(formatFacts(result.rows))
 
             const facts = formatFacts(result.rows)
-            // res.send(result.rows)
             res.status(200).json(facts)
             return
         })
@@ -64,17 +63,11 @@ exports.readAll = (req, res) => {
     else if ((page === undefined) && (review === undefined)) {
         client.query("SELECT id, review, fish, bait, method FROM facts;", [])
         .then((result) => {
-            //console.log(result)
-            // res.statusCode = 200;
-            // res.setHeader('Content-Type', 'json');
-            console.log('djdjfkdmjfkhj')
-            return res.json(result.rows) //тут ошибка Cannot set headers after they are sent to the client
-            //return
+            return res.json(result.rows) 
         })
         .catch((err) => {
             console.log('Ошибка чтения фактов там где неопределенная страница: ', err)
-            return res.json(err) //И тут
-            //return
+            return res.json(err) 
         })        
     } else {
         const data = {
@@ -194,9 +187,6 @@ function formCombinations(facts) {
         )
     })
 
-    // let reducedCombinations = 
-    // console.log('skhfkjfk')
-    // console.log(reduceArrayOfObjects(reducedCombinations))
     return reduceArrayOfObjects(combinations)
 }
 
@@ -220,5 +210,4 @@ function reduceArrayOfObjects(array) {
     }
 
     return reducedArray
-    //console.log('REDUCED', reducedArray)
 }

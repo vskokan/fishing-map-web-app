@@ -160,7 +160,7 @@ export default {
 }
 
 .current {
-    height: 75vh;
-    margin-bottom: 15px;
+  height: 75vh;
+  margin-bottom: 15px;
 }
 </style>

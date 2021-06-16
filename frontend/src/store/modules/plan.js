@@ -36,17 +36,16 @@ export default {
       state.loaded = true;
     },
     startPlanCreation(state) {
-        state.creation = true
+      state.creation = true;
     },
     endPlanCreation(state) {
-        state.creation = false
-    }
+      state.creation = false;
+    },
   },
   state: {
     plans: [],
     loaded: false,
     creation: false,
-    edition: false
   },
   getters: {
     allPlans(state) {
@@ -56,10 +55,7 @@ export default {
       return state.loaded;
     },
     planCreation(state) {
-        return state.creation
+      return state.creation;
     },
-    planEdition(state) {
-        return state.edition
-    }
   },
 };

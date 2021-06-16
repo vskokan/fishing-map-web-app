@@ -37,7 +37,8 @@
         </div>
         <div class="inputContainerFile">
           <label for="photo" class="custom-file-upload"
-            >Выбрать фото <i class="fas fa-image"></i></label>
+            >Выбрать фото <i class="fas fa-image"></i
+          ></label>
           <input
             type="file"
             name="photo"
@@ -63,7 +64,7 @@
 
 <script>
 // import { mapGetters } from 'vuex'
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 import Multiselect from "vue-multiselect";
 import GeoData from "../../services/GeoData";
 
@@ -86,7 +87,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['updateCurrentUserSettings']),
+    ...mapActions(["updateCurrentUserSettings"]),
     findUserLocation() {
       this.locations.forEach((location) => {
         // console.log(location)
@@ -98,20 +99,23 @@ export default {
       });
     },
     uploadImage() {
-        this.fileIsChosen = true
-            this.newUserData.avatar = this.$refs.file.files[0];
+      this.fileIsChosen = true;
+      this.newUserData.avatar = this.$refs.file.files[0];
     },
     send() {
-        const userToUpdate = new FormData()
-        userToUpdate.append('name', this.newUserData.name)
-        userToUpdate.append('email', this.newUserData.email)
-        userToUpdate.append('location', this.newUserData.location.locationId)
-        userToUpdate.append('avatar', this.newUserData.avatar)
-        userToUpdate.append('admin', this.user.admin)
+      const userToUpdate = new FormData();
+      userToUpdate.append("name", this.newUserData.name);
+      userToUpdate.append("email", this.newUserData.email);
+      userToUpdate.append("location", this.newUserData.location.locationId);
+      userToUpdate.append("avatar", this.newUserData.avatar);
+      userToUpdate.append("admin", this.user.admin);
 
-        this.updateCurrentUserSettings({login: this.user.login, formData: userToUpdate})
-        this.fileIsChosen = false
-    }
+      this.updateCurrentUserSettings({
+        login: this.user.login,
+        formData: userToUpdate,
+      });
+      this.fileIsChosen = false;
+    },
   },
 
   created() {
@@ -129,14 +133,13 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
-
 .mainSettings {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 65vw;
-   padding: 20px;
+  padding: 20px;
   height: 100%;
   color: #000;
 }
@@ -165,106 +168,101 @@ input:focus {
 }
 
 .location {
-    width: 15vw;
-    color: #000;
+  width: 15vw;
+  color: #000;
 }
 
 input {
-    width: 14vw;
+  width: 14vw;
 }
 
 .textFields {
-    width: 40vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    color: #000;
-    font-family: "Inter", sans-serif;
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #000;
+  font-family: "Inter", sans-serif;
   font-size: 18px;
 }
 
 .inputContainer {
-    width: 30vw;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px 0px;
+  width: 30vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0px;
 }
 
-
-
-
 .avatarSettings {
- width: 20vw;
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatarSettings .inputContainer {
-    justify-content: center;
+  justify-content: center;
 }
 
 .avatar {
-        width: 200px;
-        height: 200px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-    }
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
 
-    img {
-        width: 100%;
-    }
+img {
+  width: 100%;
+}
 
-    input[type="file"] {
-        display: none;
-    }
+input[type="file"] {
+  display: none;
+}
 
-    .custom-file-upload {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        width: 10vw;
-        cursor: pointer;
-        height: 40px;
-        font-size: 20px;
-        border: none;
-        background-color:  var(--color-violet);
-        border-radius: 10px;
-        color: rgb(255, 255, 255);
-        margin: 10px 0px 0px 10px;
-        margin: auto;
-    }
-    .inputContainerFile {
-        margin-bottom: 20px;
-        justify-self: center;
-    }
+.custom-file-upload {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 10vw;
+  cursor: pointer;
+  height: 40px;
+  font-size: 20px;
+  border: none;
+  background-color: var(--color-violet);
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+  margin: 10px 0px 0px 10px;
+  margin: auto;
+}
+.inputContainerFile {
+  margin-bottom: 20px;
+  justify-self: center;
+}
 
-    .fa-image {
-        margin-left: 10px;
-    }
+.fa-image {
+  margin-left: 10px;
+}
 
-    .custom-file-upload:hover {
-        cursor: pointer;
-    }
+.custom-file-upload:hover {
+  cursor: pointer;
+}
 
-    .filename {
-        margin: 10px 0px;
-        color: #000;
-    font-family: "Inter", sans-serif;
+.filename {
+  margin: 10px 0px;
+  color: #000;
+  font-family: "Inter", sans-serif;
   font-size: 18px;
-    }
+}
 </style>
 
 <style>
-
-
 .multiselect__option--highlight:after {
   content: attr(data-select);
   background: var(--color-violet);
@@ -277,7 +275,6 @@ input {
   color: var(--color-yellow);
   display: none;
 }
-
 
 .multiselect__placeholder {
   color: var(--color-darkgray);
@@ -326,9 +323,4 @@ input {
   outline: none;
   color: #fff;
 }
-
-
-
-
-
 </style>

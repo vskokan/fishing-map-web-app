@@ -57,7 +57,7 @@ export default {
     },
     computed: mapGetters(['allReviews', 'allFishes', 'allBaits', 'allMethods']),
     methods: {
-        ...mapActions(["updateFact", "fetchFacts", "fetchReviewsNoPagination", 'fetchFishesNoPagination', 'fetchBaitsNoPagination', 'fetchMethodsNoPagination']),
+        ...mapActions(["updateFact", "fetchFacts", "fetchReviewsNoPagination", 'fetchFishes', 'fetchBaitsNoPagination', 'fetchMethodsNoPagination']),
         ...mapMutations(['changeEditFormView']),
         send() {
             let formData = new FormData();
@@ -82,7 +82,7 @@ export default {
     },
     created() {
         this.fetchReviewsNoPagination()
-        this.fetchFishesNoPagination()
+        this.fetchFishes()
         this.fetchBaitsNoPagination()
         this.fetchMethodsNoPagination()
 

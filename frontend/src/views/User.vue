@@ -49,12 +49,12 @@ export default {
 <style scoped>
     .container {
         width: 100%;
-        height: 84vh;
+        min-height: 84vh;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
 
-        margin: auto;
+        margin: 20px 0px;
     }
 </style>

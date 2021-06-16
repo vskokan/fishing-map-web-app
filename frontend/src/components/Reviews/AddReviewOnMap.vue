@@ -66,7 +66,7 @@ export default {
     },
     computed: mapGetters(['allUsers']),
     methods: {
-        ...mapActions(["createReview", "fetchReviews", "fetchUsersNoPagination"]),
+        ...mapActions(["createReview", "fetchReviews", "fetchUsers"]),
         ...mapMutations(['insertReview', 'changeFormView']),
         send() {
             let formData = new FormData();
@@ -89,7 +89,7 @@ export default {
         }
     },
     mounted() {
-        this.fetchUsersNoPagination()
+        this.fetchUsers()
     },
     created() {
         this.review.latitude = this.latitude

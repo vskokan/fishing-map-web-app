@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    
     <div class="card">
       <ul class="options">
         <li
@@ -27,21 +26,26 @@
       </ul>
       <div class="divider" />
       <transition name="slide-fade" mode="out-in">
-      <Main v-if="currentOption == 'main'" v-bind:user="currentUser" />
-      <Password v-if="currentOption == 'password'" v-bind:user="currentUser" />
-      <Sessions v-if="currentOption == 'sessions'" v-bind:user="currentUser" />
+        <Main v-if="currentOption == 'main'" v-bind:user="currentUser" />
+        <Password
+          v-if="currentOption == 'password'"
+          v-bind:user="currentUser"
+        />
+        <Sessions
+          v-if="currentOption == 'sessions'"
+          v-bind:user="currentUser"
+        />
       </transition>
     </div>
-    
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters } from "vuex";
 
-import Main from "@/components/Settings/Main"
-import Password from "@/components/Settings/Password"
-import Sessions from "@/components/Settings/Sessions"
+import Main from "@/components/Settings/Main";
+import Password from "@/components/Settings/Password";
+import Sessions from "@/components/Settings/Sessions";
 
 export default {
   components: {
@@ -53,7 +57,7 @@ export default {
   data() {
     return {
       currentOption: "main",
-      user: {}
+      user: {},
     };
   },
   methods: {
@@ -94,9 +98,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-   background-color: rgb(243, 243, 243);
-   padding: 20px;
-   border-radius: 15px;
+  background-color: rgb(243, 243, 243);
+  padding: 20px;
+  border-radius: 15px;
 }
 
 .option {
@@ -106,7 +110,7 @@ export default {
   margin: 10px 0px;
   font-size: 20px;
   color: #000;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
 
@@ -125,13 +129,14 @@ export default {
   background-color: rgb(255, 255, 255);
 }
 
-    .slide-fade-enter-active {
-        transition: all .3s ease;
-    }
-    .slide-fade-leave-active {
-        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    }
-    .slide-fade-enter, .slide-fade-leave-to {
-        opacity: 0;
-    }
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+}
 </style>

@@ -2,28 +2,11 @@ import FishData from '../../services/FishData';
 
 export default {
     actions: {
-        fetchFishes({ commit,  rootState, dispatch}) {
-            
-            FishData.getPage(rootState.common.currentPage)
-            .then(json => {
-                const fishes = json.data.rows
-                console.log(fishes)
-                commit('updateFishes', fishes)
-                dispatch('getFishMaxPageFromServer')
-            })
-        },
-        fetchFishesNoPagination({ commit, }) {
+        fetchFishes({ commit, }) {
             FishData.getAll()
             .then(json => {
                 const fishes = json.data
                 commit('updateFishes', fishes)
-            })
-        },
-        getFishMaxPageFromServer({commit}) { 
-            FishData.getAmount()
-            .then(json => {
-                const fishes = json.data
-                commit('updateMaxPage', fishes)
             })
         },
         createFish({ commit, dispatch }, newFish, fishes, ) {

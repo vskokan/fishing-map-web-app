@@ -226,13 +226,14 @@ export default {
 }
 .regionList {
   /* background-color: rgb(235, 235, 235); */
-  width: 95%;
-  padding: 10px;
+  /* width: 95%; */
+  padding: 20px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+  background-color: rgba(118, 71, 206, 0.5);
 }
 
 .newRegion {

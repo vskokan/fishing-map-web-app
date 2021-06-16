@@ -12,7 +12,6 @@ exports.readUserSessions = (req, res) => {
 }
 
 exports.deleteUserSession = (req, res) => {
-    //let filter = (req.params.sessionId == undefined) ? '' : ` AND id = ${req.params.sessionId}`
     let needToLogout = false
     console.log(req.params.sessionId)
     if (req.params.sessionId != 'undefined') {
@@ -32,11 +31,7 @@ exports.deleteUserSession = (req, res) => {
             return client.query('COMMIT')
         })
          .then((result) => {
-        //     if (needToLogout == true) {
-        //         res.clearCookie('accessToken').clearCookie('refreshToken').status(200).json(needToLogout)
-        //     } else {
                 res.status(200).json(needToLogout)
-           // }
         })
         .catch((err) => {
             console.log(err)
@@ -51,7 +46,6 @@ exports.deleteUserSession = (req, res) => {
         console.log('full loogut')
         client.query('DELETE FROM sessions WHERE login = $1', [req.params.login])
         .then((result) => {
-            //res.clearCookie('accessToken').clearCookie('refreshToken')
             console.log('NEED TO LOGOUT')
             res.status(200).json(needToLogout)
         })
@@ -59,12 +53,4 @@ exports.deleteUserSession = (req, res) => {
             console.log(err)
         })
     }
-
-    // client.query('DELETE FROM sessions WHERE login = $1'+filter, [req.params.login])
-    // .then((result) => {
-    //     res.status(200).json({message: 'session/s ended'})
-    // })
-    // .catch((err) => {
-    //     console.log(err)
-    // })
 }

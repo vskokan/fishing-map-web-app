@@ -24,16 +24,16 @@
             <i class="fas fa-calendar-alt"></i>{{ currentReview.baseInfo.date }}
           </p>
           <p class="reviewRating">
-            <i class="fas fa-minus" @click="updateStats('vote',-1)" />
-                {{ currentReview.rating }}
-            <i class="fas fa-plus" @click="updateStats('vote',1)" />
+            <i class="fas fa-minus" @click="voteOrReport('vote', -1)" />
+            {{ currentReview.rating }}
+            <i class="fas fa-plus" @click="voteOrReport('vote', 1)" />
           </p>
-          <div class="report" @click="updateStats('report',true)"><i class="fas fa-exclamation-triangle"></i>Пожаловаться</div>
+          <div class="report" @click="voteOrReport('report', true)">
+            <i class="fas fa-exclamation-triangle"></i>Пожаловаться
+          </div>
         </div>
       </div>
-
       <p class="description">{{ currentReview.baseInfo.description }}</p>
-
       <div class="info">
         <div class="road">
           <i class="fas fa-car"></i
@@ -61,11 +61,10 @@
           }}
         </div>
       </div>
-
       <Facts v-bind:review="currentReview" />
       <ReviewPhotos v-bind:review="currentReview" />
     </div>
-
+    <div class="remove" v-if="currentUser.admin" @click="removeReview"><i class="fas fa-trash"></i>Удалить</div>
     <div class="formButtons">
       <button class="button-simple close" v-on:click="closeForm">
         Закрыть
@@ -75,10 +74,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapGetters } from "vuex";
-import { mapMutations } from "vuex";
-
+import { mapActions, mapMutations, mapGetters } from "vuex";
 import Facts from "@/components/Reviews/Facts.vue";
 import ReviewPhotos from "@/components/Reviews/ReviewPhotos.vue";
 
@@ -88,32 +84,28 @@ export default {
     Facts,
     ReviewPhotos,
   },
-  computed: mapGetters(["currentReview", "isReviewLoading"]),
-  // data() {
-  //     return {
-  //         currentReview: review
-  //     }
-  // },
+  computed: mapGetters(["currentReview", "isReviewLoading", "currentUser"]),
   watch: {
-    review: function (newVal) {
-      // alert(newVal.id)
+    review: function(newVal) {
       this.getOne(newVal.id);
     },
   },
-  // computed: mapGetters(['allFacts']),
   methods: {
     ...mapMutations(["changeCardView"]),
-    ...mapActions(["findFactsByReview", "getOne"]),
+    ...mapActions(["findFactsByReview", "getOne", "updateStats", "deleteReview"]),
     closeForm() {
       this.changeCardView();
     },
-    updateStats(type, value) {
-        const data = {
-            type: type,
-            value: value
-        }
-
-        console.log(this.review.id, data)
+    voteOrReport(type, value) {
+      const formData = new FormData();
+      formData.append("type", type);
+      formData.append("value", value);
+      formData.append("login", this.currentUser.login);
+      this.updateStats({ review: this.review.id, stats: formData });
+    },
+    removeReview() {
+      this.deleteReview(this.review.id)
+      .then(() => { this.changeCardView()})
     }
   },
   created() {
@@ -123,12 +115,6 @@ export default {
 </script>
 
 <style scoped>
-load {
-  height: 350px;
-  width: 700px;
-  position: relative;
-  top: 10px;
-}
 .card {
   display: flex;
   flex-direction: column;
@@ -172,7 +158,9 @@ load {
   font-family: "Inter", sans-serif;
 }
 
-.road, .baiting, .time {
+.road,
+.baiting,
+.time {
   display: flex;
   flex-direction: column;
   width: 150px;
@@ -229,18 +217,17 @@ load {
 .fa-munis {
   margin-left: 5px;
   margin-right: 5px;
-
 }
 
 .fa-plus:hover,
 .fa-minus:hover {
-    cursor: pointer;
-    color: var(--color-violet)
+  cursor: pointer;
+  color: var(--color-violet);
 }
 
 .report:hover {
-    cursor: pointer;
-    color: var(--color-violet)
+  cursor: pointer;
+  color: var(--color-violet);
 }
 
 .button-simple {
@@ -269,5 +256,14 @@ a:visited {
 
 a:hover {
   text-decoration: none;
+}
+
+.remove {
+  margin-top: 10px;
+}
+
+.remove:hover {
+  color: var(--color-violet);
+  cursor: pointer;
 }
 </style>

@@ -8,7 +8,7 @@
         <ul class="dropdown"  v-if="isMenuOpened">
             <li @click="isMenuOpened = false"><router-link :to="'/user/' + currentUser.login" ><i class="fas fa-id-badge"></i>Мой профиль</router-link></li>
             <li><router-link to="/settings"><i class="fas fa-users-cog"></i>Настройки</router-link></li>
-            <li v-if="currentUser.admin == true"><router-link to="/database"><i class="fas fa-tools"></i>Админка</router-link></li>
+            <li v-if="currentUser.admin == true"><router-link to="/adminpanel"><i class="fas fa-tools"></i>Админ.панель</router-link></li>
             <li @click="exit"><i class="fas fa-sign-out-alt"></i>Выход</li>
         </ul>
     </div>
@@ -83,7 +83,7 @@ export default {
         z-index: 2;
         list-style: none;
         top: 75px;
-        right: 30px;
+        right: 5px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -92,7 +92,7 @@ export default {
         padding: 5px 10px;
         font-family: 'IBM Plex Sans', sans-serif;
         border-radius: 15px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
     }
 
     li {

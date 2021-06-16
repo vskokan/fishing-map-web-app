@@ -55,7 +55,7 @@ export default {
     },
     computed: mapGetters(['allReviews', 'allFishes', 'allBaits', 'allMethods']),
     methods: {
-        ...mapActions(["createFact", "fetchFacts", "fetchReviewsNoPagination", 'fetchFishesNoPagination', 'fetchBaitsNoPagination', 'fetchMethodsNoPagination']),
+        ...mapActions(["createFact", "fetchFacts", "fetchReviewsNoPagination", 'fetchFishes', 'fetchBaitsNoPagination', 'fetchMethodsNoPagination']),
         ...mapMutations(['insertFact', 'changeFormView']),
         send() {
 
@@ -77,7 +77,7 @@ export default {
     },
     created() {
         this.fetchReviewsNoPagination()
-        this.fetchFishesNoPagination()
+        this.fetchFishes()
         this.fetchBaitsNoPagination()
         this.fetchMethodsNoPagination()
     }

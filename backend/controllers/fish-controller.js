@@ -1,8 +1,5 @@
-//import { fish } from '../models/fish-model.js'
 const client = require('../configs/db.js')
 const fs = require('fs')
-const { response } = require('express')
-const { getCiphers } = require('crypto')
 
 exports.readAll = (req, res) => {
     const page = req.query.page
@@ -18,7 +15,7 @@ exports.readAll = (req, res) => {
         return
     }
     if (page === undefined) {
-        client.query('SELECT * FROM fishes;', [], function (err, result) {
+        client.query('SELECT * FROM fishes ORDER BY name ASC;', [], function (err, result) {
             if (err) {
                return next(err)
            }
@@ -37,12 +34,9 @@ exports.readAll = (req, res) => {
             }
             console.log(result.rows[0].rownumber)
             data.maxpage = Math.ceil(result.rows[0].rownumber / rowsPerPage)
-           // console.log('maxpage: ' + data.maxpage)
-           // console.log('page from url ', page)
     
             let from = rowsPerPage * (page - 1) + 1
             let to = rowsPerPage * page
-            //console.log(from, to)
     
             client.query('SELECT * FROM (SELECT id, name, description, img_src, ROW_NUMBER () OVER (ORDER BY id) FROM fishes) AS numberedRows WHERE row_number BETWEEN $1 AND $2;', [from, to], function (err, result) {
                 if (err) {
@@ -77,35 +71,6 @@ exports.deleteById = (req, res) => {
     })
 }
 
-// exports.create = (req, res) => {
-//     const fish = {
-//         id: req.body.id,
-//         name: req.body.name,
-//         photoLink: req.body.photoLink,
-//         description: req.body.description
-//     }
-//     client.query('INSERT INTO fishes (id, name, photoLink, description) VALUES ($1, $2, $3, $4);', [fish.id, fish.name, fish.photoLink, fish.description], function (err, result) {
-//         if (err) {
-//             return next(err)
-//         }   
-//         res.send(result)
-//     })
-// }
-
-// exports.create = (req, res) => {
-//     const fish = {
-//         id: req.body.id,
-//         name: req.body.name,
-//         photoLink: req.body.photoLink,
-//         description: req.body.description
-//     }
-//     client.query('INSERT INTO fishes (id, name, photoLink, description) VALUES ($1, $2, $3, $4);', [fish.id, fish.name, fish.photoLink, fish.description], function (err, result) {
-//         if (err) {
-//             return next(err)
-//         }   
-//         res.send(result)
-//     })
-// }
 
 exports.create = (req, res) => {
     const fish = {
@@ -119,11 +84,8 @@ exports.create = (req, res) => {
             console.log('Ошибка, не удалось выполнить запрос')
         }
         console.log('Успех')
-        //res.send(result) 
     })
 
-    // res = fish
-    // console.log(res)
     res.status(200).json({status:"ok"})
 }
 
@@ -153,7 +115,6 @@ exports.update = (req, res) => {
                 if (err) {
                     console.log('Ошибка во время обновления данных')
                     return
-                    // res.json({status:"error"})
                 }
                 
             })
@@ -164,21 +125,17 @@ exports.update = (req, res) => {
             if (err) {
                 console.log('Ошибка во время обновления данных')
                 return
-                // res.json({status:"error"})
             }
             
         })
     }
 
-    //res.status(200).json({status:"ok"})
     res.json({status:"ok"})
 }
 
 exports.findAllPagination = (req, res) => {
     const rowsPerPage = 10;
     let page = req.query.page
-    //console.log(page)
-
     const data = {
         rows: '',
         maxpage:''
@@ -189,21 +146,18 @@ exports.findAllPagination = (req, res) => {
             console.log('Ошибка на этапе подсчета')
             return
         }
-        //console.log(result.rows[0].rownumber)
         data.maxpage = Math.ceil(result.rows[0].rownumber / rowsPerPage)
-        //console.log('maxpage: ' + data.maxpage)
-
 
         let from = rowsPerPage * (page - 1) + 1
         let to = rowsPerPage * page
-        //console.log(from, to)
+
 
         client.query('SELECT * FROM (SELECT id, name, img_src, description, ROW_NUMBER () OVER (ORDER BY id) FROM fishes) AS numberedRows WHERE row_number BETWEEN $1 AND $2;', [from, to], function (err, result) {
             if (err) {
                 console.log(err)
             }
             data.rows = result.rows
-            //console.log(data)
+
             res.json(data)
     })
 
@@ -259,11 +213,4 @@ exports.getOne = (req, res) => {
         console.log('Error in transaction rollback')
     })
 
-    // client.query('SELECT * FROM fishes WHERE id = $1', [id])
-    // .then((result) => {
-    //     res.status(200).json(result.rows[0])
-    // })
-    // .catch((err) => {
-    //     console.log(err)
-    // })
 }

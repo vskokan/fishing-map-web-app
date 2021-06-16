@@ -1,18 +1,30 @@
-module.exports = app => {
-    const review = require("../controllers/review-controller.js");
-    
-    let router = require("express").Router();
+module.exports = (app) => {
+  const review = require("../controllers/review-controller.js");
+  const discount = require("../controllers/discount-controller.js");
+  const au = require("../controllers/au-controller");
 
-    const multer = require("../configs/multer.js")
+  const router = require("express").Router();
+  const multer = require("../configs/multer.js");
 
-    app.use('/api/reviews', router);
+  app.use("/api/reviews", router);
 
-    router.post("/", multer.upload.none(), review.createWithPromises);
-    router.get("/", review.getAll);
-    router.get("/:id/photos", review.getPhotos);
-    router.get("/options", review.getOptions)
-    router.get("/:id", review.getFull);
-    router.put("/:id", multer.upload.none(), review.update);
-    router.delete("/:id", review.delete);
-    //router.delete("/", fishes.deleteAll);
-}
+  router.post(
+    "/",
+    //au.verify,
+    multer.upload.array("images", 5),
+    review.create,
+    discount.checkUserDiscounts,
+    discount.generateDiscount
+  );
+  router.get("/", review.getAll);
+  router.get("/:id/photos", review.getPhotos);
+  router.get("/options", review.getOptions);
+  router.get("/:id", review.getFull);
+  router.delete("/:id", review.delete);
+  router.post(
+    "/:id/stats",
+    //au.verify,
+    multer.upload.none(),
+    review.changeStats
+  );
+};

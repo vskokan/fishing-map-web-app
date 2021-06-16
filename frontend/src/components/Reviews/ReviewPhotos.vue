@@ -1,49 +1,55 @@
 <template>
-    <div class="container" v-if="review.photos.length !== 0" >
-        <div class="list">
-            <img class="photo" v-for="photo in review.photos" :key="photo.id" :src="'http://localhost:3000/' + photo.src" @click="choosePhoto(photo)">
-        </div>
-        <Slider v-bind:photos="review.photos" :active="currentPhoto" v-if="showSlider"/>
-        
+  <div class="container" v-if="review.photos.length !== 0">
+    <div class="list">
+      <img
+        class="photo"
+        v-for="photo in review.photos"
+        :key="photo.id"
+        :src="'http://localhost:3000/' + photo.src"
+        @click="choosePhoto(photo)"
+      />
     </div>
+    <Slider
+      v-bind:photos="review.photos"
+      :active="currentPhoto"
+      v-if="showSlider"
+    />
+  </div>
 </template>
 
 <script>
-
-import { mapGetters,  mapMutations } from 'vuex'
-import Slider from '@/components/Reviews/Slider.vue'
+import { mapGetters, mapMutations } from "vuex";
+import Slider from "@/components/Reviews/Slider.vue";
 
 export default {
-    props: ['review'],
-    components: { Slider },
-    data() {
-        return {
-            currentPhoto: {},
-        }
+  props: ["review"],
+  components: { Slider },
+  data() {
+    return {
+      currentPhoto: {},
+    };
+  },
+  computed: mapGetters(["allPhotos", "showSlider"]),
+  // watch: {
+  //     review: function (newVal) {
+  //         this.getReviewPhotos(newVal)
+  //     }
+  // },
+  methods: {
+    // ...mapActions(['getReviewPhotos']),
+    ...mapMutations(["changeSliderView"]),
+    choosePhoto(photo) {
+      this.currentPhoto = photo;
+      this.changeSliderView();
     },
-    computed: mapGetters(['allPhotos', "showSlider"]),
-    // watch: {
-    //     review: function (newVal) {
-    //         this.getReviewPhotos(newVal)
-    //     }
-    // },
-    methods: {
-        // ...mapActions(['getReviewPhotos']),
-        ...mapMutations(['changeSliderView']),
-        choosePhoto(photo) {
-            this.currentPhoto = photo
-            this.changeSliderView()
-        },
-        
-    },
-    created() {
-        // this.getReviewPhotos(this.review)
-    },
-}
+  },
+  created() {
+    // this.getReviewPhotos(this.review)
+  },
+};
 </script>
 
 <style scoped>
-
 .container {
   height: 120px;
   /* width: 600px; */
@@ -66,7 +72,6 @@ export default {
 }
 
 .photo:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
-
 </style>

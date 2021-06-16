@@ -14,6 +14,10 @@ class ReviewData {
     
   }
 
+  create(data) {
+    return http.post(`/reviews`, data);
+  }
+
   getOne(id) {
     return http.get(`/reviews/${id}`)
   }

@@ -79,19 +79,19 @@
           <div class="left">
             <div class="name">
               <i class="fas fa-briefcase"></i>
-              <input type="text" id="name" v-model="newCompany.name" />
+              <input type="text" id="name" v-model="updatedCompany.name" />
             </div>
             <div class="email">
               <i class="fas fa-envelope"></i>
-              <input type="text" v-model="newCompany.email" />
+              <input type="text" v-model="updatedCompany.email" />
             </div>
             <div class="website">
               <i class="fas fa-globe"></i>
-              <input type="text" v-model="newCompany.website" />
+              <input type="text" v-model="updatedCompany.website" />
             </div>
           </div>
           <div class="description">
-            <textarea type="text" v-model="newCompany.description" />
+            <textarea type="text" v-model="updatedCompany.description" />
           </div>
 
         </div>
@@ -111,7 +111,7 @@
             required
           />
           <!-- <p>
-            {{ isFileChosen ? this.newCompany.logo.name : "Файл не выбран" }}
+            {{ isFileChosen ? this.updatedCompany.logo.name : "Файл не выбран" }}
           </p> -->
         </div>
         <div class="emptyPreview" v-if="!isFileChosen">
@@ -135,7 +135,7 @@
             <Multiselect
               v-if="plansAreLoaded"
               class="multiselect location"
-              v-model="newCompany.contractPlan"
+              v-model="updatedCompany.contractPlan"
               :hide-selected="true"
               :options="allPlans"
               label="name"
@@ -151,18 +151,18 @@
           <div class="term">
             <div class="termInput">
               <i class="fas fa-minus" @click="decrement()"></i>
-              {{ newCompany.contractTerm }}
+              {{ updatedCompany.contractTerm }}
               <i class="fas fa-plus" @click="increment()"></i> месяцев
             </div>
           </div>
           <div class="date">
             Дата заключения контракта
-            <input type="date" v-model="newCompany.contractCreationDate" />
+            <input type="date" v-model="updatedCompany.contractCreationDate" />
           </div>
         </div>
       </footer>
                 <div class="actions">
-            <i class="fas fa-plus"></i>
+            <i class="fas fa-plus" @click="update()"></i>
             <i class="fas fa-times" @click="isEditing = false"></i>
           </div>
     </div>
@@ -186,7 +186,7 @@ export default {
       isEditing: false,
       departments: [],
       departmentsAreLoaded: false,
-      newCompany: {
+      updatedCompany: {
         name: this.company.name,
         email: this.company.email,
         website: this.company.website,
@@ -206,7 +206,7 @@ export default {
   },
   computed: mapGetters(["plansAreLoaded", "allPlans"]),
   methods: {
-    ...mapActions(["deleteCompany", "fetchPlans"]),
+    ...mapActions(["deleteCompany", "fetchPlans", "updateCompany"]),
     deleteCompanyById(id) {
       this.deleteCompany(id);
     },
@@ -215,11 +215,11 @@ export default {
       this.isEditing = true;
     },
         increment() {
-      this.newCompany.contractTerm++;
+      this.updatedCompany.contractTerm++;
     },
     decrement() {
-      if (this.newCompany.contractTerm > 1) {
-        this.newCompany.contractTerm--;
+      if (this.updatedCompany.contractTerm > 1) {
+        this.updatedCompany.contractTerm--;
       }
     },
     findCompanyPlan() {
@@ -229,13 +229,13 @@ export default {
         if (plan.id == this.company.contractPlanId) {
           // alert(location.locationId)
 
-          this.newCompany.contractPlan = plan;
+          this.updatedCompany.contractPlan = plan;
         }
       });
     },
     uploadImage() {
       this.isFileChosen = true;
-      this.newCompany.logo = this.$refs.file.files[0];
+      this.updatedCompany.logo = this.$refs.file.files[0];
       this.getPreviews();
     },
         getPreviews() {
@@ -252,8 +252,27 @@ export default {
     },
     clearPreview() {
       this.fileSrc = ''
-      this.newCompany.logo = this.company.logo
+      this.updatedCompany.logo = this.company.logo
       this.isFileChosen = false
+    },
+    update() {
+      const formData = new FormData()
+      formData.append('name', this.updatedCompany.name)
+      formData.append('email', this.updatedCompany.email)
+      formData.append('website', this.updatedCompany.website)
+      formData.append('description', this.updatedCompany.description)
+      formData.append('contractPlan', this.updatedCompany.contractPlan.id)
+      formData.append('contractTerm', this.updatedCompany.contractTerm)
+      formData.append('contractCreationDate', this.updatedCompany.contractCreationDate)
+      formData.append('logo', this.updatedCompany.logo)
+
+      const companyToUpdate = {
+        id: this.company.id,
+        data: formData
+      }
+
+      this.updateCompany(companyToUpdate)
+      this.isEditing = false
     }
   },
   created() {

@@ -1,43 +1,47 @@
 <template>
   <div class="userprofile" v-if="!isUserLoading">
-    <div class="userinfo">
-      <div class="pic">
-        <img class="avatar" :src="'http://localhost:3000/' + oneUser.avatar" />
-      </div>
-      <div class="login">{{ oneUser.login }}</div>
-      <div class="location">
-        <div class="label">
-          <i class="fas fa-map-marker-alt"></i>
+    <div class="mapAndInfo">
+      <div class="userinfo">
+        <div class="pic">
+          <img
+            class="avatar"
+            :src="'http://localhost:3000/' + oneUser.avatar"
+          />
         </div>
-        <div class="value">
-          {{ oneUser.location }}
+        <div class="login">{{ oneUser.login }}</div>
+        <div class="location">
+          <div class="label">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="value">
+            {{ oneUser.location }}
+          </div>
         </div>
-      </div>
-      <div class="rating">
-        <div class="label">Рейтинг пользователя:</div>
-        <div class="value">
-          {{ oneUser.rating }}
+        <div class="rating">
+          <div class="label">Рейтинг пользователя:</div>
+          <div class="value">
+            {{ oneUser.rating }}
+          </div>
         </div>
-      </div>
-      <div class="reviews">
-        <div class="label">Отзывов оставлено:</div>
-        <div class="value">
-          {{ oneUser.reviewsAmount }}
+        <div class="reviews">
+          <div class="label">Отзывов оставлено:</div>
+          <div class="value">
+            {{ oneUser.reviewsAmount }}
+          </div>
         </div>
-      </div>
-      <div class="name">
-        <div class="label">Имя:</div>
-        <div class="value">
-          {{ oneUser.name }}
+        <div class="name">
+          <div class="label">Имя:</div>
+          <div class="value">
+            {{ oneUser.name }}
+          </div>
         </div>
-      </div>
-      <div class="status">
-        <div class="label">Статус:</div>
-        <div class="value">
-          {{ oneUser.admin ? "Администратор" : "Обычный пользователь" }}
+        <div class="status">
+          <div class="label">Статус:</div>
+          <div class="value">
+            {{ oneUser.admin ? "Администратор" : "Обычный пользователь" }}
+          </div>
         </div>
-      </div>
-      <!-- <div class="fish">
+        <!-- <div class="fish">
         <div class="label">*Чаще всего ловит:</div>
         <div class="value">Карась</div>
       </div>
@@ -45,59 +49,68 @@
         <div class="label">*Любимый метод:</div>
         <div class="value">Поплавок</div>
       </div> -->
-      <!-- <div v-for="review in userReviews"
+        <!-- <div v-for="review in userReviews"
           :key="review.id" >
          Отзыв {{review.id}}</div> -->
-    </div>
-    <div class="map">
-      <yandex-map :coords="coords" :zoom="8" :cluster-options="clusterOptions">
-        <!-- <ymap-marker v-click-outside="hide" @click="toggle(review)" v-for="review of reviews" :key="review" :icon="markerIcon"
+      </div>
+      <div class="map">
+        <yandex-map
+          :coords="coords"
+          :zoom="8"
+          :cluster-options="clusterOptions"
+        >
+          <!-- <ymap-marker v-click-outside="hide" @click="toggle(review)" v-for="review of reviews" :key="review" :icon="markerIcon"
                 marker-id="review.id" 
                 :coords= "[`${review.latitude}`, `${review.longitude}`]"
                 :balloon-template="mapBalloon(review)"
             >
             </ymap-marker> -->
-        <div v-show="!areReviewsLoading">
-          <ymap-marker
-            v-for="review in userReviews"
-            :key="review.id"
-            marker-id="review.id"
-            :coords="[`${review.latitude}`, `${review.longitude}`]"
-            @click="
-              chooseReview(review);
-              move(review.latitude, review.longitude);
-            "
-            cluster-name="1"
-            :icon="markerIcon"
-          />
-        </div>
+          <div v-show="!areReviewsLoading">
+            <ymap-marker
+              v-for="review in userReviews"
+              :key="review.id"
+              marker-id="review.id"
+              :coords="[`${review.latitude}`, `${review.longitude}`]"
+              @click="
+                chooseReview(review);
+                move(review.latitude, review.longitude);
+              "
+              cluster-name="1"
+              :icon="markerIcon"
+            />
+          </div>
 
-        <ymap-marker
-          v-for="department in allDepartments"
-          :key="department.id"
-          marker-id="departmen.id"
-          :coords="[`${department.latitude}`, `${department.longitude}`]"
-          cluster-name="1"
-          :icon="markerIconPartner"
-          @click="
-            chooseDepartment(department);
-            move(department.latitude, department.longitude);
-          "
+          <ymap-marker
+            v-for="department in allDepartments"
+            :key="department.id"
+            marker-id="departmen.id"
+            :coords="[`${department.latitude}`, `${department.longitude}`]"
+            cluster-name="1"
+            :icon="markerIconPartner"
+            @click="
+              chooseDepartment(department);
+              move(department.latitude, department.longitude);
+            "
+          />
+        </yandex-map>
+      </div>
+      <transition name="fade">
+        <ReviewCard
+          class="cardForm"
+          v-if="showCard"
+          v-bind:review="currentReview"
         />
-      </yandex-map>
+        <DepartmentCard
+          class="cardForm"
+          v-if="showDepartmentCard"
+          v-bind:department="currentDepartment"
+        />
+      </transition>
     </div>
-    <transition name="fade">
-      <ReviewCard
-        class="cardForm"
-        v-if="showCard"
-        v-bind:review="currentReview"
-      />
-      <DepartmentCard
-        class="cardForm"
-        v-if="showDepartmentCard"
-        v-bind:department="currentDepartment"
-      />
-    </transition>
+    <DiscountList
+      v-if="currentUser.login == oneUser.login"
+      v-bind:login="currentUser.login"
+    ></DiscountList>
   </div>
 </template>
 
@@ -105,6 +118,7 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import ReviewCard from "@/components/Reviews/ReviewCard";
 import DepartmentCard from "@/components/Shops/DepartmentCard";
+import DiscountList from "@/components/Partners/DiscountList";
 export default {
   props: ["login"],
   data: () => {
@@ -156,7 +170,7 @@ export default {
       //reviews: this.allReviews
     };
   },
-  components: { ReviewCard, DepartmentCard },
+  components: { ReviewCard, DepartmentCard, DiscountList },
   computed: {
     ...mapGetters([
       "oneUser",
@@ -166,6 +180,7 @@ export default {
       "isUserLoading",
       "showDepartmentCard",
       "allDepartments",
+      "currentUser",
     ]),
   },
   watch: {
@@ -243,13 +258,19 @@ export default {
 <style scoped>
 .userprofile {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 80vw;
   background-color: #fff;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+}
+
+.mapAndInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .userinfo {

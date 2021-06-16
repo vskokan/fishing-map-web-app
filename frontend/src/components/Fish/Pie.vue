@@ -3,14 +3,12 @@ import { Pie } from "vue-chartjs";
 
 export default {
   extends: Pie,
-  //props: ['data', 'options'],
   props: ["fish"],
   watch: {
     fish: function(newVal) {
       this.chartdata.labels = newVal.labels;
       this.chartdata.datasets[0].data = newVal.percents;
       this.renderChart(this.chartdata, this.options);
-      //alert( `Новое значение ${newVal.baseInfo.id}`)
     },
   },
   data() {
@@ -20,7 +18,6 @@ export default {
         datasets: [
           {
             label: "Data One",
-            //backgroundColor: "#f87979",
             data: [],
             backgroundColor: [
               "#9b53ed",
@@ -42,15 +39,14 @@ export default {
             boxWidth: 25,
             padding: 20,
             fontSize: 20,
-            fontFamily: 'Inter',
-            fontColor: 'black',
+            fontFamily: "Inter",
+            fontColor: "black",
           },
         },
       },
     };
   },
   mounted() {
-    // alert('gefjeh')
     this.chartdata.labels = this.fish.labels;
     this.chartdata.datasets[0].data = this.fish.percents;
     this.renderChart(this.chartdata, this.options);

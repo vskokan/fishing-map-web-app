@@ -2,28 +2,28 @@ import UserData from '../../services/UserData';
 
 export default {
     actions: {
-        fetchUsers({ commit, rootState, dispatch}) {
-            UserData.getPage(rootState.common.currentPage)
-            .then(json => {
-                const users = json.data.rows
-                commit('updateUsers', users)
-                dispatch('getUserMaxPageFromServer')
-            })
-        },
-        fetchUsersNoPagination({ commit, }) {
+        // fetchUsers({ commit, rootState, dispatch}) {
+        //     UserData.getPage(rootState.common.currentPage)
+        //     .then(json => {
+        //         const users = json.data.rows
+        //         commit('updateUsers', users)
+        //         dispatch('getUserMaxPageFromServer')
+        //     })
+        // },
+        fetchUsers({ commit, }) {
             UserData.getAll()
             .then(json => {
                 const users = json.data
                 commit('updateUsers', users)
             })
         },
-        getUserMaxPageFromServer({commit}) {
-            UserData.getAmount()
-            .then(json => {
-                const users = json.data
-                commit('updateMaxPage', users)
-            })
-        },
+        // getUserMaxPageFromServer({commit}) {
+        //     UserData.getAmount()
+        //     .then(json => {
+        //         const users = json.data
+        //         commit('updateMaxPage', users)
+        //     })
+        // },
         createUser({ commit, dispatch }, newUser, users, ) {
             UserData.create(newUser)
             .then(() => {
@@ -66,6 +66,15 @@ export default {
                 console.log(user)
                 commit('updateUser', user)
                 commit('stopUserLoading')
+            })
+        },
+        changeBanStatus({commit, dispatch}, data, users) {
+            UserData.changeBanStatus(data.login, data.formData)
+            .then(() => {
+                dispatch('fetchUsers')
+                .then(() => {
+                    commit('updateUsers', users)
+                })
             })
         },
         

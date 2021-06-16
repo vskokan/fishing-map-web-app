@@ -43,14 +43,14 @@
         </tr>
       </table>
     </div>
-    <div class="navigationButtons">
+    <!-- <div class="navigationButtons">
       <button class="previous" @click="previousPage">
         <i class="fas fa-arrow-left"></i>
       </button>
       <button class="next" @click="nextPage">
         <i class="fas fa-arrow-right"></i>
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 

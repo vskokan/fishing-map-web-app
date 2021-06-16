@@ -6,7 +6,8 @@ module.exports = app => {
     const multer = require("../configs/multer.js")
     const au = require('../controllers/au-controller')
 
-    router.post("/", au.verify, multer.upload.none(), method.create);
+    router.post("/", //au.verify,
+     multer.upload.none(), method.create);
     router.get("/", method.readAll);
     router.get("/:id", method.readOne);
     router.post("/update", au.verify, multer.upload.none(), method.update); //Переписать на put!

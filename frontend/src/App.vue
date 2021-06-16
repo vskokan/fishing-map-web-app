@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <MyLoader class="loader" v-if="isAuthLoading" />
+    <Loader class="loader" v-if="isAuthLoading" />
     <Header v-if="!isAuthLoading"></Header>
     <transition name="slide-fade" mode="out-in">
       <router-view v-if="!isAuthLoading"> </router-view>
     </transition>
-    <Footer v-if="!isAuthLoading"/>
+    <Footer v-if="!isAuthLoading" />
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import Footer from '@/components/Footer'
-import MyLoader from "@/components/MyLoader";
+import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 
@@ -20,8 +20,8 @@ export default {
   name: "App",
   components: {
     Header,
-    MyLoader,
-    Footer
+    Loader,
+    Footer,
   },
   methods: {
     ...mapActions(["checkSession"]),
@@ -168,7 +168,7 @@ button:hover {
   opacity: 0;
 }
 
-Header {
+header {
   z-index: 5;
 }
 
@@ -202,6 +202,3 @@ router-view {
   cursor: pointer;
 }
 </style>
-
-
-

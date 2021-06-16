@@ -49,6 +49,14 @@ class UserData {
   signIn(data) {
     return http.post(`au/login`, data)
   }
+
+  getDiscounts(login) {
+    return http.get(`/users/${login}/discounts`)
+  }
+
+  changeBanStatus(login, data) {
+    return http.post(`users/ban/${login}`, data)
+  }
   
 }
 

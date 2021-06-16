@@ -1,6 +1,7 @@
 const client = require('../configs/db.js')
 
 exports.create = (req, res) => {
+    console.log(req.body)
     const method = {
         name: req.body.name,
         description: req.body.description
@@ -19,7 +20,7 @@ exports.readAll = (req, res) => {
     if (p === "amount") {
         client.query('SELECT COUNT(*) AS amount FROM methods', [], function (err, result) {
             if (err) {
-                console.log('Что-то пошло не так')
+                console.log(err)
                 return
             }
             res.json(result.rows[0].amount)
@@ -66,7 +67,6 @@ exports.readAll = (req, res) => {
 }
 
 exports.readOne = (req, res) => {
-    // тут будет вывод одной записи по id
     let id = String(req.params.id)
     client.query('SELECT * FROM methods WHERE id = $1;', [id], function (err, result) {
         if (err) {
@@ -77,11 +77,8 @@ exports.readOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    //сюда изменение одной записи
     let id = req.query.id
     console.log(id)
-    // let name = req.body.name
-    // let description = req.body.description
 
     const method = {
         id: req.body.id,
@@ -89,8 +86,6 @@ exports.update = (req, res) => {
         description: req.body.description
     }
 
-    console.log(method)
-    // console.log(description)
     client.query('UPDATE methods SET name = $1, description = $2 WHERE id = $3;', [method.name, method.description, method.id], function (err, result) {
         if (err) {
             console.log('Ошибка во время обновления')
@@ -102,7 +97,6 @@ exports.update = (req, res) => {
 
 exports.deleteById = (req, res) => {
     let id = req.params.id
-    //console.log(id)
     client.query('DELETE FROM methods WHERE id = $1;', [id], function (err, result) {
         if (err) {
             console.log('Ошибка во время удаления')
@@ -115,7 +109,6 @@ exports.deleteById = (req, res) => {
 }
 
 exports.deleteAll = (req, res) => {
-    //сюда удаление одной записи
     client.query('DELETE * FROM methods;', [], function (err, result) {
         if (err) {
             return next(err)
