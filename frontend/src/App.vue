@@ -44,13 +44,13 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap");
 
 @font-face {
-  font-family: Arkhip; /* Имя шрифта */
-  src: url(./assets/fonts/Arkhip_font.ttf); /* Путь к файлу со шрифтом */
+  font-family: Arkhip; 
+  src: url(./assets/fonts/Arkhip_font.ttf); 
 }
 
 @font-face {
-  font-family: Fishhook; /* Имя шрифта */
-  src: url(./assets/fonts/Fishhook_Bold.ttf); /* Путь к файлу со шрифтом */
+  font-family: Fishhook; 
+  src: url(./assets/fonts/Fishhook_Bold.ttf); 
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
